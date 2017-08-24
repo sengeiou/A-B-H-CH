@@ -33,7 +33,7 @@
 }
 
 - (void)createPhotoUIWithTouchPhoto:(ButTouchedBlock)photo touchAlum:(ButTouchedBlock)alum{
-
+    
     self.backgroundColor = CHUIColorFromRGB(0x000000, 0.5);
     backView = [UIView new];
     [self addSubview:backView];
@@ -128,7 +128,9 @@
     datePick = [UIPickerView new];
     datePick.delegate = self;
     datePick.dataSource = self;
-
+    //    [datePick add]
+    
+    
     [backView addSubview:datePick];
     
     [backView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -152,18 +154,26 @@
         make.right.mas_equalTo(-20);
         make.width.mas_equalTo(butWidth);
     }];
-
+    
     [datePick mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(8);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
         make.bottom.mas_equalTo(confirmBut.mas_top).mas_offset(-8);
     }];
-
+    
     [self commonData];
     [UIView animateWithDuration:0.5 animations:^{
         backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive);
     }];
+}
+
+- (void)layoutMarginsDidChange{
+    NSLog(@"layoutMarginsDidChange");
+}
+
+- (void)layoutSubviews{
+    NSLog(@"layoutSubviews");
 }
 
 - (void)commonData {
@@ -177,7 +187,7 @@
     }
     
     NSInteger allDays = [self totaldaysInMonth:currentSelectedDate];
-    for (int i = 1; i <= allDays; i++) {
+    for (int i = 1; i <= [[NSDate date] getDay]; i++) {
         NSString *strDay = [NSString stringWithFormat:@"%02i", i];
         [self.dayArray addObject:strDay];
     }
@@ -208,25 +218,30 @@
     if (indexDay == NSNotFound) {
         indexDay = 0;
     }
+    
     [datePick selectRow:indexDay inComponent:2 animated:YES];
     self.dayString = self.dayArray[indexDay];
+    UILabel *yearlab = (UILabel *)[datePick viewForRow:indexYear forComponent:0];
+    yearlab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+    UILabel *monlab = (UILabel *)[datePick viewForRow:indexMonth forComponent:1];
+    monlab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+    UILabel *daylab = (UILabel *)[datePick viewForRow:indexDay forComponent:2];
+    daylab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
 }
 
 - (void)tapAction{
-//    [UIView animateWithDuration:0.3 animations:^{
-//        backView.transform = CGAffineTransformIdentity;
-//        
-//    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-//    }];
-
+    //    [UIView animateWithDuration:0.3 animations:^{
+    //        backView.transform = CGAffineTransformIdentity;
+    //    } completion:^(BOOL finished) {
+    [self removeFromSuperview];
+    //    }];
 }
 
 - (NSMutableArray *)yearArray {
-    
     if (!_yearArray) {
         _yearArray = [NSMutableArray array];
-        for (int i = 1; i < 10000; i++) {
+        NSInteger currentYear = [[NSDate date] getYear];
+        for (int i = 1; i <= currentYear; i++) {
             NSString *year = [NSString stringWithFormat:@"%04i", i];
             [_yearArray addObject:year];
         }
@@ -238,7 +253,8 @@
     
     if (!_monthArray) {
         _monthArray = [NSMutableArray array];
-        for (int i = 1; i <= 12; i++) {
+        NSInteger currentMonth = [[NSDate date] getMonth];
+        for (int i = 1; i <= currentMonth; i++) {
             NSString *month = [NSString stringWithFormat:@"%02i", i];
             [_monthArray addObject:month];
         }
@@ -263,24 +279,84 @@
     return obj;
 }
 
-- (void)updateCurrentAllDaysWithDate:(NSDate *)currentDate { // 更新选中的年、月份时的日期
+- (void)updateCurrentAllDaysWithDate:(NSDate *)currentDate inComponent:(NSInteger)component{ // 更新选中的年、月份时的日期
+    //    if (currentDate.timeIntervalSince1970 > [NSDate date].timeIntervalSince1970) {
+    //        currentDate = [NSDate date];
+    //        self.originSelectedDate = currentDate;
+    //        [self commonData];
+    //        return;
+    //    }
     
+    NSInteger currentYear = [currentDate getYear];
+    NSInteger currentMonth = [currentDate getMonth];
+    NSInteger currentDay = self.dayString.integerValue;
+    
+    if (component == 0) {//今年
+        NSString *strMonth = [NSString stringWithFormat:@"%02li", currentMonth];
+        NSInteger indexMonth = [self.monthArray indexOfObject:strMonth];
+        if (currentYear == [[NSDate date] getYear]) {
+            if (indexMonth > ([[NSDate date] getMonth] - 1)) {
+                indexMonth = [[NSDate date] getMonth] - 1;
+            }
+            
+            [self.monthArray removeAllObjects];
+            for (int i = 1; i <= [[NSDate date] getMonth]; i++) {
+                NSString *strDay = [NSString stringWithFormat:@"%02i", i];
+                [self.monthArray addObject:strDay];
+            }
+        }
+        else{
+            [self.monthArray removeAllObjects];
+            for (int i = 1; i <= 12; i++) {
+                NSString *strDay = [NSString stringWithFormat:@"%02i", i];
+                [self.monthArray addObject:strDay];
+            }
+        }
+        [datePick reloadComponent:1];
+        
+        [datePick selectRow:indexMonth inComponent:1 animated:YES];
+        self.monthString = self.monthArray[indexMonth];
+        UILabel *monlab = (UILabel *)[datePick viewForRow:indexMonth forComponent:1];
+        monlab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+    }
+    //    if (component == 1) {
     [self.dayArray removeAllObjects];
-    
     NSInteger allDays = [self totaldaysInMonth:currentDate];
-    for (int i = 1; i <= allDays; i++) {
-        NSString *strDay = [NSString stringWithFormat:@"%02i", i];
-        [self.dayArray addObject:strDay];
+    if (currentMonth == [[NSDate date] getMonth] && currentYear == [[NSDate date] getYear]) {
+        for (int i = 1; i <= (allDays >= [[NSDate date] getDay] ? [[NSDate date] getDay]:allDays); i++) {
+            NSString *strDay = [NSString stringWithFormat:@"%02i", i];
+            [self.dayArray addObject:strDay];
+        }
+        [datePick reloadComponent:2];
+        
+        NSString *strDay = [NSString stringWithFormat:@"%02li", currentDay];
+        NSInteger indexDay = [self.dayArray indexOfObject:strDay];
+        if (indexDay > ([[NSDate date] getDay] - 1)) {
+            indexDay = ([[NSDate date] getDay] - 1);
+        }
+        [datePick selectRow:indexDay inComponent:2 animated:YES];
+        self.dayString = self.dayArray[indexDay];
+        
+        UILabel *monlab = (UILabel *)[datePick viewForRow:indexDay forComponent:2];
+        monlab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     }
-    
-    [datePick reloadComponent:2];
-    
-    NSInteger indexDay = [self.dayArray indexOfObject:self.dayString];
-    if (indexDay == NSNotFound) {
-        indexDay = (self.dayArray.count - 1) > 0 ? (self.dayArray.count - 1) : 0;
+    else{
+        for (int i = 1; i <= allDays; i++) {
+            NSString *strDay = [NSString stringWithFormat:@"%02i", i];
+            [self.dayArray addObject:strDay];
+        }
+        [datePick reloadComponent:2];
+        
+        NSInteger indexDay = [self.dayArray indexOfObject:self.dayString];
+        if (indexDay == NSNotFound) {
+            indexDay = (self.dayArray.count - 1) > 0 ? (self.dayArray.count - 1) : 0;
+        }
+        [datePick selectRow:indexDay inComponent:2 animated:YES];
+        self.dayString = self.dayArray[indexDay];
+        UILabel *daylab = (UILabel *)[datePick viewForRow:indexDay forComponent:2];
+        daylab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     }
-    [datePick selectRow:indexDay inComponent:2 animated:YES];
-    self.dayString = self.dayArray[indexDay];
+    //    }
 }
 
 - (NSInteger)totaldaysInMonth:(NSDate *)date { // 计算出当月有多少天
@@ -350,19 +426,19 @@
         self.dayString = [self safeObjectAtIndex:row array:self.dayArray];
     }
     
-    if (component != 2) {
+//    if (component != 2) {
         NSString *strDate = [NSString stringWithFormat:@"%@%@", self.yearString, self.monthString];
-        [self updateCurrentAllDaysWithDate:[self.dateFormatter dateFromString:strDate]];
-    }
+        [self updateCurrentAllDaysWithDate:[self.dateFormatter dateFromString:strDate] inComponent:component];
+//    }
     NSString *dateString = [NSString stringWithFormat:@"%@年%@月%@日",self.yearString, self.monthString, self.dayString];
     NSLog(@"dateString  %@",dateString);
 }
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end
