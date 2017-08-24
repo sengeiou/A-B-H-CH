@@ -1,0 +1,127 @@
+//
+//  CHAFNWorking.m
+//  Children
+//
+//  Created by 有限公司 深圳市 on 2017/8/16.
+//  Copyright © 2017年 SMA. All rights reserved.
+//
+
+#import "CHAFNWorking.h"
+
+static NSString *prfixStr = @"http://openapi.5gcity.com/";
+
+@interface CHAFNWorking ()
+
+@end
+
+@implementation CHAFNWorking
+static id _instace;
+
++ (instancetype)shareAFNworking{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instace = [[self alloc] init];
+        [_instace initilize];
+    });
+    return _instace;
+}
+
++ (id)allocWithZone:(struct _NSZone *)zone{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instace = [super allocWithZone:zone];
+    });
+    return _instace;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return _instace;
+}
+
+
+- (NSMutableDictionary *)requestDic{
+    if (!_requestDic) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
+                NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
+         _requestDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[CHDefaultionfos CHgetValueforKey:CHAPPTOKEN] ? [CHDefaultionfos CHgetValueforKey:CHAPPTOKEN]:@"",@"Token",@"71",@"AppId",preferredLang,@"Language", nil];
+    }
+    return _requestDic;
+}
+
+- (void)initilize{
+    _sessionMgr = [AFHTTPSessionManager manager];
+    _sessionMgr.requestSerializer = [AFJSONRequestSerializer serializer];
+    _sessionMgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects: @"application/json",@"text/json", nil];
+    [_sessionMgr.requestSerializer setValue:@"3A73DE89-2C32-4DD8-A8F8-B43C1FC26C17" forHTTPHeaderField:@"key"];
+    [_sessionMgr.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+    [_sessionMgr.requestSerializer setTimeoutInterval:60.0];
+    
+}
+
+- (void)CHAFNPostRequestUrl:(REQUESTURL)url parameters:(NSMutableDictionary *)par Mess:(NSString *)messtr showError:(BOOL)show progress:(void (^)(NSProgress * _Nonnull uploadProgress))Progress success:(void (^)(NSURLSessionDataTask * _Nonnull task, id _Nullable result))success failure:(void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure{
+    if (show && messtr) {
+        [MBProgressHUD showMessage:messtr];
+    }
+    [_sessionMgr POST:[prfixStr stringByAppendingString:GetOrderStatus(url)] parameters:par progress:^(NSProgress * _Nonnull uploadProgress) {
+        Progress(uploadProgress);
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"\nresponseObject***********************\n%@\nrequesturl: %@\n********************",responseObject,[prfixStr stringByAppendingString:GetOrderStatus(url)]);
+        if (show) {
+            [MBProgressHUD hideHUD];
+        }
+        success(task,responseObject);
+
+        [self showMessAgeWithResponse:responseObject];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"\error***********************\n%@\nrequesturl: %@\n********************",error,[prfixStr stringByAppendingString:GetOrderStatus(url)]);
+        if (error && error.code == -999) {
+            failure(task,nil);
+        }
+        else{
+            failure(task,error);
+            if (show) {
+                [MBProgressHUD hideHUD];
+                [MBProgressHUD showError:error.localizedDescription];
+            }
+        }
+    }];
+   
+}
+
+NSString * GetOrderStatus(REQUESTURL status) {
+    switch (status) {
+        case REQUESTURL_CheckUser:
+            return @"api/User/CheckUser";
+        case REQUESTURL_SendSMS:
+            return @"api/User/SendSMSCodeByYunPian";
+        case REQUESTURL_Register:
+            /*"api/User/Register" 测试注册  正式注册 api/User/RegisterNeedSMSCode*/
+            return @"api/User/Register";
+        case REQUESTURL_PersonDeviceList:
+            return @"api/Device/PersonDeviceList";
+        case REQUESTURL_Login:
+            return @"api/User/Login";
+        case REQUESTURL_ChangePasswordNeedSMSCode:
+            return @"api/User/ChangePasswordNeedSMSCode";
+        case REQUESTURL_CheckDevice:
+            return @"api/Device/CheckDevice";
+        case REQUESTURL_AddDeviceAndUserGroup:
+            return @"api/Device/AddDeviceAndUserGroup";
+        default:
+            return @"";
+    }
+}
+
+- (void)showMessAgeWithResponse:(id _Nullable)responseObject{
+    
+    if (responseObject && [[responseObject objectForKey:@"State"] intValue] != 0 && [[responseObject objectForKey:@"State"] intValue] != 1107 && [[responseObject objectForKey:@"State"] intValue] != 1500 && [[responseObject objectForKey:@"State"] intValue] != 1501) {
+        if ([responseObject objectForKey:@"Message"] && ![[responseObject objectForKey:@"Message"] isEqualToString:@""]) {
+             [MBProgressHUD showError:[responseObject objectForKey:@"Message"]];
+        }
+    }
+}
+@end

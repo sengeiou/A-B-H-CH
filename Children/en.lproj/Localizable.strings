@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Children
+
+  Created by 有限公司 深圳市 on 2017/8/12.
+  Copyright © 2017年 SMA. All rights reserved.
+*/
+
+"firstLun_loca" = "定位";
+"firstLun_locaMes" = "多重定位，实时掌握孩子动态";
+"firstLun_group" = "群聊";
+"firstLun_groupMes" = "语音群聊，家人孩子沟通互动更有趣";
+"firstLun_security" = "安全区域";
+"firstLun_securityMes" = "安全防护，让父母放心的区域";
+"firstLun_gauge" = "健康计步";
+"firstLun_gaugeMes" = "智能追踪，轻松掌握孩子的运动状况";
+"firstLun_experience" = "立即体验";
+"login_login" = "登录";
+"login_regis" = "注册";
+
+
+
