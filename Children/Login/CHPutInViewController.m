@@ -27,6 +27,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = CHLocalizedString(@"成员监护申请", nil);
@@ -61,7 +70,7 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if([result[@"State"] intValue] == 1500 || [result[@"State"] intValue] == 1501){
-                
+                [MBProgressHUD showSuccess:CHLocalizedString(@"请求成功", nil)];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
             

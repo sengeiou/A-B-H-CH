@@ -9,10 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "CHNavViewController.h"
 #import "CHRegAnLogViewController.h"
+#import "MainViewController.h"
+#import "XLSlideMenu.h"
+#import "CHLeftViewController.h"
+#import "CHBaseViewController.h"
+#import "LeftSliderViewController.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong ,nonatomic) LeftSliderViewController * leftSliderViewController;
 
 @end
 

@@ -17,6 +17,7 @@ PODS:
   - Fabric (1.6.11)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
+  - MJExtension (3.0.13)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - Fabric
   - Masonry
   - MBProgressHUD
+  - MJExtension
   - SDWebImage
   - TwitterKit
 
@@ -38,10 +40,11 @@ SPEC CHECKSUMS:
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJExtension: 5932755f451458eefa24239358817f8d291240c7
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: 2c899cd6c02cabb2e65487b65902c3bf8a8fa3de
+PODFILE CHECKSUM: 25ccf29818076cdbbc83e2ef1d768665bb758c83
 
 COCOAPODS: 1.2.0.beta.3

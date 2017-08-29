@@ -14,4 +14,6 @@ typedef void(^touchItemBlock)(UIBarButtonItem *item);
 + (UIBarButtonItem *)backItemWithIma:(UIImage *)image target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)CHitemWithIcon:(NSString *)icon highIcon:(NSString *)highIcon frame:(CGRect)frame  target:(id)target action:(SEL)action transfrom:(int)rotation;
 + (UIBarButtonItem *)CHItemWithTit:(NSString *)tit textColor:(UIColor *)tcolor textFont:(UIFont *)tfont touchCallBack:(touchItemBlock)touchItem;
++ (UIBarButtonItem *)CHItemWithBackIma:(UIImage *)backIma Radius:(CGFloat)radius touchCallBack:(touchItemBlock)touchItem;
++ (UIBarButtonItem *)CHItemWithNorIma:(UIImage *)norIma highIma:(UIImage *)highIma touchCallBack:(touchItemBlock)touchItem;
 @end

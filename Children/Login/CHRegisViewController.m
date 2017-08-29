@@ -41,14 +41,14 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [self.navigationController setBackgroudImage:[UIImage new]];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    //    [self.navigationController setBackgroudImage:[UIImage new]];
+    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-   [super viewDidAppear:animated];
-//    [self.navigationController setBackgroudImage:[UIImage new]];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [super viewDidAppear:animated];
+    //    [self.navigationController setBackgroudImage:[UIImage new]];
+    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)initializeMethod{
     [CHNotifictionCenter addObserver:self selector:@selector(KeyboardWillChange:) name:UIKeyboardWillShowNotification object:nil];
@@ -257,7 +257,6 @@
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 if ([[result objectForKey:@"State"] intValue] == 0) {
-                    [MBProgressHUD hideHUD];
                     authBut.enabled = NO;
                     [MBProgressHUD showSuccess:CHLocalizedString(@"发送成功!", nil)];
                     [sender setTitle:@"60S" forState:UIControlStateNormal];
@@ -384,11 +383,6 @@
     
     resignBut = [CHButton createWithTit:resStr titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self.view endEditing:YES];
-        self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
-        
-        CHBingViewController *binVC = [[CHBingViewController alloc] init];
-        [self.navigationController pushViewController:binVC animated:YES];
-        return;
         
         NSMutableDictionary *resignDic = [CHAFNWorking shareAFNworking].requestDic;
         NSString *mess = @"";
@@ -566,6 +560,7 @@
         user.userPh = phoneLab.text;
         user.userPs = passFiled.text;
         user.userTo = [result objectForKey:@"AccessToken"];
+        [CHDefaultionfos CHputKey:CHAPPTOKEN andValue:user.userTo];
         [CHAccountTool saveUser:user];
         NSMutableDictionary *personDic = [CHAFNWorking shareAFNworking].requestDic;
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
@@ -591,6 +586,7 @@
                     userList.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
                     userList.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
                     userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
+                    userList.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
                     [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                         
                     } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
@@ -606,8 +602,9 @@
                 }
             }
             else{
+                [CHAccountTool saveUser:user];
+                CHUserInfo *us = [CHAccountTool user];
                 self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
-                
                 CHBingViewController *binVC = [[CHBingViewController alloc] init];
                 [self.navigationController pushViewController:binVC animated:YES];
                 return ;
@@ -622,6 +619,12 @@
     NSLog(@"the area data：%@,", code);
     codeLab.text = [NSString stringWithFormat:@"+%@",[[code componentsSeparatedByString:@","] lastObject]];
     countryLab.text = [[code componentsSeparatedByString:@","] firstObject];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (phoneLab == textField) [passFiled becomeFirstResponder];
+    if (passFiled == textField) [authFiled becomeFirstResponder];
+    return YES;
 }
 
 static bool accInt;

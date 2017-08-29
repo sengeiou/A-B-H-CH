@@ -41,12 +41,12 @@ static id _instace;
 
 
 - (NSMutableDictionary *)requestDic{
-    if (!_requestDic) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
-                NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
-         _requestDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[CHDefaultionfos CHgetValueforKey:CHAPPTOKEN] ? [CHDefaultionfos CHgetValueforKey:CHAPPTOKEN]:@"",@"Token",@"71",@"AppId",preferredLang,@"Language", nil];
-    }
+    //    if (!_requestDic) {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
+    NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
+    _requestDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[CHDefaultionfos CHgetValueforKey:CHAPPTOKEN] ? [CHDefaultionfos CHgetValueforKey:CHAPPTOKEN]:@"",@"Token",@"71",@"AppId",preferredLang,@"Language", nil];
+    //    }
     return _requestDic;
 }
 
@@ -57,7 +57,6 @@ static id _instace;
     [_sessionMgr.requestSerializer setValue:@"3A73DE89-2C32-4DD8-A8F8-B43C1FC26C17" forHTTPHeaderField:@"key"];
     [_sessionMgr.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
     [_sessionMgr.requestSerializer setTimeoutInterval:60.0];
-    
 }
 
 - (void)CHAFNPostRequestUrl:(REQUESTURL)url parameters:(NSMutableDictionary *)par Mess:(NSString *)messtr showError:(BOOL)show progress:(void (^)(NSProgress * _Nonnull uploadProgress))Progress success:(void (^)(NSURLSessionDataTask * _Nonnull task, id _Nullable result))success failure:(void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure{
@@ -69,11 +68,11 @@ static id _instace;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"\nresponseObject***********************\n%@\nrequesturl: %@\n********************",responseObject,[prfixStr stringByAppendingString:GetOrderStatus(url)]);
-        if (show) {
+        if (show && !_moreRequest) {
             [MBProgressHUD hideHUD];
         }
         success(task,responseObject);
-
+        
         [self showMessAgeWithResponse:responseObject];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -82,6 +81,7 @@ static id _instace;
             failure(task,nil);
         }
         else{
+            _moreRequest = NO;
             failure(task,error);
             if (show) {
                 [MBProgressHUD hideHUD];
@@ -89,7 +89,7 @@ static id _instace;
             }
         }
     }];
-   
+    
 }
 
 NSString * GetOrderStatus(REQUESTURL status) {
@@ -100,6 +100,7 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/User/SendSMSCodeByYunPian";
         case REQUESTURL_Register:
             /*"api/User/Register" 测试注册  正式注册 api/User/RegisterNeedSMSCode*/
+            //            return @"api/User/RegisterNeedSMSCode";
             return @"api/User/Register";
         case REQUESTURL_PersonDeviceList:
             return @"api/Device/PersonDeviceList";
@@ -111,6 +112,12 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/Device/CheckDevice";
         case REQUESTURL_AddDeviceAndUserGroup:
             return @"api/Device/AddDeviceAndUserGroup";
+        case REQUESTURL_SavePersonProfile:
+            return @"api/Person/SavePersonProfile";
+        case REQUESTURL_SendCommand:
+            return @"api/Command/SendCommand";
+        case REQUESTURL_PersonTracking:
+            return @"api/Device/PersonTracking";
         default:
             return @"";
     }
@@ -120,7 +127,8 @@ NSString * GetOrderStatus(REQUESTURL status) {
     
     if (responseObject && [[responseObject objectForKey:@"State"] intValue] != 0 && [[responseObject objectForKey:@"State"] intValue] != 1107 && [[responseObject objectForKey:@"State"] intValue] != 1500 && [[responseObject objectForKey:@"State"] intValue] != 1501) {
         if ([responseObject objectForKey:@"Message"] && ![[responseObject objectForKey:@"Message"] isEqualToString:@""]) {
-             [MBProgressHUD showError:[responseObject objectForKey:@"Message"]];
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showError:[responseObject objectForKey:@"Message"]];
         }
     }
 }

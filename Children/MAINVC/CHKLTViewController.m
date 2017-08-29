@@ -37,6 +37,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated{
     if (self.childViewControllers.count >= 1) {
+        NSLog(@"self.backImage  %@",self.backImage);
         if (!self.backImage) {
             self.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
         }

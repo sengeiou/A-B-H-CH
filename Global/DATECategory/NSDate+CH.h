@@ -12,4 +12,5 @@
 - (NSUInteger)getDay;
 - (NSUInteger)getMonth;
 - (NSUInteger)getYear;
++ (NSDate *)dateWithYear:(NSInteger)year month:(NSUInteger)month day:(NSUInteger)day;
 @end

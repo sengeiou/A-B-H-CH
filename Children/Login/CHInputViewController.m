@@ -71,30 +71,39 @@
         @StrongObject(_imeiField)
          CHUserInfo *user = [CHAccountTool user];
         
-        CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
-        user.deviceIMEI = [(CHTextField *)strongOjb text];
-        [CHAccountTool saveUser:user];
-        [self.navigationController pushViewController:deviceVC animated:YES];
-        return ;
-       
         NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
         [dic addEntriesFromDictionary:@{@"SerialNumber":[(CHTextField *)strongOjb text],@"UserId": user.userId}];
+        user.deviceIMEI = [(CHTextField *)strongOjb text];
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CheckDevice parameters:dic Mess:CHLocalizedString(@"", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             user.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
             if ([[result objectForKey:@"State"] intValue] == 0) {
-                CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
-                user.deviceIMEI = [(CHTextField *)strongOjb text];
-                [CHAccountTool saveUser:user];
-                [self.navigationController pushViewController:deviceVC animated:YES];
+                NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+                [dic addEntriesFromDictionary:@{@"DeviceId":user.deviceId,@"UserId": user.userId,@"RelationPhone":user.userPh,@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
+                [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                    
+                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                    if ([result[@"State"] intValue] == 0) {
+                        CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+                        deviceVC.user = user;
+                        [self.navigationController pushViewController:deviceVC animated:YES];
+                    }
+                    if([result[@"State"] intValue] == 1500 || [result[@"State"] intValue] == 1501){
+                        
+                    }
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                    
+                }];
             }else if ([[result objectForKey:@"State"] intValue] == 1107) {
                 CHPutInViewController *putInVC = [[CHPutInViewController alloc] init];
                 putInVC.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
-                [CHAccountTool saveUser:user];
                 [self.navigationController pushViewController:putInVC animated:YES];
             }else{
-                
+                 [MBProgressHUD showError:[result objectForKey:@"Message"]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         }];
@@ -124,7 +133,6 @@
     if (selectedRange && pos) {
         return YES;
     }
-    NSLog(@"realTextViewText.length %d",realTextViewText.length);
     if (realTextViewText.length >= 15) {
         NSInteger length = string.length + 15 - realTextViewText.length;
         NSRange rg = {0,MAX(length,0)};

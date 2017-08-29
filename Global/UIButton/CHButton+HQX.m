@@ -15,6 +15,7 @@ static const void *butBlockKey = &butBlockKey;
     [but setTitle:tit ? tit:@"" forState:UIControlStateNormal];
     [but setTitleColor:color ? color:[UIColor blackColor] forState:UIControlStateNormal];
     but.backgroundColor = backColor ? backColor:[UIColor clearColor];
+    but.titleLabel.font = font;
     objc_setAssociatedObject(but, butBlockKey, butTouchedBlack, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     [but addTarget:but action:@selector(didTouchBut:) forControlEvents:UIControlEventTouchUpInside];

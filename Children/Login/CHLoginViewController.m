@@ -44,8 +44,8 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
-//    [self.view endEditing:YES];
-//    self.view.transform = CGAffineTransformIdentity;
+    //    [self.view endEditing:YES];
+    //    self.view.transform = CGAffineTransformIdentity;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -246,7 +246,7 @@
         but.tag = 101 + i;
         [self.view addSubview:but];
         [but mas_makeConstraints:^(MASConstraintMaker *make) {
-          
+            
             make.bottom.mas_equalTo(self.view.mas_bottom).mas_offset(-2);
             make.centerX.mas_equalTo(self.view.mas_centerX).mas_offset(-CHMainScreen.size.width/3 + CHMainScreen.size.width/3 * i );
             make.width.mas_equalTo(44);
@@ -306,7 +306,7 @@
         but.titleLabel.textAlignment = NSTextAlignmentCenter;
         but.tag = 111 + j;
         [but mas_makeConstraints:^(MASConstraintMaker *make) {
-              NSLog(@"%f CHMainScreen.size.width/3 + -CHMainScreen.size.width/3 * i  %f",-CHMainScreen.size.width/4,-CHMainScreen.size.width/2 + CHMainScreen.size.width/2 * j);
+            NSLog(@"%f CHMainScreen.size.width/3 + -CHMainScreen.size.width/3 * i  %f",-CHMainScreen.size.width/4,-CHMainScreen.size.width/2 + CHMainScreen.size.width/2 * j);
             make.bottom.mas_equalTo(thirdLab.mas_top).mas_offset(-20);
             make.centerX.mas_equalTo(self.view.mas_centerX).mas_offset(-CHMainScreen.size.width/4 + CHMainScreen.size.width/2 * j );
             make.width.mas_lessThanOrEqualTo(CHMainScreen.size.width/2.6);
@@ -314,13 +314,13 @@
         
         if (j == 1) {
             loginBut = [CHButton createWithTit:CHLocalizedString(@"登录", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-                
+                [self.view endEditing:YES];
                 NSMutableDictionary *requestDic = [[CHAFNWorking shareAFNworking] requestDic];
                 [requestDic addEntriesFromDictionary:@{@"Name":phoneLab.text, @"Pass":passFiled.text,@"LoginType":@"0"}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Login parameters:requestDic Mess:CHLocalizedString(@"正在登录...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
-
+                    
                     if ([[result objectForKey:@"State"] intValue] == 1000) {
                         [MBProgressHUD showError:CHLocalizedString(@"账号或密码不正确", nil)];
                     }
@@ -353,10 +353,10 @@
                                     
                                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                                     if ([[result objectForKey:@"State"] intValue] == 0) {
-                                         [CHDefaultionfos CHputKey:CHAPPTOKEN andValue:user.userTo];
+                                        [CHDefaultionfos CHputKey:CHAPPTOKEN andValue:user.userTo];
                                     }
                                     if ([[result objectForKey:@"Items"] count] > 0) {
-                                        [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:user];
+                                        [[FMDBConversionMode sharedCoreBlueTool] deleteAllDevice:user];
                                         for (int i = 0; i < [[result objectForKey:@"Items"] count]; i ++) {
                                             NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:i];
                                             CHUserInfo *userList = [[CHUserInfo alloc] init];
@@ -367,6 +367,7 @@
                                             userList.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
                                             userList.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
                                             userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
+                                            userList.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
                                             [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                                                 
                                             } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
@@ -384,11 +385,16 @@
                                     else{
                                         [CHAccountTool saveUser:user];
                                     }
+                                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                                    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+                                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+                                    slideMenu.leftViewController = leftVC;
+                                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
                                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
                                     
                                 }];
                             }];
-
+                            
                         }];
                     }
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
@@ -407,7 +413,7 @@
         }
     }
     
-
+    
 }
 
 - (void)setTheLocalAreaCode{
@@ -539,13 +545,13 @@ static bool passInt;
     return YES;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

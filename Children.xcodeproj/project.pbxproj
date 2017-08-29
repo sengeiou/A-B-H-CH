@@ -23,10 +23,18 @@
 		EE2FCB0C1F3EE6EB00A6457B /* UIBarButtonItem+CHITEM.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB0B1F3EE6EB00A6457B /* UIBarButtonItem+CHITEM.m */; };
 		EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB0F1F3EEBCB00A6457B /* CHRegAnLogViewController.m */; };
 		EE2FCB131F3EEDFF00A6457B /* UIImage+IMAGE.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB121F3EEDFF00A6457B /* UIImage+IMAGE.m */; };
+		EE38B4C61F4FFD7700C33C1D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE38B4C51F4FFD7700C33C1D /* MapKit.framework */; };
+		EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38B4C91F4FFE5B00C33C1D /* CHLocaViewController.m */; };
+		EE38B4CE1F4FFEE300C33C1D /* CHMKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38B4CD1F4FFEE300C33C1D /* CHMKMapView.m */; };
+		EE38B4D11F50084F00C33C1D /* CHPhoneCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38B4D01F50084F00C33C1D /* CHPhoneCellView.m */; };
 		EE38DBFC1F414CB8003C3B9A /* CHRegisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38DBFB1F414CB8003C3B9A /* CHRegisViewController.m */; };
 		EE41DB3B1F4D2498009B230A /* CHPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE41DB3A1F4D2498009B230A /* CHPhotoView.m */; };
 		EE41DB3F1F4D9BE0009B230A /* NSDate+CH.m in Sources */ = {isa = PBXBuildFile; fileRef = EE41DB3E1F4D9BE0009B230A /* NSDate+CH.m */; };
 		EE64D18A1F45960D00CCBFDF /* CHAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EE64D1891F45960D00CCBFDF /* CHAccountTool.m */; };
+		EE6E88C01F4EE6B70016104A /* UIViewController+XLSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6E88BD1F4EE6B70016104A /* UIViewController+XLSlideMenu.m */; };
+		EE6E88C11F4EE6B70016104A /* XLSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6E88BF1F4EE6B70016104A /* XLSlideMenu.m */; };
+		EE6E88C41F4EE7AE0016104A /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6E88C31F4EE7AE0016104A /* MainViewController.m */; };
+		EE6E88C91F4EE9120016104A /* CHLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6E88C81F4EE9120016104A /* CHLeftViewController.m */; };
 		EE74AB661F4BC8E7004F03B8 /* CHInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB651F4BC8E7004F03B8 /* CHInputViewController.m */; };
 		EE74AB681F4BCE7B004F03B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE74AB671F4BCE7B004F03B8 /* AVFoundation.framework */; };
 		EE74AB6D1F4BFFF7004F03B8 /* AnimationContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB6A1F4BFFF7004F03B8 /* AnimationContoller.m */; };
@@ -35,6 +43,19 @@
 		EE74AB741F4C2411004F03B8 /* CHPutInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB731F4C2411004F03B8 /* CHPutInViewController.m */; };
 		EE74AB771F4C3C05004F03B8 /* CHDeviceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB761F4C3C05004F03B8 /* CHDeviceInfoViewController.m */; };
 		EE74AB7B1F4C4FAA004F03B8 /* CHCalculatedMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */; };
+		EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */; };
+		EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */; };
+		EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */; };
+		EEB359491F5256E9005C5064 /* LeftSliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359441F5256E9005C5064 /* LeftSliderViewController.m */; };
+		EEB3594A1F5256E9005C5064 /* MyPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359461F5256E9005C5064 /* MyPanGestureRecognizer.m */; };
+		EEB3594B1F5256E9005C5064 /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359481F5256E9005C5064 /* UIView_extra.m */; };
+		EEB359521F525E12005C5064 /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359511F525E12005C5064 /* UIView+Extensions.m */; };
+		EEB359551F525F8F005C5064 /* CHBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359541F525F8F005C5064 /* CHBaseViewController.m */; };
+		EEB3595D1F526F64005C5064 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB3595C1F526F64005C5064 /* CoreLocation.framework */; };
+		EEB359611F5272CF005C5064 /* CHLocationMar.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359601F5272CF005C5064 /* CHLocationMar.m */; };
+		EEB359641F5276E5005C5064 /* SMALocatiuonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359631F5276E5005C5064 /* SMALocatiuonManager.m */; };
+		EEB359671F529571005C5064 /* CHLocationInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359661F529571005C5064 /* CHLocationInfoView.m */; };
+		EEB3596A1F529A75005C5064 /* CHDeiceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359691F529A75005C5064 /* CHDeiceCollectionViewCell.m */; };
 		EEB40A701F4A6FD1003C33EA /* CHLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB40A6F1F4A6FD1003C33EA /* CHLoginViewController.m */; };
 		EEB40A7A1F4ABDD8003C33EA /* country.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEB40A7C1F4ABDD8003C33EA /* country.plist */; };
 		EEB40A811F4AC30E003C33EA /* TypeConversionMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB40A801F4AC30E003C33EA /* TypeConversionMode.m */; };
@@ -92,6 +113,13 @@
 		EE2FCB0F1F3EEBCB00A6457B /* CHRegAnLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHRegAnLogViewController.m; path = ../CHRegAnLogViewController.m; sourceTree = "<group>"; };
 		EE2FCB111F3EEDFF00A6457B /* UIImage+IMAGE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+IMAGE.h"; sourceTree = "<group>"; };
 		EE2FCB121F3EEDFF00A6457B /* UIImage+IMAGE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IMAGE.m"; sourceTree = "<group>"; };
+		EE38B4C51F4FFD7700C33C1D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		EE38B4C81F4FFE5B00C33C1D /* CHLocaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocaViewController.h; sourceTree = "<group>"; };
+		EE38B4C91F4FFE5B00C33C1D /* CHLocaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHLocaViewController.m; sourceTree = "<group>"; };
+		EE38B4CC1F4FFEE300C33C1D /* CHMKMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMKMapView.h; sourceTree = "<group>"; };
+		EE38B4CD1F4FFEE300C33C1D /* CHMKMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMKMapView.m; sourceTree = "<group>"; };
+		EE38B4CF1F50084F00C33C1D /* CHPhoneCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPhoneCellView.h; sourceTree = "<group>"; };
+		EE38B4D01F50084F00C33C1D /* CHPhoneCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPhoneCellView.m; sourceTree = "<group>"; };
 		EE38DBFA1F414CB8003C3B9A /* CHRegisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHRegisViewController.h; path = ../CHRegisViewController.h; sourceTree = "<group>"; };
 		EE38DBFB1F414CB8003C3B9A /* CHRegisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHRegisViewController.m; path = ../CHRegisViewController.m; sourceTree = "<group>"; };
 		EE41DB391F4D2498009B230A /* CHPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPhotoView.h; sourceTree = "<group>"; };
@@ -100,6 +128,14 @@
 		EE41DB3E1F4D9BE0009B230A /* NSDate+CH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+CH.m"; sourceTree = "<group>"; };
 		EE64D1881F45960D00CCBFDF /* CHAccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHAccountTool.h; sourceTree = "<group>"; };
 		EE64D1891F45960D00CCBFDF /* CHAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHAccountTool.m; sourceTree = "<group>"; };
+		EE6E88BC1F4EE6B70016104A /* UIViewController+XLSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XLSlideMenu.h"; sourceTree = "<group>"; };
+		EE6E88BD1F4EE6B70016104A /* UIViewController+XLSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XLSlideMenu.m"; sourceTree = "<group>"; };
+		EE6E88BE1F4EE6B70016104A /* XLSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSlideMenu.h; sourceTree = "<group>"; };
+		EE6E88BF1F4EE6B70016104A /* XLSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLSlideMenu.m; sourceTree = "<group>"; };
+		EE6E88C21F4EE7AE0016104A /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
+		EE6E88C31F4EE7AE0016104A /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
+		EE6E88C71F4EE9120016104A /* CHLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLeftViewController.h; sourceTree = "<group>"; };
+		EE6E88C81F4EE9120016104A /* CHLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHLeftViewController.m; sourceTree = "<group>"; };
 		EE74AB641F4BC8E7004F03B8 /* CHInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHInputViewController.h; path = ../CHInputViewController.h; sourceTree = "<group>"; };
 		EE74AB651F4BC8E7004F03B8 /* CHInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHInputViewController.m; path = ../CHInputViewController.m; sourceTree = "<group>"; };
 		EE74AB671F4BCE7B004F03B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -115,6 +151,31 @@
 		EE74AB761F4C3C05004F03B8 /* CHDeviceInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHDeviceInfoViewController.m; path = ../CHDeviceInfoViewController.m; sourceTree = "<group>"; };
 		EE74AB791F4C4FAA004F03B8 /* CHCalculatedMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCalculatedMode.h; sourceTree = "<group>"; };
 		EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCalculatedMode.m; sourceTree = "<group>"; };
+		EEA2CDA11F553F01005A3A97 /* CHGeoCodingMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGeoCodingMode.h; sourceTree = "<group>"; };
+		EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGeoCodingMode.m; sourceTree = "<group>"; };
+		EEA2CDA41F558971005A3A97 /* CHPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPointAnnotation.h; sourceTree = "<group>"; };
+		EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPointAnnotation.m; sourceTree = "<group>"; };
+		EEA2CDA71F558C37005A3A97 /* CHAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHAnnotationView.h; sourceTree = "<group>"; };
+		EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHAnnotationView.m; sourceTree = "<group>"; };
+		EEB359431F5256E9005C5064 /* LeftSliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftSliderViewController.h; sourceTree = "<group>"; };
+		EEB359441F5256E9005C5064 /* LeftSliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftSliderViewController.m; sourceTree = "<group>"; };
+		EEB359451F5256E9005C5064 /* MyPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPanGestureRecognizer.h; sourceTree = "<group>"; };
+		EEB359461F5256E9005C5064 /* MyPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPanGestureRecognizer.m; sourceTree = "<group>"; };
+		EEB359471F5256E9005C5064 /* UIView_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_extra.h; sourceTree = "<group>"; };
+		EEB359481F5256E9005C5064 /* UIView_extra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_extra.m; sourceTree = "<group>"; };
+		EEB359501F525E12005C5064 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extensions.h"; sourceTree = "<group>"; };
+		EEB359511F525E12005C5064 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extensions.m"; sourceTree = "<group>"; };
+		EEB359531F525F8F005C5064 /* CHBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHBaseViewController.h; sourceTree = "<group>"; };
+		EEB359541F525F8F005C5064 /* CHBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHBaseViewController.m; sourceTree = "<group>"; };
+		EEB3595C1F526F64005C5064 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EEB3595F1F5272CF005C5064 /* CHLocationMar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocationMar.h; sourceTree = "<group>"; };
+		EEB359601F5272CF005C5064 /* CHLocationMar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHLocationMar.m; sourceTree = "<group>"; };
+		EEB359621F5276E5005C5064 /* SMALocatiuonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMALocatiuonManager.h; sourceTree = "<group>"; };
+		EEB359631F5276E5005C5064 /* SMALocatiuonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMALocatiuonManager.m; sourceTree = "<group>"; };
+		EEB359651F529571005C5064 /* CHLocationInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocationInfoView.h; sourceTree = "<group>"; };
+		EEB359661F529571005C5064 /* CHLocationInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHLocationInfoView.m; sourceTree = "<group>"; };
+		EEB359681F529A75005C5064 /* CHDeiceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDeiceCollectionViewCell.h; sourceTree = "<group>"; };
+		EEB359691F529A75005C5064 /* CHDeiceCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDeiceCollectionViewCell.m; sourceTree = "<group>"; };
 		EEB40A6E1F4A6FD1003C33EA /* CHLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHLoginViewController.h; path = ../CHLoginViewController.h; sourceTree = "<group>"; };
 		EEB40A6F1F4A6FD1003C33EA /* CHLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHLoginViewController.m; path = ../CHLoginViewController.m; sourceTree = "<group>"; };
 		EEB40A791F4ABDD0003C33EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -166,6 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEB3595D1F526F64005C5064 /* CoreLocation.framework in Frameworks */,
+				EE38B4C61F4FFD7700C33C1D /* MapKit.framework in Frameworks */,
 				EE74AB681F4BCE7B004F03B8 /* AVFoundation.framework in Frameworks */,
 				EEB40A971F4AE129003C33EA /* libsqlite3.0.tbd in Frameworks */,
 				9E7FB312481B6392B6395EEE /* Pods_Children.framework in Frameworks */,
@@ -210,6 +273,7 @@
 				EE148CBD1F3D96E50089C5D2 /* AppDelegate.m */,
 				EE148CBF1F3D96E50089C5D2 /* ViewController.h */,
 				EE148CC01F3D96E50089C5D2 /* ViewController.m */,
+				EE6E88B91F4EE6890016104A /* PLANVC */,
 				EE2FCB001F3EDC7400A6457B /* MAINVC */,
 				EE2FCB0D1F3EEB7000A6457B /* Login */,
 				EE148CC51F3D96E50089C5D2 /* Assets.xcassets */,
@@ -271,6 +335,8 @@
 		EE2FCB001F3EDC7400A6457B /* MAINVC */ = {
 			isa = PBXGroup;
 			children = (
+				EEB359421F5256E9005C5064 /* LeftSlideViewController */,
+				EE6E88BB1F4EE6B70016104A /* XLSlideMenu */,
 				EE74AB691F4BFFF7004F03B8 /* AnimationContoller.h */,
 				EE74AB6A1F4BFFF7004F03B8 /* AnimationContoller.m */,
 				EE74AB6B1F4BFFF7004F03B8 /* KLTNavigationController.h */,
@@ -293,6 +359,34 @@
 				EEEB8CC11F43D8B4003AE170 /* MODE */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		EE38B4C71F4FFE1A00C33C1D /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EE6E88C21F4EE7AE0016104A /* MainViewController.h */,
+				EE6E88C31F4EE7AE0016104A /* MainViewController.m */,
+				EE38B4C81F4FFE5B00C33C1D /* CHLocaViewController.h */,
+				EE38B4C91F4FFE5B00C33C1D /* CHLocaViewController.m */,
+				EEB359531F525F8F005C5064 /* CHBaseViewController.h */,
+				EEB359541F525F8F005C5064 /* CHBaseViewController.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		EE38B4CB1F4FFEBF00C33C1D /* VIEW */ = {
+			isa = PBXGroup;
+			children = (
+				EE38B4CC1F4FFEE300C33C1D /* CHMKMapView.h */,
+				EE38B4CD1F4FFEE300C33C1D /* CHMKMapView.m */,
+				EE38B4CF1F50084F00C33C1D /* CHPhoneCellView.h */,
+				EE38B4D01F50084F00C33C1D /* CHPhoneCellView.m */,
+				EEB359651F529571005C5064 /* CHLocationInfoView.h */,
+				EEB359661F529571005C5064 /* CHLocationInfoView.m */,
+				EEB359681F529A75005C5064 /* CHDeiceCollectionViewCell.h */,
+				EEB359691F529A75005C5064 /* CHDeiceCollectionViewCell.m */,
+			);
+			path = VIEW;
 			sourceTree = "<group>";
 		};
 		EE41DB371F4D244C009B230A /* VC */ = {
@@ -336,6 +430,55 @@
 			path = DATECategory;
 			sourceTree = "<group>";
 		};
+		EE6E88B91F4EE6890016104A /* PLANVC */ = {
+			isa = PBXGroup;
+			children = (
+				EE6E88C51F4EE8FB0016104A /* LEFTVC */,
+				EE6E88BA1F4EE6A90016104A /* MINVC */,
+			);
+			path = PLANVC;
+			sourceTree = "<group>";
+		};
+		EE6E88BA1F4EE6A90016104A /* MINVC */ = {
+			isa = PBXGroup;
+			children = (
+				EEB3595E1F5272B3005C5064 /* MODE */,
+				EE38B4CB1F4FFEBF00C33C1D /* VIEW */,
+				EE38B4C71F4FFE1A00C33C1D /* VC */,
+			);
+			path = MINVC;
+			sourceTree = "<group>";
+		};
+		EE6E88BB1F4EE6B70016104A /* XLSlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				EE6E88BC1F4EE6B70016104A /* UIViewController+XLSlideMenu.h */,
+				EE6E88BD1F4EE6B70016104A /* UIViewController+XLSlideMenu.m */,
+				EE6E88BE1F4EE6B70016104A /* XLSlideMenu.h */,
+				EE6E88BF1F4EE6B70016104A /* XLSlideMenu.m */,
+			);
+			path = XLSlideMenu;
+			sourceTree = "<group>";
+		};
+		EE6E88C51F4EE8FB0016104A /* LEFTVC */ = {
+			isa = PBXGroup;
+			children = (
+				EE6E88C61F4EE9050016104A /* VC */,
+			);
+			path = LEFTVC;
+			sourceTree = "<group>";
+		};
+		EE6E88C61F4EE9050016104A /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EE6E88C71F4EE9120016104A /* CHLeftViewController.h */,
+				EE6E88C81F4EE9120016104A /* CHLeftViewController.m */,
+				EEB359501F525E12005C5064 /* UIView+Extensions.h */,
+				EEB359511F525E12005C5064 /* UIView+Extensions.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		EE74AB781F4C4F94004F03B8 /* CalculatedMode */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +486,36 @@
 				EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */,
 			);
 			path = CalculatedMode;
+			sourceTree = "<group>";
+		};
+		EEB359421F5256E9005C5064 /* LeftSlideViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EEB359431F5256E9005C5064 /* LeftSliderViewController.h */,
+				EEB359441F5256E9005C5064 /* LeftSliderViewController.m */,
+				EEB359451F5256E9005C5064 /* MyPanGestureRecognizer.h */,
+				EEB359461F5256E9005C5064 /* MyPanGestureRecognizer.m */,
+				EEB359471F5256E9005C5064 /* UIView_extra.h */,
+				EEB359481F5256E9005C5064 /* UIView_extra.m */,
+			);
+			path = LeftSlideViewController;
+			sourceTree = "<group>";
+		};
+		EEB3595E1F5272B3005C5064 /* MODE */ = {
+			isa = PBXGroup;
+			children = (
+				EEB359621F5276E5005C5064 /* SMALocatiuonManager.h */,
+				EEB359631F5276E5005C5064 /* SMALocatiuonManager.m */,
+				EEB3595F1F5272CF005C5064 /* CHLocationMar.h */,
+				EEB359601F5272CF005C5064 /* CHLocationMar.m */,
+				EEA2CDA11F553F01005A3A97 /* CHGeoCodingMode.h */,
+				EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */,
+				EEA2CDA41F558971005A3A97 /* CHPointAnnotation.h */,
+				EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */,
+				EEA2CDA71F558C37005A3A97 /* CHAnnotationView.h */,
+				EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */,
+			);
+			path = MODE;
 			sourceTree = "<group>";
 		};
 		EEB40A7E1F4AC2EC003C33EA /* Tool */ = {
@@ -439,6 +612,8 @@
 		F8F1A2E62B7D7CCAA0E2130C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EEB3595C1F526F64005C5064 /* CoreLocation.framework */,
+				EE38B4C51F4FFD7700C33C1D /* MapKit.framework */,
 				EE74AB671F4BCE7B004F03B8 /* AVFoundation.framework */,
 				EEB40A961F4AE129003C33EA /* libsqlite3.0.tbd */,
 				A052A8FD3EE4AD27BEEEEF5D /* Pods_Children.framework */,
@@ -572,33 +747,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */,
 				EE148CC11F3D96E50089C5D2 /* ViewController.m in Sources */,
 				EE2FCB131F3EEDFF00A6457B /* UIImage+IMAGE.m in Sources */,
 				EE74AB661F4BC8E7004F03B8 /* CHInputViewController.m in Sources */,
+				EEB359521F525E12005C5064 /* UIView+Extensions.m in Sources */,
 				EEB40A811F4AC30E003C33EA /* TypeConversionMode.m in Sources */,
+				EE38B4CE1F4FFEE300C33C1D /* CHMKMapView.m in Sources */,
 				EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */,
 				EEB40A901F4ADCA3003C33EA /* FMDatabasePool.m in Sources */,
+				EE6E88C11F4EE6B70016104A /* XLSlideMenu.m in Sources */,
 				EE74AB771F4C3C05004F03B8 /* CHDeviceInfoViewController.m in Sources */,
+				EEB359641F5276E5005C5064 /* SMALocatiuonManager.m in Sources */,
+				EEB3594B1F5256E9005C5064 /* UIView_extra.m in Sources */,
 				EE74AB7B1F4C4FAA004F03B8 /* CHCalculatedMode.m in Sources */,
 				EEB40A911F4ADCA3003C33EA /* FMDatabaseQueue.m in Sources */,
 				EEB40A701F4A6FD1003C33EA /* CHLoginViewController.m in Sources */,
 				EE41DB3B1F4D2498009B230A /* CHPhotoView.m in Sources */,
 				EEC294261F4290C30029CA23 /* CHTextField.m in Sources */,
+				EE6E88C41F4EE7AE0016104A /* MainViewController.m in Sources */,
+				EEB3596A1F529A75005C5064 /* CHDeiceCollectionViewCell.m in Sources */,
 				EE14FE2F1F42DD37008E8387 /* CHButton+HQX.m in Sources */,
+				EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */,
 				EE74AB6D1F4BFFF7004F03B8 /* AnimationContoller.m in Sources */,
 				EE38DBFC1F414CB8003C3B9A /* CHRegisViewController.m in Sources */,
 				EE148CBE1F3D96E50089C5D2 /* AppDelegate.m in Sources */,
 				EEB40A921F4ADCA3003C33EA /* FMResultSet.m in Sources */,
+				EEB3594A1F5256E9005C5064 /* MyPanGestureRecognizer.m in Sources */,
+				EEB359611F5272CF005C5064 /* CHLocationMar.m in Sources */,
+				EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */,
 				EE14FE2C1F42DD21008E8387 /* CHButton.m in Sources */,
 				EEEB8CCA1F43DEDF003AE170 /* CHAFNWorking.m in Sources */,
 				EEEB8CC41F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m in Sources */,
+				EE6E88C91F4EE9120016104A /* CHLeftViewController.m in Sources */,
 				EEB40A8E1F4ADCA3003C33EA /* FMDatabase.m in Sources */,
 				EEB40A9A1F4B00F1003C33EA /* CHBingViewController.m in Sources */,
+				EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */,
 				EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */,
 				EEC294221F428D3D0029CA23 /* CHLabel+HQX.m in Sources */,
 				EEC2941F1F428D1E0029CA23 /* CHLabel.m in Sources */,
+				EEB359671F529571005C5064 /* CHLocationInfoView.m in Sources */,
 				EE74AB741F4C2411004F03B8 /* CHPutInViewController.m in Sources */,
+				EE6E88C01F4EE6B70016104A /* UIViewController+XLSlideMenu.m in Sources */,
 				EEB40A951F4ADCC9003C33EA /* FMDBConversionMode.m in Sources */,
+				EE38B4D11F50084F00C33C1D /* CHPhoneCellView.m in Sources */,
+				EEB359551F525F8F005C5064 /* CHBaseViewController.m in Sources */,
 				EEBE19DF1F4592A1000C5B8D /* CHUserInfo.m in Sources */,
 				EEC2941B1F4282680029CA23 /* UIImageView+HQX.m in Sources */,
 				EE2FCAF71F3E9D5E00A6457B /* CHDefaultionfos.m in Sources */,
@@ -613,6 +806,7 @@
 				EE2FCAFA1F3E9F8200A6457B /* CHLocalizeableMode.m in Sources */,
 				EE148CBB1F3D96E50089C5D2 /* main.m in Sources */,
 				EEEB8CCE1F43F122003AE170 /* MBProgressHUD_Tips.m in Sources */,
+				EEB359491F5256E9005C5064 /* LeftSliderViewController.m in Sources */,
 				EE74AB711F4C003C004F03B8 /* CHKLTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

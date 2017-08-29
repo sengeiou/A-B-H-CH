@@ -44,6 +44,25 @@ static const void *itemBlockKey = &itemBlockKey;
     return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
++ (UIBarButtonItem *)CHItemWithBackIma:(UIImage *)backIma Radius:(CGFloat)radius touchCallBack:(touchItemBlock)touchItem{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:backIma forState:UIControlStateNormal];
+    [button.layer setMasksToBounds:YES];
+    [button.layer setCornerRadius:radius];
+    objc_setAssociatedObject(self, itemBlockKey, touchItem, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [button addTarget:self action:@selector(didTouchItem:) forControlEvents:UIControlEventTouchUpInside];
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
++ (UIBarButtonItem *)CHItemWithNorIma:(UIImage *)norIma highIma:(UIImage *)highIma touchCallBack:(touchItemBlock)touchItem{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage :norIma forState:UIControlStateNormal];
+    [button setImage: highIma forState:UIControlStateHighlighted];
+    objc_setAssociatedObject(self, itemBlockKey, touchItem, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [button addTarget:self action:@selector(didTouchItem:) forControlEvents:UIControlEventTouchUpInside];
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
 + (void)didTouchItem:(UIBarButtonItem *)item{
     touchItemBlock block = objc_getAssociatedObject(self, itemBlockKey);
     if (block) {

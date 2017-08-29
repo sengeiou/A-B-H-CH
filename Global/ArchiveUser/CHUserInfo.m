@@ -26,6 +26,8 @@
         _deviceWi = [aDecoder decodeObjectForKey:@"_deviceWi"];
         _deviceGe = [aDecoder decodeObjectForKey:@"_deviceGe"];
         _deviceIMEI = [aDecoder decodeObjectForKey:@"_deviceIMEI"];
+        _deviceTy = [aDecoder decodeObjectForKey:@"_deviceTy"];
+        _deviceMo = [aDecoder decodeObjectForKey:@"_deviceMo"];
         _relatoin = [aDecoder decodeObjectForKey:@"_relatoin"];
     }
     return self;
@@ -36,7 +38,7 @@
     [aCoder encodeObject:_userPs forKey:@"_userPs"];
     [aCoder encodeObject:_userNa forKey:@"_userNa"];
     [aCoder encodeObject:_userIm forKey:@"_userIm"];
-    [aCoder encodeObject:_userIm forKey:@"_userTo"];
+    [aCoder encodeObject:_userTo forKey:@"_userTo"];
     [aCoder encodeObject:_deviceId forKey:@"_deviceId"];
     [aCoder encodeObject:_devicePh forKey:@"_devicePh"];
     [aCoder encodeObject:_deviceNa forKey:@"_deviceNa"];
@@ -46,6 +48,8 @@
     [aCoder encodeObject:_deviceWi forKey:@"_deviceWi"];
     [aCoder encodeObject:_deviceGe forKey:@"_deviceGe"];
     [aCoder encodeObject:_deviceIMEI forKey:@"_deviceIMEI"];
+    [aCoder encodeObject:_deviceTy forKey:@"_deviceTy"];
+    [aCoder encodeObject:_deviceMo forKey:@"_deviceMo"];
     [aCoder encodeObject:_relatoin forKey:@"_relatoin"];
 }
 @end

@@ -28,4 +28,13 @@
     NSDateComponents *dayComponents = [calendar components:(NSCalendarUnitYear) fromDate:self];
     return [dayComponents year];
 }
+
++ (NSDate *)dateWithYear:(NSInteger)year month:(NSUInteger)month day:(NSUInteger)day {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setYear:year];
+    [components setMonth:month];
+    [components setDay:day];
+    return [calendar dateFromComponents:components];
+}
 @end

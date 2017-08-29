@@ -11,16 +11,18 @@
 @interface CHDeviceInfoViewController ()
 {
     NSArray *titArr;
-    CHUserInfo *user;
     CHButton *gailBut;
     CHButton *mainBut;
     UIImagePickerController *picker;
     CHButton *headBut;
+    NSDateFormatter *formatter;
 }
+@property (nonatomic, strong) NSMutableArray *heightArrs;
+@property (nonatomic, strong) NSMutableArray *widthArrs;
 @end
 
 @implementation CHDeviceInfoViewController
-
+@synthesize user;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -33,20 +35,31 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)initializeMethod{
-     titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"生日", nil),CHLocalizedString(@"身高", nil),CHLocalizedString(@"体重", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"IMEI", nil)];
-    user = [CHAccountTool user];
+    titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"生日", nil),CHLocalizedString(@"身高", nil),CHLocalizedString(@"体重", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"IMEI", nil)];
+    formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *norDate = [NSDate dateWithYear:[[NSDate date] getYear] - 6 month:6 day:1];
     if (!user.deviceHe) {
         user.deviceHe = @"115";
     }
-    if (!user.deviceBi) {
-        user.deviceHe = @"115";
+    if (!user.deviceNa) {
+        user.deviceNa = CHLocalizedString(@"宝贝",nil);
     }
     if (!user.deviceWi) {
         user.deviceWi = @"20";
     }
     if (!user.deviceGe) {
-        user.deviceGe = @"0";
+        user.deviceGe = @"1";
+    }
+    
+    if (!user.deviceBi) {
+        user.deviceBi = [formatter stringFromDate:norDate];
     }
 }
 
@@ -58,10 +71,16 @@
     [self.view addSubview:headView];
     __block UIImagePickerControllerSourceType sourceType ;
     
-//    @WeakObject(picker)
-    headBut = [CHButton createWithImage:[UIImage mergeMainIma:[UIImage imageNamed:@"pho_touxiang"] subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] Radius:(CHMainScreen.size.width * WIDTHAdaptive)/7 touchBlock:^(CHButton *sender) {
-//        @StrongObject(picker)
-//        UIImagePickerController *_pick = (UIImagePickerController *)strongOjb;
+    UIImage *headIma = [UIImage imageNamed:@"pho_touxiang"];
+    if (user.deviceIm && ![[user deviceIm] isEqualToString:@""]) {
+        NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        headIma = [UIImage imageWithData:imaData];
+        if (!headIma) {
+            headIma = [UIImage imageNamed:@"pho_touxiang"];
+        }
+    }
+    
+    headBut = [CHButton createWithImage:[UIImage mergeMainIma:headIma subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] Radius:(CHMainScreen.size.width * WIDTHAdaptive)/7 touchBlock:^(CHButton *sender) {
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         CHPhotoView *photoView = [CHPhotoView initWithNomarSheet];
         [photoView createPhotoUIWithTouchPhoto:^(CHButton *sender) {
@@ -83,8 +102,8 @@
             }
         } touchAlum:^(CHButton *sender) {
             NSLog(@"点击相册");
-//            @StrongObject(picker)
-//            UIImagePickerController *_pick = (UIImagePickerController *)strongOjb;
+            //    @StrongObject(picker)
+            //    UIImagePickerController *_pick = (UIImagePickerController *)strongOjb;
             sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary]) {
                 if (!picker) {
@@ -107,7 +126,7 @@
     
     mainBut = [CHButton createWithTit:CHLocalizedString(@"男", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
         sender.selected = YES;
-        user.deviceGe = @"0";
+        user.deviceGe = @"1";
         gailBut.selected = NO;
     }];
     [mainBut setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(0x0288d1, 1.0) size:CHMainScreen.size] forState:UIControlStateSelected];
@@ -119,13 +138,13 @@
     gailBut = [CHButton createWithTit:CHLocalizedString(@"女", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
         sender.selected = YES;
         mainBut.selected = NO;
-        user.deviceGe = @"1";
+        user.deviceGe = @"2";
     }];
     [gailBut setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(0xff23cf, 1.0) size:CHMainScreen.size] forState:UIControlStateSelected];
     [gailBut setImage:[UIImage imageNamed:@"icon_nv"] forState:UIControlStateNormal];
     [gailBut setTitleColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) forState:UIControlStateNormal];
     [gailBut setTitleColor:CHUIColorFromRGB(0xffffff, 1.0) forState:UIControlStateSelected];
-    if (user.deviceGe.intValue) {
+    if (user.deviceGe.intValue == 2) {
         gailBut.selected = YES;
         mainBut.selected = NO;
     }
@@ -136,7 +155,51 @@
     [headView addSubview:gailBut];
     
     CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"确定", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
+        if (!user.devicePh) {
+            [MBProgressHUD showError:CHLocalizedString(@"请输入手机号码", nil)];
+            return ;
+        }
         
+        NSMutableDictionary *saveDic = [CHAFNWorking shareAFNworking].requestDic;
+        [saveDic addEntriesFromDictionary:@{@"Item":@{@"Birthday": [TypeConversionMode strongChangeString:user.deviceBi],
+                                                  @"DeviceID": [TypeConversionMode strongChangeString:user.deviceId],
+                                                  @"Gender": [TypeConversionMode strongChangeString:user.deviceGe],
+                                                  @"Grade": @"",
+                                                  @"Height": [TypeConversionMode strongChangeString:user.deviceHe],
+                                                  @"Nickname": [TypeConversionMode strongChangeString:user.deviceNa],
+                                                  @"UpdateTime": @"",
+                                                  @"Weight": [TypeConversionMode strongChangeString:user.deviceWi],
+                                                  @"Avatar": [TypeConversionMode strongChangeString:user.deviceIm],
+                                                  @"UserId": [TypeConversionMode strongChangeString:user.userId],
+                                                  @"Sim": [TypeConversionMode strongChangeString:user.devicePh],
+                                                  @"Age": @"",
+                                                  @"BloodType": @"",
+                                                  @"CellPhone": @"",
+                                                  @"CellPhone2": @"",
+                                                  @"Address": @"",
+                                                  @"Breed": @"",
+                                                  @"IDnumber": @"",
+                                                  @"Remark": @"",
+                                                  @"MarkerColor": @""}}];
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SavePersonProfile parameters:saveDic Mess:CHLocalizedString(@"正在保存", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+            if ([[result objectForKey:@"State"] intValue] == 0) {
+                [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                [CHAccountTool saveUser:user];
+                [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:user];
+                [[FMDBConversionMode sharedCoreBlueTool] insertDevice:user];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+                    slideMenu.leftViewController = leftVC;
+                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                });
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+            
+        }];
     }];
     [self.view addSubview:confimBut];
     
@@ -197,6 +260,34 @@
     }];
 }
 
+- (NSMutableArray *)heightArrs{
+    if (!_heightArrs) {
+        _heightArrs = [NSMutableArray array];
+        NSMutableArray *unArr = [NSMutableArray array];
+        for (int i = 0; i < 231 ; i ++) {
+            [unArr addObject:[NSString stringWithFormat:@"%d",i + 30]];
+        }
+        for (int i = 0; i < 60; i ++) {
+            [_heightArrs addObjectsFromArray:unArr];
+        }
+    }
+    return _heightArrs;
+}
+
+- (NSMutableArray *)widthArrs{
+    if (!_widthArrs) {
+        _widthArrs = [NSMutableArray array];
+        NSMutableArray *unArr = [NSMutableArray array];
+        for (int i = 0; i < 161 ; i ++) {
+            [unArr addObject:[NSString stringWithFormat:@"%d",i + 10]];
+        }
+        for (int i = 0; i < 60; i ++) {
+            [_widthArrs addObjectsFromArray:unArr];
+        }
+    }
+    return _widthArrs;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIndex = @"INFOCELL";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndex];
@@ -211,8 +302,8 @@
         cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
     }
     cell.textLabel.text = [titArr objectAtIndex:indexPath.row];
-    if (indexPath.row == 0) cell.detailTextLabel.text = user.deviceNa ? user.deviceNa:CHLocalizedString(@"宝贝", nil);
-    if (indexPath.row == 1) cell.detailTextLabel.text = user.deviceBi ? user.deviceBi:CHLocalizedString(@"", nil);
+    if (indexPath.row == 0) cell.detailTextLabel.text = user.deviceNa;
+    if (indexPath.row == 1) cell.detailTextLabel.text = user.deviceBi;
     if (indexPath.row == 2) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"厘米", nil)];
     if (indexPath.row == 3) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"公斤", nil)];
     if (indexPath.row == 4) cell.detailTextLabel.text = user.devicePh ? user.devicePh:CHLocalizedString(@"", nil);
@@ -225,7 +316,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.row == 0) {
         UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -234,7 +327,7 @@
         UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UITextField *nickField = (UITextField *)aler.textFields[0];
             user.deviceNa = nickField.text;
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            
             cell.detailTextLabel.text = nickField.text;
         }];
         UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -246,13 +339,51 @@
             
         }];
     }
-    if (indexPath.row) {
-        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (indexPath.row == 1) {
         CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-        [PickView createBirthdayUIDidSelectConfirm:^(CHButton *sender) {
-            
+        NSDate *date = [formatter dateFromString:user.deviceBi];
+        [PickView createBirthdayUIWithOriginDate:date DidSelectConfirm:^(CHButton *sender, NSString *date) {
+            user.deviceBi = date;
+            cell.detailTextLabel.text = date;
         }];
         [app.window addSubview:PickView];
+    }
+    else if (indexPath.row == 2){
+        CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
+        [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"厘米", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
+            user.deviceHe = date;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"厘米", nil)];
+        }];
+        [app.window addSubview:PickView];
+    }
+    else if (indexPath.row == 3){
+        CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
+        [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"公斤", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
+            user.deviceWi = date;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"公斤", nil)];
+        }];
+        [app.window addSubview:PickView];
+    }
+    else if(indexPath.row == 4){
+        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"手机号码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UITextField *nickField = (UITextField *)aler.textFields[0];
+            user.devicePh = nickField.text;
+            
+            cell.detailTextLabel.text = nickField.text;
+        }];
+        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [aler addAction:cancelAct];
+        [aler addAction:conFimAct];
+        [self presentViewController:aler animated:YES completion:^{
+            
+        }];
+
     }
 }
 
@@ -266,7 +397,7 @@
         NSLog(@"rgerh==%lu",UIImageJPEGRepresentation(image, 1).length);
         BOOL result = [UIImageJPEGRepresentation(image, 1) writeToFile: filePath  atomically:YES];
         if(result) {
-        NSLog(@"上传成功");
+            NSLog(@"上传成功");
         }else{
         }
     }
@@ -280,13 +411,13 @@
     NSLog(@"dealloc");
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

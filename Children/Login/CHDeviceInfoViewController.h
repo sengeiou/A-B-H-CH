@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CHPhotoView.h"
+@class CHUserInfo;
 
 @interface CHDeviceInfoViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@property (nonatomic, strong) CHUserInfo *user;
 @end

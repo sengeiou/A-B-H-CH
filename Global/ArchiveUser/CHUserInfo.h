@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CHGeoCodingMode.h"
 
 @interface CHUserInfo : NSObject<NSCoding>
 @property (nonatomic, copy) NSString *userId;
@@ -24,5 +25,11 @@
 @property (nonatomic, copy) NSString *deviceWi;
 @property (nonatomic, copy) NSString *deviceGe;
 @property (nonatomic, copy) NSString *deviceIMEI;
+@property (nonatomic, copy) NSString *deviceTy;
+@property (nonatomic, copy) NSString *deviceMo;
 @property (nonatomic, copy) NSString *relatoin;
+
+@property (nonatomic, assign) CLLocationCoordinate2D deviceCoor;
+@property (nonatomic, strong) CHGeoCodingMode *GeoCoding;
+
 @end

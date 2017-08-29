@@ -16,7 +16,11 @@
 
  @param userInfo 登录的账号信息
  */
+- (void)deleteAllDevice:(CHUserInfo *)userInfo;
+
 - (void)deleteDevice:(CHUserInfo *)userInfo;
 
 - (void)insertDevice:(CHUserInfo *)deviceInfo;
+
+- (NSMutableArray <CHUserInfo *>*)searchDevice:(CHUserInfo *)user;
 @end

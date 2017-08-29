@@ -37,6 +37,8 @@
 #import "FMDBConversionMode.h"
 #import "CHCalculatedMode.h"
 #import "NSDate+CH.h"
+#import "MJExtension.h"
+#import "UIImage+MultiFormat.h"
 
 #define WeakObj(o) autoreleasepool{} __weak typeof(o) o##Weak = o;
 #define StrongObj(o) autoreleasepool{} __strong typeof(o) o = o##Weak;
@@ -48,6 +50,19 @@
 #define WIDTHAdaptive [UIScreen mainScreen].bounds.size.width/375
 #define CHMediumSkyBlueColor 0x28ccfa
 #define CHMediumBlackColor 0x212121
+#define IOS_VERSION_10 (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_9_x_Max)?(YES):(NO) 
+#define WORK_MODE = @"0120"        //工作模式
+#define DORMANT_TIME_BUCKET @"1020"  //晚间时间段
+#define CHANGE_DEVICE @"2806"  //更换小普夹子
+#define SOUND_SIZE @"2808"  //音量大小
+#define LOCATION_REAL_TIME @"0039"  //即时定位
+#define UPDATA_INTERVAL @"0003"  //上传间隔
+#define SHIELD_OTHER_PHONE @"2807"  //屏蔽陌生号码开关
+#define SET_WATCH_PHONE @"2807"  //设置手表号码
+#define SHIELD_DEVICE @"2814"  //小普夹子开关
+#define QUERY_TELEHONE_CHARGE @"2804"  //查询话费 cmdValue:app用户手机号码,目标号码,短信内容
+#define GREET_CMD @"2810"  //问候指令 cmdvalue:app用户的手机号码,问候内容
+
 
 #if DEBUG
 #define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);

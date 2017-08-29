@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^pickViewBlock)(CHButton* sender,NSString *date);
 
 @interface CHPhotoView : UIView<UIPickerViewDelegate, UIPickerViewDataSource>
+@property (nonatomic, copy) NSString *yearString;
+@property (nonatomic, copy) NSString *monthString;
+@property (nonatomic, copy) NSString *dayString;
+
 + (CHPhotoView *)initWithNomarSheet;
 - (void)createPhotoUIWithTouchPhoto:(ButTouchedBlock)photo touchAlum:(ButTouchedBlock)alum;
-- (void)createBirthdayUIDidSelectConfirm:(ButTouchedBlock)confirm;
+- (void)createBirthdayUIWithOriginDate:(NSDate *)date DidSelectConfirm:(pickViewBlock)confirm;
+- (void)createPickDatas:(NSArray *)datas OriginIndex:(NSString *)origin DidSelectConfirm:(pickViewBlock)confirm;
 @end

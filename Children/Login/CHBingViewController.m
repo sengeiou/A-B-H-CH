@@ -201,21 +201,64 @@
         [activityIndicatorView startAnimating];
         NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
         [dic addEntriesFromDictionary:@{@"SerialNumber":resultObj.stringValue,@"UserId": user.userId}];
+        user.deviceIMEI = resultObj.stringValue;
+        [CHAFNWorking shareAFNworking].moreRequest = YES;
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CheckDevice parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             user.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
             if ([[result objectForKey:@"State"] intValue] == 0) {
-                CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
-                [self.navigationController pushViewController:deviceVC animated:YES];
+                
+                NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+                [dic addEntriesFromDictionary:@{@"DeviceId":user.deviceId,@"UserId": user.userId,@"RelationPhone":user.userPh,@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
+                [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                    
+                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                    if ([result[@"State"] intValue] == 0) {
+                        
+                        NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+                        [dic addEntriesFromDictionary:@{@"UserId": user.userId,
+                                                        @"DeviceId": user.deviceId,
+                                                        @"TimeOffset": [NSNumber numberWithInteger:[[NSTimeZone systemTimeZone] secondsFromGMT]/3600],
+                                                        @"MapType": @""}];
+                        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_PersonTracking parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                            
+                        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                            NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:0];
+                            user.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
+                            
+                            [CHAFNWorking shareAFNworking].moreRequest = NO;
+                            [activityIndicatorView stopAnimating];
+                            
+                            CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+                            deviceVC.user = user;
+                            [self.navigationController pushViewController:deviceVC animated:YES];
+
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                            [activityIndicatorView stopAnimating];
+                        }];
+                    }
+                    if([result[@"State"] intValue] == 1500 || [result[@"State"] intValue] == 1501){
+                        
+                    }
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                    [activityIndicatorView stopAnimating];
+                }];
+               
             }else if ([[result objectForKey:@"State"] intValue] == 1107) {
+                [activityIndicatorView stopAnimating];
                 CHPutInViewController *putInVC = [[CHPutInViewController alloc] init];
                 putInVC.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
                 [self.navigationController pushViewController:putInVC animated:YES];
             }else{
-                [self.navigationController popViewControllerAnimated:YES];
+                [MBProgressHUD showError:[result objectForKey:@"Message"]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     [self.navigationController popViewControllerAnimated:YES];
+                    [activityIndicatorView stopAnimating];
+                });
             }
-            [activityIndicatorView stopAnimating];
+            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
            [activityIndicatorView stopAnimating];
         }];

@@ -12,17 +12,17 @@
 {
     UIView *backView;
     UIPickerView *datePick;
+    UIPickerView *heWiPick;
 }
 @property (nonatomic, strong) NSMutableArray *yearArray;
 @property (nonatomic, strong) NSMutableArray *monthArray;
 @property (nonatomic, strong) NSMutableArray *dayArray;
 
-@property (nonatomic, copy) NSString *yearString;
-@property (nonatomic, copy) NSString *monthString;
-@property (nonatomic, copy) NSString *dayString;
-
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDate *originSelectedDate; //设置初始选择日期
+
+@property (nonatomic, strong) NSArray *dataArr;
+@property (nonatomic, strong) NSString *selectData;
 @end
 
 @implementation CHPhotoView
@@ -72,22 +72,24 @@
         make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
     }];
     
+    CGFloat top = (self.frame.size.height/2.5 * WIDTHAdaptive - 44 * WIDTHAdaptive *3)/3;
+    
     [photoBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(20 * WIDTHAdaptive);
+        make.top.mas_equalTo(top);
         make.centerX.mas_equalTo(backView);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.width.mas_equalTo(240 * WIDTHAdaptive);
     }];
     
     [albumBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(photoBut.mas_bottom).mas_offset(12);
+        make.top.mas_equalTo(photoBut.mas_bottom).mas_offset(top/2);
         make.centerX.mas_equalTo(backView);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.width.mas_equalTo(240 * WIDTHAdaptive);
     }];
     
     [cancelBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-16);
+        make.top.mas_equalTo(albumBut.mas_bottom).mas_offset(top);
         make.centerX.mas_equalTo(backView);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.width.mas_equalTo(240 * WIDTHAdaptive);
@@ -98,7 +100,7 @@
     }];
 }
 
-- (void)createBirthdayUIDidSelectConfirm:(ButTouchedBlock)confirm{
+- (void)createBirthdayUIWithOriginDate:(NSDate *)date DidSelectConfirm:(pickViewBlock)confirm{
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateFormat = @"yyyyMM";
     self.backgroundColor = CHUIColorFromRGB(0x000000, 0.5);
@@ -116,20 +118,19 @@
     [backView.layer addSublayer:shapeLayer];
     
     CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"取消", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-        
+        [self tapAction];
     }];
     [backView addSubview:canBut];
     
     CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-        
+        confirm(sender,[NSString stringWithFormat:@"%@-%@-%@",self.yearString, self.monthString,self.dayString]);
+        [self tapAction];
     }];
     [backView addSubview:confirmBut];
     
     datePick = [UIPickerView new];
     datePick.delegate = self;
     datePick.dataSource = self;
-    //    [datePick add]
-    
     
     [backView addSubview:datePick];
     
@@ -149,44 +150,105 @@
     }];
     
     [confirmBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-16);
+        make.bottom.mas_equalTo(-12);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.right.mas_equalTo(-20);
         make.width.mas_equalTo(butWidth);
     }];
     
     [datePick mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(8);
+        make.top.mas_equalTo(6);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(confirmBut.mas_top).mas_offset(-8);
+        make.bottom.mas_equalTo(confirmBut.mas_top).mas_offset(-6);
     }];
     
-    [self commonData];
+    [self commonDate:date];
     [UIView animateWithDuration:0.5 animations:^{
         backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive);
     }];
 }
 
-- (void)layoutMarginsDidChange{
-    NSLog(@"layoutMarginsDidChange");
-}
-
-- (void)layoutSubviews{
-    NSLog(@"layoutSubviews");
-}
-
-- (void)commonData {
+- (void)createPickDatas:(NSArray *)datas OriginIndex:(NSString *)origin DidSelectConfirm:(pickViewBlock)confirm{
+    self.backgroundColor = CHUIColorFromRGB(0x000000, 0.5);
+    self.dataArr = datas;
+    backView = [UIView new];
+    [self addSubview:backView];
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [self addGestureRecognizer:tapGR];
     
+    CGSize radi = CGSizeMake(8.0, 8.0);
+    UIRectCorner cornes = UIRectCornerTopLeft | UIRectCornerTopRight;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CHMainScreen.size.width, self.frame.size.height/2.5 * WIDTHAdaptive) byRoundingCorners:cornes cornerRadii:radi];
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.fillColor = CHUIColorFromRGB(0xffffff, 1.0).CGColor;
+    shapeLayer.path = path.CGPath;
+    [backView.layer addSublayer:shapeLayer];
+    
+    CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"取消", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        [self tapAction];
+    }];
+    [backView addSubview:canBut];
+    
+    CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        confirm(sender,self.selectData);
+        [self tapAction];
+    }];
+    [backView addSubview:confirmBut];
+    
+    heWiPick = [UIPickerView new];
+    heWiPick.delegate = self;
+    heWiPick.dataSource = self;
+    
+    [backView addSubview:heWiPick];
+    
+    [backView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+    }];
+    
+    CGFloat butWidth = (CHMainScreen.size.width - 64)/2;
+    [canBut mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-16);
+        make.height.mas_equalTo(44 * WIDTHAdaptive);
+        make.left.mas_equalTo(20);
+        make.width.mas_equalTo(butWidth);
+    }];
+    
+    [confirmBut mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-12);
+        make.height.mas_equalTo(44 * WIDTHAdaptive);
+        make.right.mas_equalTo(-20);
+        make.width.mas_equalTo(butWidth);
+    }];
+    
+    [heWiPick mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(6);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(confirmBut.mas_top).mas_offset(-6);
+    }];
+    
+    self.selectData = origin;
+    NSInteger offset = [[self.dataArr firstObject] count]/60;
+    NSInteger current = [[self.dataArr firstObject] indexOfObject:origin] + offset * 30;
+    [heWiPick selectRow:current inComponent:0 animated:YES];
+    [UIView animateWithDuration:0.5 animations:^{
+        backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive);
+    }];
+}
+
+- (void)commonDate:(NSDate *)date{
     // 获取当前月份有多少日
     NSDate *currentSelectedDate;
-    if (self.originSelectedDate) {
-        currentSelectedDate = self.originSelectedDate;
+    if (date) {
+        currentSelectedDate = date;
     } else {
         currentSelectedDate = [NSDate date];
     }
-    
-    NSInteger allDays = [self totaldaysInMonth:currentSelectedDate];
+    self.originSelectedDate = currentSelectedDate;
     for (int i = 1; i <= [[NSDate date] getDay]; i++) {
         NSString *strDay = [NSString stringWithFormat:@"%02i", i];
         [self.dayArray addObject:strDay];
@@ -366,30 +428,34 @@
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    
-    return 3;
+    if (pickerView == datePick) {
+        return 3;
+    }
+//    return self.dataArr.count;
+    return 2;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    
-    if (component == 0) {
-        return self.yearArray.count;
-    } else if (component == 1) {
-        return self.monthArray.count;
-    } else {
-        return self.dayArray.count;
+    if (pickerView == datePick) {
+        if (component == 0) {
+            return self.yearArray.count;
+        } else if (component == 1) {
+            return self.monthArray.count;
+        } else {
+            return self.dayArray.count;
+        }
     }
+    else{
+        return [self.dataArr[component] count];
+    }
+    return 0;
 }
-//
-//- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-//    return nil;
-//}
 
-- (UILabel *)getPickViewCellWithString:(NSString *)string {
+- (UILabel *)getPickViewCellWithString:(NSString *)string textColor:(UIColor *)color{
     
     UILabel *cell = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width / 3, 50.f)];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+    cell.textColor = color;
     cell.textAlignment = NSTextAlignmentCenter;
     cell.font = CHFontNormal(nil, 18);
     cell.text = string;
@@ -406,39 +472,62 @@
             singleLine.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
         }
     }
-    if (component == 0) {
-        return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.yearArray]];
-    } else if (component == 1) {
-        return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.monthArray]];
-    } else {
-        return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.dayArray]];
+    UIColor *color = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+    if (pickerView == datePick) {
+        if (component == 0) {
+            if ([self.yearString integerValue] == [[self safeObjectAtIndex:row array:self.yearArray] integerValue]) {
+                color = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+            }
+            return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.yearArray] textColor:color];
+        } else if (component == 1) {
+            if ([self.monthString integerValue] == [[self safeObjectAtIndex:row array:self.monthArray] integerValue]) {
+                color = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+            }
+            return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.monthArray] textColor:color];
+        } else {
+            if ([self.dayString integerValue] == [[self safeObjectAtIndex:row array:self.dayArray] integerValue]) {
+                color = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+            }
+            return [self getPickViewCellWithString:[self safeObjectAtIndex:row array:self.dayArray] textColor:color];
+        }
     }
+    else{
+        if (component == 1) {
+             color = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+        }
+       else if (self.selectData.intValue == [[self safeObjectAtIndex:row array:[self.dataArr firstObject]] integerValue]) {
+            color = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+        }
+        return [self getPickViewCellWithString:self.dataArr[component][row] textColor:color];
+    }
+    return nil;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     UILabel *lab = (UILabel *)[pickerView viewForRow:row forComponent:component];
     lab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
-    if (component == 0) {
-        self.yearString = [self safeObjectAtIndex:row array:self.yearArray];
-    } else if (component == 1) {
-        self.monthString = [self safeObjectAtIndex:row array:self.monthArray];
-    } else {
-        self.dayString = [self safeObjectAtIndex:row array:self.dayArray];
-    }
-    
-//    if (component != 2) {
+    if (pickerView == datePick) {
+        if (component == 0) {
+            self.yearString = [self safeObjectAtIndex:row array:self.yearArray];
+        } else if (component == 1) {
+            self.monthString = [self safeObjectAtIndex:row array:self.monthArray];
+        } else {
+            self.dayString = [self safeObjectAtIndex:row array:self.dayArray];
+        }
+        
+        //    if (component != 2) {
         NSString *strDate = [NSString stringWithFormat:@"%@%@", self.yearString, self.monthString];
         [self updateCurrentAllDaysWithDate:[self.dateFormatter dateFromString:strDate] inComponent:component];
-//    }
-    NSString *dateString = [NSString stringWithFormat:@"%@年%@月%@日",self.yearString, self.monthString, self.dayString];
-    NSLog(@"dateString  %@",dateString);
+        //    }
+        NSString *dateString = [NSString stringWithFormat:@"%@年%@月%@日",self.yearString, self.monthString, self.dayString];
+        
+        NSLog(@"dateString  %@",dateString);
+    }
+    else{
+        self.selectData = [self safeObjectAtIndex:row array:[self.dataArr firstObject]];
+         NSLog(@"selectData  %@",self.selectData);
+    }
 }
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
+
 
 @end

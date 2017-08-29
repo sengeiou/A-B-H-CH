@@ -50,26 +50,66 @@ static id _instace;
     if (!_queue) {
         [queue inDatabase:^(FMDatabase *db) {
             BOOL result;
-            result = [db executeUpdate:@"create table if not exists tb_deviceList (userId varchar(50),deviceId varchar(50),devicePh archar(50),deviceNa varchar(50),deviceIm varchar(50),deviceBi varchar(50),deviceHe varchar(50),deviceWi varchar(50),deviceGe varchar(50),deviceIMEI varchar(50),relatoin varchar(50))"];
+            result = [db executeUpdate:@"create table if not exists tb_deviceList (userId varchar(50),deviceId varchar(50),devicePh archar(50),deviceNa varchar(50),deviceIm varchar(50),deviceBi varchar(50),deviceHe varchar(50),deviceWi varchar(50),deviceGe varchar(50),deviceIMEI varchar(50),relatoin varchar(50),deviceTy varchar(50),deviceMo varchar(50))"];
             NSLog(@"创表 %d",result);
         }];
     }
     return queue;
 }
 
+- (void)deleteAllDevice:(CHUserInfo *)userInfo{
+    [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        BOOL result;
+        result = [db executeUpdate:@"delete from tb_deviceList where userId=?",userInfo.userId];
+        NSLog(@"删除该账号下所有设备数据 %d",result);
+    }];
+}
+
 - (void)deleteDevice:(CHUserInfo *)userInfo{
     [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL result;
-        result = [db executeUpdate:@"delete from tb_deviceList where deviceId=?",userInfo.userId];
+        result = [db executeUpdate:@"delete from tb_deviceList where userId=? and deviceId=?",userInfo.userId,userInfo.deviceId];
         NSLog(@"删除该账号下所有设备数据 %d",result);
     }];
+
 }
 
 - (void)insertDevice:(CHUserInfo *)deviceInfo{
     [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL result;
-        result = [db executeUpdate:@"insert into tb_deviceList (userId,deviceId,devicePh,deviceNa,deviceIm,deviceBi,deviceHe,deviceWi,deviceGe,deviceIMEI,relatoin) values(?,?,?,?,?,?,?,?,?,?)",[TypeConversionMode strongChangeString:deviceInfo.userId],[TypeConversionMode strongChangeString:deviceInfo.deviceId],[TypeConversionMode strongChangeString:deviceInfo.devicePh],[TypeConversionMode strongChangeString:deviceInfo.deviceNa],[TypeConversionMode strongChangeString:deviceInfo.deviceIm],[TypeConversionMode strongChangeString:deviceInfo.deviceBi],[TypeConversionMode strongChangeString:deviceInfo.deviceHe],[TypeConversionMode strongChangeString:deviceInfo.deviceWi],[TypeConversionMode strongChangeString:deviceInfo.deviceGe],[TypeConversionMode strongChangeString:deviceInfo.deviceIMEI],[TypeConversionMode strongChangeString:deviceInfo.relatoin]];
+        result = [db executeUpdate:@"insert into tb_deviceList (userId,deviceId,devicePh,deviceNa,deviceIm,deviceBi,deviceHe,deviceWi,deviceGe,deviceIMEI,relatoin,deviceTy,deviceMo) values(?,?,?,?,?,?,?,?,?,?,?,?,?)",[TypeConversionMode strongChangeString:deviceInfo.userId],[TypeConversionMode strongChangeString:deviceInfo.deviceId],[TypeConversionMode strongChangeString:deviceInfo.devicePh],[TypeConversionMode strongChangeString:deviceInfo.deviceNa],[TypeConversionMode strongChangeString:deviceInfo.deviceIm],[TypeConversionMode strongChangeString:deviceInfo.deviceBi],[TypeConversionMode strongChangeString:deviceInfo.deviceHe],[TypeConversionMode strongChangeString:deviceInfo.deviceWi],[TypeConversionMode strongChangeString:deviceInfo.deviceGe],[TypeConversionMode strongChangeString:deviceInfo.deviceIMEI],[TypeConversionMode strongChangeString:deviceInfo.relatoin],[TypeConversionMode strongChangeString:deviceInfo.deviceTy],[TypeConversionMode strongChangeString:deviceInfo.deviceMo]];
         NSLog(@"插入设备数据 %d",result);
     }];
+}
+
+- (NSMutableArray <CHUserInfo *>*)searchDevice:(CHUserInfo *)user{
+    NSMutableArray *diveceList = [NSMutableArray array];
+    [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *sql = [NSString stringWithFormat:@"select *from tb_deviceList where userId = \'%@\'",user.userId];
+        FMResultSet *rs = [db executeQuery:sql];
+        while (rs.next) {
+            CHUserInfo *device = [[CHUserInfo alloc] init];
+            device.userId = [rs stringForColumn:@"userId"];
+            device.userPh = user.userPh;
+            device.userPs = user.userPs;
+            device.userNa = user.userNa;
+            device.userIm = user.userIm;
+            device.userTo = user.userTo;
+            device.deviceId = [rs stringForColumn:@"deviceId"];
+            device.devicePh = [rs stringForColumn:@"devicePh"];
+            device.deviceNa = [rs stringForColumn:@"deviceNa"];
+            device.deviceIm = [rs stringForColumn:@"deviceIm"];
+            device.deviceBi = [rs stringForColumn:@"deviceBi"];
+            device.deviceHe = [rs stringForColumn:@"deviceHe"];
+            device.deviceWi = [rs stringForColumn:@"deviceWi"];
+            device.deviceGe = [rs stringForColumn:@"deviceGe"];
+            device.deviceIMEI = [rs stringForColumn:@"deviceIMEI"];
+            device.deviceTy = [rs stringForColumn:@"deviceTy"];
+            device.relatoin = [rs stringForColumn:@"relatoin"];
+            device.deviceMo = [rs stringForColumn:@"deviceMo"];
+            [diveceList addObject:device];
+        }
+    }];
+    return diveceList;
 }
 @end
