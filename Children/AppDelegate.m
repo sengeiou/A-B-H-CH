@@ -22,7 +22,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    
     if (![CHDefaultionfos CHgetValueforKey:CHFIRSTLUN]) {
         self.window.rootViewController = [[ViewController alloc] init];
     }

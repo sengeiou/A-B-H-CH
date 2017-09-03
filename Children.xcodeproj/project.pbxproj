@@ -15,6 +15,8 @@
 		EE148CC91F3D96E50089C5D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE148CC71F3D96E50089C5D2 /* LaunchScreen.storyboard */; };
 		EE14FE2C1F42DD21008E8387 /* CHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE14FE2B1F42DD21008E8387 /* CHButton.m */; };
 		EE14FE2F1F42DD37008E8387 /* CHButton+HQX.m in Sources */ = {isa = PBXBuildFile; fileRef = EE14FE2E1F42DD37008E8387 /* CHButton+HQX.m */; };
+		EE21888A1F5A3E0F004ACED1 /* CHDevicePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2188891F5A3E0E004ACED1 /* CHDevicePickView.m */; };
+		EE2188901F5A56FE004ACED1 /* MNWheelView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE21888F1F5A56FE004ACED1 /* MNWheelView.m */; };
 		EE2FCAF71F3E9D5E00A6457B /* CHDefaultionfos.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCAF61F3E9D5E00A6457B /* CHDefaultionfos.m */; };
 		EE2FCAFA1F3E9F8200A6457B /* CHLocalizeableMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCAF91F3E9F8200A6457B /* CHLocalizeableMode.m */; };
 		EE2FCAFD1F3EA5BA00A6457B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE2FCAFF1F3EA5BA00A6457B /* Localizable.strings */; };
@@ -46,6 +48,9 @@
 		EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */; };
 		EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */; };
 		EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */; };
+		EEB2C1C11F57E4C700787EA0 /* InfiniteScrollPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2C1BE1F57E4C700787EA0 /* InfiniteScrollPicker.m */; };
+		EEB2C1C21F57E4C700787EA0 /* UIView+viewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2C1C01F57E4C700787EA0 /* UIView+viewController.m */; };
+		EEB2C21A1F5817A500787EA0 /* CHDeviceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2C2191F5817A500787EA0 /* CHDeviceImage.m */; };
 		EEB359491F5256E9005C5064 /* LeftSliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359441F5256E9005C5064 /* LeftSliderViewController.m */; };
 		EEB3594A1F5256E9005C5064 /* MyPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359461F5256E9005C5064 /* MyPanGestureRecognizer.m */; };
 		EEB3594B1F5256E9005C5064 /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB359481F5256E9005C5064 /* UIView_extra.m */; };
@@ -73,6 +78,9 @@
 		EEC294221F428D3D0029CA23 /* CHLabel+HQX.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294211F428D3D0029CA23 /* CHLabel+HQX.m */; };
 		EEC294261F4290C30029CA23 /* CHTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294251F4290C30029CA23 /* CHTextField.m */; };
 		EEC294291F4290E70029CA23 /* CHTextField+HQX.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294281F4290E70029CA23 /* CHTextField+HQX.m */; };
+		EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394B1F56967000DFF409 /* CHPointAnnotion.m */; };
+		EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */; };
+		EEEB242C1F59696C003D3495 /* CHDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEB242B1F59696C003D3495 /* CHDeviceView.m */; };
 		EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8CBF1F43D884003AE170 /* SectionsViewController.m */; };
 		EEEB8CC41F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8CC31F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m */; };
 		EEEB8CCA1F43DEDF003AE170 /* CHAFNWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8CC91F43DEDF003AE170 /* CHAFNWorking.m */; };
@@ -98,6 +106,10 @@
 		EE14FE2B1F42DD21008E8387 /* CHButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHButton.m; sourceTree = "<group>"; };
 		EE14FE2D1F42DD37008E8387 /* CHButton+HQX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CHButton+HQX.h"; sourceTree = "<group>"; };
 		EE14FE2E1F42DD37008E8387 /* CHButton+HQX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CHButton+HQX.m"; sourceTree = "<group>"; };
+		EE2188881F5A3E0E004ACED1 /* CHDevicePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDevicePickView.h; sourceTree = "<group>"; };
+		EE2188891F5A3E0E004ACED1 /* CHDevicePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDevicePickView.m; sourceTree = "<group>"; };
+		EE21888E1F5A56FE004ACED1 /* MNWheelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNWheelView.h; sourceTree = "<group>"; };
+		EE21888F1F5A56FE004ACED1 /* MNWheelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNWheelView.m; sourceTree = "<group>"; };
 		EE2FCAF51F3E9D5E00A6457B /* CHDefaultionfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDefaultionfos.h; sourceTree = "<group>"; };
 		EE2FCAF61F3E9D5E00A6457B /* CHDefaultionfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDefaultionfos.m; sourceTree = "<group>"; };
 		EE2FCAF81F3E9F8100A6457B /* CHLocalizeableMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocalizeableMode.h; sourceTree = "<group>"; };
@@ -157,14 +169,20 @@
 		EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPointAnnotation.m; sourceTree = "<group>"; };
 		EEA2CDA71F558C37005A3A97 /* CHAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHAnnotationView.h; sourceTree = "<group>"; };
 		EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHAnnotationView.m; sourceTree = "<group>"; };
+		EEB2C1BD1F57E4C700787EA0 /* InfiniteScrollPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfiniteScrollPicker.h; sourceTree = "<group>"; };
+		EEB2C1BE1F57E4C700787EA0 /* InfiniteScrollPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollPicker.m; sourceTree = "<group>"; };
+		EEB2C1BF1F57E4C700787EA0 /* UIView+viewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+viewController.h"; sourceTree = "<group>"; };
+		EEB2C1C01F57E4C700787EA0 /* UIView+viewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+viewController.m"; sourceTree = "<group>"; };
+		EEB2C2181F5817A500787EA0 /* CHDeviceImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDeviceImage.h; sourceTree = "<group>"; };
+		EEB2C2191F5817A500787EA0 /* CHDeviceImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDeviceImage.m; sourceTree = "<group>"; };
 		EEB359431F5256E9005C5064 /* LeftSliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftSliderViewController.h; sourceTree = "<group>"; };
 		EEB359441F5256E9005C5064 /* LeftSliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftSliderViewController.m; sourceTree = "<group>"; };
 		EEB359451F5256E9005C5064 /* MyPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPanGestureRecognizer.h; sourceTree = "<group>"; };
 		EEB359461F5256E9005C5064 /* MyPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPanGestureRecognizer.m; sourceTree = "<group>"; };
 		EEB359471F5256E9005C5064 /* UIView_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_extra.h; sourceTree = "<group>"; };
 		EEB359481F5256E9005C5064 /* UIView_extra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_extra.m; sourceTree = "<group>"; };
-		EEB359501F525E12005C5064 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extensions.h"; sourceTree = "<group>"; };
-		EEB359511F525E12005C5064 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extensions.m"; sourceTree = "<group>"; };
+		EEB359501F525E12005C5064 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extensions.h"; path = "../VC/UIView+Extensions.h"; sourceTree = "<group>"; };
+		EEB359511F525E12005C5064 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extensions.m"; path = "../VC/UIView+Extensions.m"; sourceTree = "<group>"; };
 		EEB359531F525F8F005C5064 /* CHBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHBaseViewController.h; sourceTree = "<group>"; };
 		EEB359541F525F8F005C5064 /* CHBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHBaseViewController.m; sourceTree = "<group>"; };
 		EEB3595C1F526F64005C5064 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -211,6 +229,12 @@
 		EEC294251F4290C30029CA23 /* CHTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTextField.m; sourceTree = "<group>"; };
 		EEC294271F4290E70029CA23 /* CHTextField+HQX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CHTextField+HQX.h"; sourceTree = "<group>"; };
 		EEC294281F4290E70029CA23 /* CHTextField+HQX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CHTextField+HQX.m"; sourceTree = "<group>"; };
+		EED9394A1F56967000DFF409 /* CHPointAnnotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPointAnnotion.h; sourceTree = "<group>"; };
+		EED9394B1F56967000DFF409 /* CHPointAnnotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPointAnnotion.m; sourceTree = "<group>"; };
+		EED9394D1F56B9A000DFF409 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
+		EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
+		EEEB242A1F59696C003D3495 /* CHDeviceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDeviceView.h; sourceTree = "<group>"; };
+		EEEB242B1F59696C003D3495 /* CHDeviceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDeviceView.m; sourceTree = "<group>"; };
 		EEEB8CBE1F43D884003AE170 /* SectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SectionsViewController.h; path = ../../MAINVC/SectionsViewController.h; sourceTree = "<group>"; };
 		EEEB8CBF1F43D884003AE170 /* SectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SectionsViewController.m; path = ../../MAINVC/SectionsViewController.m; sourceTree = "<group>"; };
 		EEEB8CC21F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary-DeepMutableCopy.h"; sourceTree = "<group>"; };
@@ -463,6 +487,8 @@
 		EE6E88C51F4EE8FB0016104A /* LEFTVC */ = {
 			isa = PBXGroup;
 			children = (
+				EEB2C1B81F57E4A400787EA0 /* MODE */,
+				EEB2C1B71F57E49100787EA0 /* VIEW */,
 				EE6E88C61F4EE9050016104A /* VC */,
 			);
 			path = LEFTVC;
@@ -473,8 +499,6 @@
 			children = (
 				EE6E88C71F4EE9120016104A /* CHLeftViewController.h */,
 				EE6E88C81F4EE9120016104A /* CHLeftViewController.m */,
-				EEB359501F525E12005C5064 /* UIView+Extensions.h */,
-				EEB359511F525E12005C5064 /* UIView+Extensions.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -486,6 +510,42 @@
 				EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */,
 			);
 			path = CalculatedMode;
+			sourceTree = "<group>";
+		};
+		EEB2C1B71F57E49100787EA0 /* VIEW */ = {
+			isa = PBXGroup;
+			children = (
+				EE21888E1F5A56FE004ACED1 /* MNWheelView.h */,
+				EE21888F1F5A56FE004ACED1 /* MNWheelView.m */,
+				EEB2C2181F5817A500787EA0 /* CHDeviceImage.h */,
+				EEB2C2191F5817A500787EA0 /* CHDeviceImage.m */,
+				EEEB242A1F59696C003D3495 /* CHDeviceView.h */,
+				EEEB242B1F59696C003D3495 /* CHDeviceView.m */,
+				EE2188881F5A3E0E004ACED1 /* CHDevicePickView.h */,
+				EE2188891F5A3E0E004ACED1 /* CHDevicePickView.m */,
+				EEB2C1BC1F57E4C700787EA0 /* InfiniteScrollPicker */,
+			);
+			path = VIEW;
+			sourceTree = "<group>";
+		};
+		EEB2C1B81F57E4A400787EA0 /* MODE */ = {
+			isa = PBXGroup;
+			children = (
+				EEB359501F525E12005C5064 /* UIView+Extensions.h */,
+				EEB359511F525E12005C5064 /* UIView+Extensions.m */,
+			);
+			path = MODE;
+			sourceTree = "<group>";
+		};
+		EEB2C1BC1F57E4C700787EA0 /* InfiniteScrollPicker */ = {
+			isa = PBXGroup;
+			children = (
+				EEB2C1BD1F57E4C700787EA0 /* InfiniteScrollPicker.h */,
+				EEB2C1BE1F57E4C700787EA0 /* InfiniteScrollPicker.m */,
+				EEB2C1BF1F57E4C700787EA0 /* UIView+viewController.h */,
+				EEB2C1C01F57E4C700787EA0 /* UIView+viewController.m */,
+			);
+			path = InfiniteScrollPicker;
 			sourceTree = "<group>";
 		};
 		EEB359421F5256E9005C5064 /* LeftSlideViewController */ = {
@@ -504,6 +564,8 @@
 		EEB3595E1F5272B3005C5064 /* MODE */ = {
 			isa = PBXGroup;
 			children = (
+				EED9394D1F56B9A000DFF409 /* MKMapView+ZoomLevel.h */,
+				EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */,
 				EEB359621F5276E5005C5064 /* SMALocatiuonManager.h */,
 				EEB359631F5276E5005C5064 /* SMALocatiuonManager.m */,
 				EEB3595F1F5272CF005C5064 /* CHLocationMar.h */,
@@ -514,6 +576,8 @@
 				EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */,
 				EEA2CDA71F558C37005A3A97 /* CHAnnotationView.h */,
 				EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */,
+				EED9394A1F56967000DFF409 /* CHPointAnnotion.h */,
+				EED9394B1F56967000DFF409 /* CHPointAnnotion.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -749,6 +813,7 @@
 			files = (
 				EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */,
 				EE148CC11F3D96E50089C5D2 /* ViewController.m in Sources */,
+				EEB2C1C21F57E4C700787EA0 /* UIView+viewController.m in Sources */,
 				EE2FCB131F3EEDFF00A6457B /* UIImage+IMAGE.m in Sources */,
 				EE74AB661F4BC8E7004F03B8 /* CHInputViewController.m in Sources */,
 				EEB359521F525E12005C5064 /* UIView+Extensions.m in Sources */,
@@ -765,6 +830,7 @@
 				EEB40A701F4A6FD1003C33EA /* CHLoginViewController.m in Sources */,
 				EE41DB3B1F4D2498009B230A /* CHPhotoView.m in Sources */,
 				EEC294261F4290C30029CA23 /* CHTextField.m in Sources */,
+				EEB2C21A1F5817A500787EA0 /* CHDeviceImage.m in Sources */,
 				EE6E88C41F4EE7AE0016104A /* MainViewController.m in Sources */,
 				EEB3596A1F529A75005C5064 /* CHDeiceCollectionViewCell.m in Sources */,
 				EE14FE2F1F42DD37008E8387 /* CHButton+HQX.m in Sources */,
@@ -775,6 +841,7 @@
 				EEB40A921F4ADCA3003C33EA /* FMResultSet.m in Sources */,
 				EEB3594A1F5256E9005C5064 /* MyPanGestureRecognizer.m in Sources */,
 				EEB359611F5272CF005C5064 /* CHLocationMar.m in Sources */,
+				EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */,
 				EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */,
 				EE14FE2C1F42DD21008E8387 /* CHButton.m in Sources */,
 				EEEB8CCA1F43DEDF003AE170 /* CHAFNWorking.m in Sources */,
@@ -785,6 +852,7 @@
 				EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */,
 				EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */,
 				EEC294221F428D3D0029CA23 /* CHLabel+HQX.m in Sources */,
+				EE21888A1F5A3E0F004ACED1 /* CHDevicePickView.m in Sources */,
 				EEC2941F1F428D1E0029CA23 /* CHLabel.m in Sources */,
 				EEB359671F529571005C5064 /* CHLocationInfoView.m in Sources */,
 				EE74AB741F4C2411004F03B8 /* CHPutInViewController.m in Sources */,
@@ -794,14 +862,18 @@
 				EEB359551F525F8F005C5064 /* CHBaseViewController.m in Sources */,
 				EEBE19DF1F4592A1000C5B8D /* CHUserInfo.m in Sources */,
 				EEC2941B1F4282680029CA23 /* UIImageView+HQX.m in Sources */,
+				EE2188901F5A56FE004ACED1 /* MNWheelView.m in Sources */,
 				EE2FCAF71F3E9D5E00A6457B /* CHDefaultionfos.m in Sources */,
 				EEB40A8F1F4ADCA3003C33EA /* FMDatabaseAdditions.m in Sources */,
 				EE41DB3F1F4D9BE0009B230A /* NSDate+CH.m in Sources */,
 				EE74AB6E1F4BFFF7004F03B8 /* KLTNavigationController.m in Sources */,
+				EEEB242C1F59696C003D3495 /* CHDeviceView.m in Sources */,
+				EEB2C1C11F57E4C700787EA0 /* InfiniteScrollPicker.m in Sources */,
 				EE64D18A1F45960D00CCBFDF /* CHAccountTool.m in Sources */,
 				EE2FCB0C1F3EE6EB00A6457B /* UIBarButtonItem+CHITEM.m in Sources */,
 				EE2FCB031F3EDC9100A6457B /* CHNavViewController.m in Sources */,
 				EEC294291F4290E70029CA23 /* CHTextField+HQX.m in Sources */,
+				EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */,
 				EE2FCB061F3EDD4300A6457B /* UINavigationController+CHNav.m in Sources */,
 				EE2FCAFA1F3E9F8200A6457B /* CHLocalizeableMode.m in Sources */,
 				EE148CBB1F3D96E50089C5D2 /* main.m in Sources */,

@@ -9,7 +9,9 @@
 #import "CHLocationInfoView.h"
 
 @interface CHLocationInfoView ()
-
+{
+    CHButton *updateBut;
+}
 @end
 
 @implementation CHLocationInfoView
@@ -40,7 +42,7 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
     self.locaLab.numberOfLines = 0;
     [locaView addSubview:self.locaLab];
     
-    CHButton *updateBut = [CHButton createWithTit:CHLocalizedString(@"刷新", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 9) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:22 touchBlock:^(CHButton *sender) {
+    updateBut = [CHButton createWithTit:CHLocalizedString(@"刷新", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 9) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:22 touchBlock:^(CHButton *sender) {
         NSLog(@"fwegg");
     }];
     [updateBut setImage:[UIImage imageNamed:@"icon_shuaxin"] forState:UIControlStateNormal];
@@ -61,13 +63,14 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
         make.height.mas_equalTo(self.mas_height).multipliedBy(0.5).mas_offset(-16);
     }];
     
+  
     [updateBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.right.mas_equalTo(-12);
         make.height.mas_equalTo(44);
         make.width.mas_equalTo(44);
     }];
-    [updateBut layoutButtonWithEdgeInsetsStyle:buttonddgeinsetsstyletop space:8];
+//    [updateBut sizeToFit];
     
     [self.locaLab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(14);
@@ -75,6 +78,10 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
         make.bottom.mas_equalTo(0);
         make.right.mas_equalTo(updateBut.mas_left).mas_offset(-8);
     }];
+}
+
+- (void)layoutSubviews{
+    [updateBut layoutButtonWithEdgeInsetsStyle:buttonddgeinsetsstyletop space:8];
 }
 
 - (void)setDevices:(NSMutableArray<CHUserInfo *> *)devices{
@@ -118,6 +125,7 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     return 20.0f;
 }
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.

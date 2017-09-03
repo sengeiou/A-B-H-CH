@@ -19,4 +19,6 @@ typedef NS_ENUM(NSInteger, GradientType)  {
 + (UIImage *)CHbuttonImageFromColors:(NSArray*)colors ByGradientType:(GradientType)gradientType size:(CGSize )size;
 + (UIImage *)mergeMainIma:(UIImage *)maIma subIma:(UIImage *)subIma callBackSize:(CGSize)size;
 + (UIImage*)image:(UIImage*)image  fortargetSize: (CGSize)targetSize;
++ (UIImage *)drawDeviceImageWithSize:(CGSize )size title:(NSString *)title;
++ (UIImage *)drawWithSize:(CGSize )size Radius:(CGFloat)radius image:(UIImage *)ima;
 @end

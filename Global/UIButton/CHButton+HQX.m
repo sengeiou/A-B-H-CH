@@ -108,7 +108,6 @@ static const void *butBlockKey = &butBlockKey;
         labelWidth = self.titleLabel.frame.size.width;
         labelHeight = self.titleLabel.frame.size.height;
     }
-    
     // 2. 声明全局的imageEdgeInsets和labelEdgeInsets
     UIEdgeInsets imageEdgeInsets = UIEdgeInsetsZero;
     UIEdgeInsets labelEdgeInsets = UIEdgeInsetsZero;

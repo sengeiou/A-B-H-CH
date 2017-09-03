@@ -18,7 +18,7 @@
 #define vCouldChangeDeckStateDistance  (kScreenWidth - kMainPageDistance) / 2.0 - 20 //滑动距离大于此数时，状态改变（关--》开，或者开--》关）
 #define vSpeedFloat   0.7    //滑动速度
 
-#define kLeftAlpha 0.1  //左侧蒙版的最大值
+#define kLeftAlpha 0.8  //左侧蒙版的最大值
 #define kLeftCenterX 30 //左侧初始偏移量
 #define kLeftScale 1 //左侧初始缩放比例
 

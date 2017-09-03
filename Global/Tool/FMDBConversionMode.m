@@ -107,7 +107,12 @@ static id _instace;
             device.deviceTy = [rs stringForColumn:@"deviceTy"];
             device.relatoin = [rs stringForColumn:@"relatoin"];
             device.deviceMo = [rs stringForColumn:@"deviceMo"];
-            [diveceList addObject:device];
+            if ([device.deviceId isEqualToString:user.deviceId]) {
+                 [diveceList insertObject:device atIndex:0];
+            }
+            else{
+                 [diveceList addObject:device];
+            }
         }
     }];
     return diveceList;

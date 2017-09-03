@@ -9,8 +9,13 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "SMALocatiuonManager.h"
+#import "CHAnnotationView.h"
+#import "CHPointAnnotion.h"
+#import "MKMapView+ZoomLevel.h"
 
 @interface CHMKMapView : MKMapView<MKMapViewDelegate>
 @property (nonatomic, strong) SMALocatiuonManager *locaMar;
+@property (nonatomic, assign) NSUInteger zoomLevel;
 + (CHMKMapView *)createMapView;
+- (void)addAnnotationsWithPoints:(NSMutableArray *)points;
 @end

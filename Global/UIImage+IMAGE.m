@@ -151,4 +151,30 @@
     UIImage*newImage =UIGraphicsGetImageFromCurrentImageContext();//截图拿到图片
     return newImage;
 }
+
++ (UIImage *)drawDeviceImageWithSize:(CGSize )size title:(NSString *)title{
+    //画布大小
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGRect rect = [CHCalculatedMode CHCalculatedWithStr:title size:CGSizeMake(CHMainScreen.size.width/2, 10) attributes:@{NSFontAttributeName:CHFontNormal(nil, 11)}];
+    CGFloat offset = MAX(rect.size.width, 100);
+//    UIBezierPath *path = [UIBezierPath bezierPath];
+   UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, offset, 15 * WIDTHAdaptive) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(8.0, 8.0)];
+//    path.lineWidth = 1.0;
+    [[UIColor redColor] set];
+    [path stroke];
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
++ (UIImage *)drawWithSize:(CGSize )size Radius:(CGFloat)radius image:(UIImage *)ima{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+    [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, size.width, size.height) cornerRadius:radius] addClip];
+    [ima drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 @end

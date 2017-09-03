@@ -8,6 +8,11 @@
 
 #import <MapKit/MapKit.h>
 
-@interface CHAnnotationView : MKAnnotationView
+typedef void(^tapAnnotation)(id <MKAnnotation> annotation);
 
+@interface CHAnnotationView : MKAnnotationView
+@property (nonatomic, strong) CHLabel *nameLab;
+@property (nonatomic, strong) UIImageView *IconImageView;
+- (void)setLabTit:(NSString *)tit;
+- (void)didSelectAnnotaton:(tapAnnotation)block;
 @end

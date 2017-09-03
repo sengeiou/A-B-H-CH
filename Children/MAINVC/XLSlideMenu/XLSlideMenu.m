@@ -112,7 +112,6 @@ static CGFloat MaxCoverAlpha = 0.3;
     }
 }
 
-
 //拖拽方法
 -(void)panChanged:(UIPanGestureRecognizer*)pan{
     //拖拽的距离

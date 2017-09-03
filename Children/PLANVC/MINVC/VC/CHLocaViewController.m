@@ -10,10 +10,11 @@
 
 @interface CHLocaViewController ()
 
+//@property (nonatomic, strong) MKMapView *mapView;
 @property (nonatomic, strong) CHMKMapView *mapView;
 @property (nonatomic, strong) CHUserInfo *user;
 @property (nonatomic, strong) CHAFNWorking *afnRequest;
-//@property (nonatomic, assign) CLLocationCoordinate2D *deviceCoor;
+
 @property (nonatomic, assign) CLLocationCoordinate2D deviceCoor;
 @property (nonatomic, strong) NSMutableArray <CHUserInfo *> *devices;
 @property (nonatomic, strong) SMALocatiuonManager *locationMar;
@@ -25,10 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     [self initializeMethod];
+    [self initializeMethod];
     [self createUI];
-    
-   
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -64,54 +63,114 @@ static int request;
                                        @"Params": @"",
                                        @"UserId": _user.userId}];
     _afnRequest.moreRequest = YES;
+    @WeakObj(self)
     [_afnRequest CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:comDic Mess:CHLocalizedString(@"正在加载中，请稍后", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        @StrongObj(self)
         if ([[result objectForKey:@"State"] intValue] == 0) {
 //            [self updateDeviceListWithRequestTimes:30];
-            request = 30;
-            if (_searchTimer) {
-                [_searchTimer invalidate];
-                _searchTimer = nil;
+            request = 3;
+            if (self.searchTimer) {
+                [self.searchTimer invalidate];
+                self.searchTimer = nil;
             }
-           _searchTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateDeviceListWithRequestTimes:) userInfo:nil repeats:YES];
+           self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateDeviceListWithRequestTimes:) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:self.searchTimer forMode:NSRunLoopCommonModes];
         }
         else{
-             _afnRequest.moreRequest = NO;
+             self.afnRequest.moreRequest = NO;
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
     }];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+//   self.mapView.zoomLevel = 15;
+}
 
+- (NSString *)removeHTML2:(NSString *)html{
+    NSArray *components = [html componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    NSMutableArray *componentsToKeep = [NSMutableArray array];
+    for (int i = 0; i < [components count]; i ++ ) {
+        if ([[components objectAtIndex:i] length] > 10) {
+            [componentsToKeep addObject:[components objectAtIndex:i]];
+        }
+        
+    }
+    NSString *plainText = [componentsToKeep componentsJoinedByString:@""];
+    return plainText;
+}
 
 - (void)createUI{
     self.title = CHLocalizedString(@"定位", nil);
     self.mapView = [CHMKMapView createMapView];
     self.mapView.showsUserLocation = YES;
+    [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(39.9163854444,116.3971424103) animated:NO];
+//    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(39.9076660604,116.3967589906);
+//    self.mapView.zoomLevel = 15;
+    NSLog(@"fwogio  %@",self.mapView.userLocation.location);
     [self.view addSubview:self.mapView];
     
     CHButton *moniBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_jianting"] Radius:0 touchBlock:^(CHButton *sender) {
+         NSLog(@"moniBut  %f  %f",self.mapView.centerCoordinate.latitude,self.mapView.centerCoordinate.latitude);
+       AFHTTPSessionManager *_sessionMgr = [AFHTTPSessionManager manager];
+        _sessionMgr.requestSerializer = [AFHTTPRequestSerializer serializer];
+        _sessionMgr.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        _sessionMgr.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html",@"text/javascript",@"text/plan", nil]; [NSSet setWithObjects:@"<html>",@"<body>",@"<p>", @"</p>",@"</p>",@"</body>",@"</html>", nil]
+        [_sessionMgr POST:@"http://www.smart-times.cn/fw/st01" parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             NSString *xmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//            NSArray *xmlStr = [xmlString componentsSeparatedByCharactersInSet:<#(nonnull NSCharacterSet *)#>]
+            NSString *str = [self removeHTML2:xmlString];
+            NSLog(@"responseObject %@",responseObject);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"error %@",error);
+        }];
         
+        NSURL *url = [NSURL URLWithString:@"http://www.smart-times.cn/fw/st01"];
+        
+        //A Boolean value that turns an indicator of network activity on or off.
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        NSData *xmlData = [NSData dataWithContentsOfURL:url];
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        NSString *xmlString = [[NSString alloc] initWithData:xmlData encoding:NSUTF8StringEncoding];
+        
+        if (xmlData == nil) {
+            NSLog(@"File read failed!:%@", xmlString);
+        }
+        else {
+            NSLog(@"File read succeed!:%@",xmlString);
+        }
     }];
     [self.view addSubview:moniBut];
-    
+
+    @WeakObj(self)
     CHButton *addBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_fangda"] Radius:0 touchBlock:^(CHButton *sender) {
-        
+        @StrongObj(self)
+        self.mapView.zoomLevel = self.mapView.zoomLevel + 1;
     }];
     [self.view addSubview:addBut];
-    
+
     CHButton *reduBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_suofang"] Radius:0 touchBlock:^(CHButton *sender) {
-        
+        @StrongObj(self)
+         self.mapView.zoomLevel = self.mapView.zoomLevel - 1;
+        NSLog(@"self.mapView.zoomLeve %lu",(unsigned long)self.mapView.zoomLevel);
     }];
     [self.view addSubview:reduBut];
-    
+
     CHButton *useLocaBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_huidaodinwei"] Radius:0 touchBlock:^(CHButton *sender) {
+        [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
+        NSLog(@"moniBut  %f  %f",self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.latitude);
     }];
     [self.view addSubview:useLocaBut];
     
-   self.infoView = [[CHLocationInfoView alloc] initWithShowView:YES];
+    self.infoView = [[CHLocationInfoView alloc] initWithShowView:YES];
     [self.view addSubview:self.infoView];
     
     [self.mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -127,15 +186,13 @@ static int request;
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
-    
-    
+
     [self.infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view.mas_bottom);
         make.right.mas_equalTo(0);
         make.left.mas_equalTo(0);
         make.height.mas_equalTo(160 * WIDTHAdaptive);
     }];
-    
 
     [reduBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12);
@@ -143,20 +200,25 @@ static int request;
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
-    
+
     [addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(reduBut.mas_top).mas_offset(1);
         make.right.mas_equalTo(-16);
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
-    
+
     [useLocaBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12);
         make.left.mas_equalTo(16);
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
+    
+    UIImageView *ima = [[UIImageView alloc] initWithFrame:CGRectMake(20, 30, 30, 40)];
+    ima.image = [UIImage drawDeviceImageWithSize:ima.size title:@"宝贝"];
+    ima.backgroundColor = [UIColor greenColor];
+//    [self.view addSubview:ima];
 }
 
 
@@ -187,13 +249,17 @@ static int request;
                                           @"MapType": @"",
                                           @"LastTime": [NSDate date].description,
                                           @"TimeOffset": [NSNumber numberWithInteger:[[NSTimeZone systemTimeZone] secondsFromGMT]/3600]}];
+    @WeakObj(self)
+
     [_afnRequest CHAFNPostRequestUrl:REQUESTURL_PersonDeviceList parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        @StrongObj(self)
+
         [[FMDBConversionMode sharedCoreBlueTool] deleteAllDevice:_user];
         BOOL foundDevice = NO;
         if ([[result objectForKey:@"Items"] count] > 0) {
-            [_devices removeAllObjects];
+            [self.devices removeAllObjects];
         }
         for (int i = 0; i < [[result objectForKey:@"Items"] count]; i ++) {
             NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:i];
@@ -201,33 +267,31 @@ static int request;
             
             if (!foundDevice && i == ([[result objectForKey:@"Items"] count] - 1)) {
                 NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:0];
-                _user.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
-                _user.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
-                _user.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
-                _user.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
+                self.user.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
+                self.user.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
+                self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
+                self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
             }
             
-            if ([_user.deviceId isEqualToString:[TypeConversionMode strongChangeString:itemDit[@"Id"]]]) {
-                userList = _user;
+            if ([self.user.deviceId isEqualToString:[TypeConversionMode strongChangeString:itemDit[@"Id"]]]) {
+                userList = self.user;
                 NSLog(@"CLLocationCoordinate2DIsValid(_deviceCoor)  %d",CLLocationCoordinate2DIsValid(_deviceCoor));
-                if (!CLLocationCoordinate2DIsValid(_deviceCoor)) {
-                    _deviceCoor.latitude = [itemDit[@"Latitude"] floatValue];
-                    _deviceCoor.longitude = [itemDit[@"Longitude"] floatValue];
+                if (!CLLocationCoordinate2DIsValid(self.deviceCoor)) {
+                    self.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
                 }
-                if (_deviceCoor.latitude != [itemDit[@"Latitude"] floatValue] || _deviceCoor.longitude != [itemDit[@"Longitude"] floatValue]){
-                    _deviceCoor.latitude = [itemDit[@"Latitude"] floatValue];
-                    _deviceCoor.longitude = [itemDit[@"Longitude"] floatValue];
+                if (self.deviceCoor.latitude != [itemDit[@"Latitude"] floatValue] || self.deviceCoor.longitude != [itemDit[@"Longitude"] floatValue]){
+                    self.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
                     foundDevice = YES;
                 }
                 if (foundDevice) {
                     request = 0;
-                    for (NSURLSessionDataTask *task in _afnRequest.sessionMgr.tasks) {
+                    for (NSURLSessionDataTask *task in self.afnRequest.sessionMgr.tasks) {
                         [task cancel];
                     }
                 }
             }
 
-            userList.userId = _user.userId;
+            userList.userId = self.user.userId;
             userList.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
             userList.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
             userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
@@ -244,16 +308,16 @@ static int request;
                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
                 if ([_user.deviceId isEqualToString:[TypeConversionMode strongChangeString:itemDit[@"Id"]]]) {
                     [CHAccountTool saveUser:userList];
-                    [_devices insertObject:userList atIndex:0];
+                    [self.devices insertObject:userList atIndex:0];
                 }
                 else{
-                    [_devices addObject:userList];
+                    [self.devices addObject:userList];
                 }
                 if (foundDevice || request == 0) {
                     NSLog(@"getRegoCoding");
-                    if (_devices.count > 0) {
+                    if (self.devices.count > 0) {
                          NSLog(@"getRegoCoding1");
-                        for (CHUserInfo *user in _devices) {
+                        for (CHUserInfo *user in self.devices) {
                             [self getRegoCoding:user];
                         }
                     }
@@ -269,7 +333,7 @@ static int request;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         if (error.code != 999) {
              request = 0;
-            for (NSURLSessionDataTask *tasks in _afnRequest.sessionMgr.tasks) {
+            for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
                 if (tasks != task) {
                      [tasks cancel];
                 }
@@ -284,14 +348,18 @@ static int request;
 }
 
 - (void)getRegoCoding:(CHUserInfo *)user{
-    [_locationMar regeoCoding:user.deviceCoor callBack:^(CHGeoCodingMode *geo) {
-        NSLog(@"str  %@",geo);
-        user.GeoCoding = geo;
-        if (user == [_devices lastObject]) {
-            [MBProgressHUD hideHUD];
-            [self updateUI];
-        }
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_locationMar regeoCoding:user.deviceCoor callBack:^(CHGeoCodingMode *geo) {
+            NSLog(@"str  %@",geo);
+            if (geo) {
+                user.GeoCoding = geo;
+            }
+            if (user == [self.devices lastObject]) {
+                [MBProgressHUD hideHUD];
+                [self updateUI];
+            }
+        }];
+    });
 }
 
 - (void)updateUI{
@@ -307,6 +375,11 @@ static int request;
     
     self.infoView.locaLab.text = (_user.GeoCoding.FormattedAddress && ![_user.GeoCoding.FormattedAddress isEqualToString:@""]) ? _user.GeoCoding.FormattedAddress:CHLocalizedString(@"暂无定位信息", nil);
     [self.infoView setDevices:_devices];
+    [self.mapView addAnnotationsWithPoints:_devices];
+}
+
+- (void)dealloc{
+    NSLog(@"dealloc");
 }
 /*
 #pragma mark - Navigation

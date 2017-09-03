@@ -371,10 +371,9 @@
                                             [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                                                 
                                             } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                                                if (!image) {
-                                                    image = [UIImage imageNamed:@"pho_touxiang"];
+                                                if (image) {
+                                                    userList.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                                                 }
-                                                userList.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                                                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
                                                 if (i == 0) {
                                                     [CHAccountTool saveUser:userList];

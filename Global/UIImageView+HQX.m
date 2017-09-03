@@ -88,4 +88,5 @@ static const void *ImageEventKey = &ImageEventKey;
         block(self,tap.state);
     }
 }
+
 @end

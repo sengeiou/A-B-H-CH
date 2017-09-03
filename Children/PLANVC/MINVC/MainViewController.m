@@ -11,6 +11,7 @@
 @interface MainViewController ()
 @property (nonatomic, strong) CHUserInfo *user;
 @property (nonatomic, strong) NSMutableArray *deviceLists;
+@property (nonatomic, strong) AppDelegate *app;
 @end
 
 @implementation MainViewController
@@ -29,12 +30,38 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
-    appDelegate.leftSliderViewController.closedDraw = NO;
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
+}
+
+//- (void)viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:NO];
+//}
+
+- (void)viewDidAppear:(BOOL)animated{
+   [self setPanIsOpen:YES];
+     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)initializeMethod{
     self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+    self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //接收抽屉点击事件的HomePage0Push通知
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(pushViewControllerFromLeftView:) name:@"HomePagePush" object:nil];
+}
+
+//右滑打开抽屉手势
+-(void)setPanIsOpen:(BOOL)isOpen{
+    AppDelegate * appDelagate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+    [appDelagate.leftSliderViewController setPanEnabled:isOpen];
+    [((CHKLTViewController *)self.navigationController).panGestureRec setEnabled:isOpen];
+}
+
+//当主页消失的时候关闭手势
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self setPanIsOpen:NO];
+     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (CHUserInfo *)user{
@@ -53,7 +80,6 @@
     UIImage *deviceIma = [UIImage imageNamed:@"pho_morentouxiang"];
     NSLog(@"[CHAccountTool user].userId %@",[CHAccountTool user].userId);
 
-
     if (self.user.deviceId) {
         if (self.user.deviceIm && ![[self.user deviceIm] isEqualToString:@""]) {
             NSData *imaData = [[NSData alloc] initWithBase64EncodedString:self.user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -63,9 +89,11 @@
             }
         }
     }
+    
     CHButton *leftBut = [CHButton createWithImage:deviceIma Radius:25 touchBlock:^(CHButton *sender) {
-        
+        [selfWeak.app.leftSliderViewController openLeftView];
     }];
+    leftBut.backgroundColor = [UIColor greenColor];
     [backImage addSubview:leftBut];
     
     UIImageView *leftIma = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_cebian"]];
@@ -82,10 +110,9 @@
             NSLog(@"device %@",device.devicePh);
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",device.devicePh]];
             [[UIApplication sharedApplication] openURL:url];
-            
         }];
-        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [app.window addSubview:cellView];
+        
+        [self.app.window addSubview:cellView];
         
     }];
     [backImage addSubview:phoneBut];
@@ -99,9 +126,10 @@
 //                [nav pushViewController:newVc animated:false];
         //关闭抽屉
         AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
-        appDelegate.leftSliderViewController.closedDraw = YES;
+        [appDelegate.leftSliderViewController closeLeftView];
         NSLog(@"appDelegate.leftSliderViewController %@",appDelegate.leftSliderViewController);
         self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
+        
         [self.navigationController pushViewController:[[CHLocaViewController alloc] init] animated:YES];
     }];
     [backImage addSubview:locaBut];
@@ -127,6 +155,7 @@
     [leftBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(28);
         make.left.mas_equalTo(18);
+//        make.center.mas_equalTo(backImage);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
     }];
@@ -188,6 +217,25 @@
     }];
 }
 
+#pragma mark -- 抽屉界面转跳
+-(void)pushViewControllerFromLeftView:(NSNotification *) notification{
+    NSDictionary * dict  = notification.userInfo;
+    UIViewController * pushViewController = [dict objectForKey:@"pushViewController"];
+    self.hidesBottomBarWhenPushed = YES;
+    
+    //关闭抽屉
+    AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
+    [appDelegate.leftSliderViewController closeLeftView];
+    
+    [self.navigationController pushViewController:pushViewController animated:YES];
+    
+    self.hidesBottomBarWhenPushed = NO;
+}
+
+-(void)dealloc{
+    NSLog(@"dealloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 /*
  #pragma mark - Navigation

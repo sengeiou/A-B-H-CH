@@ -64,17 +64,17 @@
     _screenshotImgs = [NSMutableArray array];
 }
 
-- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                            animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                         fromViewController:(UIViewController *)fromVC
-                                                           toViewController:(UIViewController *)toVC  NS_AVAILABLE_IOS(7_0)
-{
-    self.animationController.navigationOperation = operation;
-    self.animationController.navigationController = self;
-    //    self.animationController.lastVCScreenShot = self.lastVCScreenShotImg;
-    // self.animationController.nextVCScreenShot = self.nextVCScreenShotImg;
-    return self.animationController;
-}
+//- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+//                                            animationControllerForOperation:(UINavigationControllerOperation)operation
+//                                                         fromViewController:(UIViewController *)fromVC
+//                                                           toViewController:(UIViewController *)toVC  NS_AVAILABLE_IOS(7_0)
+//{
+//    self.animationController.navigationOperation = operation;
+//    self.animationController.navigationController = self;
+//    //    self.animationController.lastVCScreenShot = self.lastVCScreenShotImg;
+//    // self.animationController.nextVCScreenShot = self.nextVCScreenShotImg;
+//    return self.animationController;
+//}
 - (AnimationContoller *)animationController
 {
     if (_animationController == nil) {
@@ -85,14 +85,17 @@
 }
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    
-    
     // 只有在导航控制器里面有子控制器的时候才需要截图
     if (self.viewControllers.count >= 1) {
         // 调用自定义方法,使用上下文截图
         [self screenShot];
     }
-    
+    if (self.viewControllers.count > 1) {
+//        [_panGestureRec setEnabled:YES];
+    }
+    else{
+//       [_panGestureRec setEnabled:NO];
+    }
     [super pushViewController:viewController animated:animated];
     
     
@@ -103,8 +106,11 @@
     NSString * className = nil;
     if (index >= 2) {
         className = NSStringFromClass([self.viewControllers[index -2] class]);
+//         [_panGestureRec setEnabled:YES];
     }
-    
+    else{
+//        [_panGestureRec setEnabled:NO];
+    }
     if (_screenshotImgs.count >= index - 1) {
         [_screenshotImgs removeLastObject];
     }
@@ -114,7 +120,12 @@
 }
 - (NSArray<UIViewController *> *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    
+    if (self.viewControllers.count > 1) {
+//        [_panGestureRec setEnabled:YES];
+    }
+    else{
+//        [_panGestureRec setEnabled:NO];
+    }
     NSInteger removeCount = 0;
     for (NSInteger i = self.viewControllers.count - 1; i > 0; i--) {
         if (viewController == self.viewControllers[i]) {
@@ -161,7 +172,6 @@
         [_screenshotImgs addObject:snapshot];
         //self.lastVCScreenShotImg = snapshot;
     }
-    
     
     // 千万记得,结束上下文(移除栈顶的基于当前位图的图形上下文)
     UIGraphicsEndImageContext();

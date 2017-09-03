@@ -59,15 +59,15 @@
         self.contentView.backgroundColor = [UIColor blackColor];
         self.contentView.alpha = 0;
 //        self.contentView.hidden = true;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handeTap:)];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handeTap:)];
 //        [_contentView addGestureRecognizer:tap];
-//         [self.mainVC.view addSubview:self.contentView];
+//        [self.mainVC.view addSubview:self.contentView];
         
         
         //获取左侧tableview
         for (UIView *obj in self.leftVC.view.subviews) {
             if ([obj isKindOfClass:[UITableView class]]) {
-                self.leftTableview = (UITableView *)obj;
+//                self.leftTableview = (UITableView *)obj;
             }
         }
 //        self.leftTableview.backgroundColor = [UIColor clearColor];
@@ -153,7 +153,8 @@
             //tempAlpha kLeftAlpha~0
             CGFloat tempAlpha = kLeftAlpha - kLeftAlpha * (rec.view.frame.origin.x / (kScreenWidth - kMainPageDistance));
             self.contentView.alpha = tempAlpha;
-            NSLog(@"tempAlpha  %f",tempAlpha);
+//            NSLog(@"%F tempAlpha  %f  N  FWFIIG %F   (( %F",tempAlpha,leftScale,rec.view.frame.origin.x,(kScreenWidth - kMainPageDistance));
+//            NSLog(@"rec.view.center %F self.leftTableview.center %F  leftScale %F  scale %F",rec.view.center.x,self.leftTableview.center.x,leftScale,scale);
         }
         else
         {
