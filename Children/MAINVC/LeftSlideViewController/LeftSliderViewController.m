@@ -282,6 +282,10 @@
         [self.mainVC.view addGestureRecognizer:self.sideslipTapGes];
         self.sideslipTapGes.cancelsTouchesInView = YES;  //点击事件盖住其它响应事件,但盖不住Button;
     }
+    
+    if (self.leftDelegate && [self.leftDelegate respondsToSelector:@selector(leftViewWillApplear)]) {
+        [self.leftDelegate leftViewWillApplear];
+    }
 }
 
 //关闭行为收敛
@@ -293,6 +297,10 @@
     }
     [self.mainVC.view removeGestureRecognizer:self.sideslipTapGes];
     self.sideslipTapGes = nil;
+    
+    if (self.leftDelegate && [self.leftDelegate respondsToSelector:@selector(leftViewWillDisApplear)]) {
+        [self.leftDelegate leftViewWillDisApplear];
+    }
 }
 
 /**

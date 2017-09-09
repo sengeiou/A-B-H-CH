@@ -25,6 +25,9 @@
 		EE2FCB0C1F3EE6EB00A6457B /* UIBarButtonItem+CHITEM.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB0B1F3EE6EB00A6457B /* UIBarButtonItem+CHITEM.m */; };
 		EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB0F1F3EEBCB00A6457B /* CHRegAnLogViewController.m */; };
 		EE2FCB131F3EEDFF00A6457B /* UIImage+IMAGE.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCB121F3EEDFF00A6457B /* UIImage+IMAGE.m */; };
+		EE322E801F63CE1300FCA1CE /* CHGuarderMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE322E7F1F63CE1300FCA1CE /* CHGuarderMode.m */; };
+		EE322E831F63CF1600FCA1CE /* CHGuarderItemMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE322E821F63CF1600FCA1CE /* CHGuarderItemMode.m */; };
+		EE322E861F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE322E851F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m */; };
 		EE38B4C61F4FFD7700C33C1D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE38B4C51F4FFD7700C33C1D /* MapKit.framework */; };
 		EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38B4C91F4FFE5B00C33C1D /* CHLocaViewController.m */; };
 		EE38B4CE1F4FFEE300C33C1D /* CHMKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE38B4CD1F4FFEE300C33C1D /* CHMKMapView.m */; };
@@ -78,6 +81,14 @@
 		EEC294221F428D3D0029CA23 /* CHLabel+HQX.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294211F428D3D0029CA23 /* CHLabel+HQX.m */; };
 		EEC294261F4290C30029CA23 /* CHTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294251F4290C30029CA23 /* CHTextField.m */; };
 		EEC294291F4290E70029CA23 /* CHTextField+HQX.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC294281F4290E70029CA23 /* CHTextField+HQX.m */; };
+		EEC491581F638BB90068F636 /* WMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491511F638BB90068F636 /* WMMenuItem.m */; };
+		EEC491591F638BB90068F636 /* WMMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491531F638BB90068F636 /* WMMenuView.m */; };
+		EEC4915A1F638BB90068F636 /* WMProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491551F638BB90068F636 /* WMProgressView.m */; };
+		EEC4915B1F638BB90068F636 /* WMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491571F638BB90068F636 /* WMScrollView.m */; };
+		EEC4915F1F638BC50068F636 /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC4915E1F638BC50068F636 /* WMPageController.m */; };
+		EEC491621F638C310068F636 /* CHMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491611F638C310068F636 /* CHMemberViewController.m */; };
+		EEC491651F638C930068F636 /* CHGuarderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491641F638C930068F636 /* CHGuarderViewController.m */; };
+		EEC491691F6391A10068F636 /* CHGuarderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491681F6391A10068F636 /* CHGuarderCell.m */; };
 		EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394B1F56967000DFF409 /* CHPointAnnotion.m */; };
 		EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */; };
 		EEEB242C1F59696C003D3495 /* CHDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEB242B1F59696C003D3495 /* CHDeviceView.m */; };
@@ -125,6 +136,12 @@
 		EE2FCB0F1F3EEBCB00A6457B /* CHRegAnLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHRegAnLogViewController.m; path = ../CHRegAnLogViewController.m; sourceTree = "<group>"; };
 		EE2FCB111F3EEDFF00A6457B /* UIImage+IMAGE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+IMAGE.h"; sourceTree = "<group>"; };
 		EE2FCB121F3EEDFF00A6457B /* UIImage+IMAGE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IMAGE.m"; sourceTree = "<group>"; };
+		EE322E7E1F63CE1300FCA1CE /* CHGuarderMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGuarderMode.h; sourceTree = "<group>"; };
+		EE322E7F1F63CE1300FCA1CE /* CHGuarderMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderMode.m; sourceTree = "<group>"; };
+		EE322E811F63CF1600FCA1CE /* CHGuarderItemMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGuarderItemMode.h; sourceTree = "<group>"; };
+		EE322E821F63CF1600FCA1CE /* CHGuarderItemMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderItemMode.m; sourceTree = "<group>"; };
+		EE322E841F63DDDF00FCA1CE /* CHEditGuarderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHEditGuarderTableViewController.h; sourceTree = "<group>"; };
+		EE322E851F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHEditGuarderTableViewController.m; sourceTree = "<group>"; };
 		EE38B4C51F4FFD7700C33C1D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EE38B4C81F4FFE5B00C33C1D /* CHLocaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocaViewController.h; sourceTree = "<group>"; };
 		EE38B4C91F4FFE5B00C33C1D /* CHLocaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHLocaViewController.m; sourceTree = "<group>"; };
@@ -229,6 +246,23 @@
 		EEC294251F4290C30029CA23 /* CHTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTextField.m; sourceTree = "<group>"; };
 		EEC294271F4290E70029CA23 /* CHTextField+HQX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CHTextField+HQX.h"; sourceTree = "<group>"; };
 		EEC294281F4290E70029CA23 /* CHTextField+HQX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CHTextField+HQX.m"; sourceTree = "<group>"; };
+		EEC491501F638BB90068F636 /* WMMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMMenuItem.h; sourceTree = "<group>"; };
+		EEC491511F638BB90068F636 /* WMMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMMenuItem.m; sourceTree = "<group>"; };
+		EEC491521F638BB90068F636 /* WMMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMMenuView.h; sourceTree = "<group>"; };
+		EEC491531F638BB90068F636 /* WMMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMMenuView.m; sourceTree = "<group>"; };
+		EEC491541F638BB90068F636 /* WMProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMProgressView.h; sourceTree = "<group>"; };
+		EEC491551F638BB90068F636 /* WMProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMProgressView.m; sourceTree = "<group>"; };
+		EEC491561F638BB90068F636 /* WMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMScrollView.h; sourceTree = "<group>"; };
+		EEC491571F638BB90068F636 /* WMScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMScrollView.m; sourceTree = "<group>"; };
+		EEC4915C1F638BC50068F636 /* WMPageConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPageConst.h; sourceTree = "<group>"; };
+		EEC4915D1F638BC50068F636 /* WMPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPageController.h; sourceTree = "<group>"; };
+		EEC4915E1F638BC50068F636 /* WMPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPageController.m; sourceTree = "<group>"; };
+		EEC491601F638C300068F636 /* CHMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMemberViewController.h; sourceTree = "<group>"; };
+		EEC491611F638C310068F636 /* CHMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMemberViewController.m; sourceTree = "<group>"; };
+		EEC491631F638C930068F636 /* CHGuarderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGuarderViewController.h; sourceTree = "<group>"; };
+		EEC491641F638C930068F636 /* CHGuarderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderViewController.m; sourceTree = "<group>"; };
+		EEC491671F6391A10068F636 /* CHGuarderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGuarderCell.h; sourceTree = "<group>"; };
+		EEC491681F6391A10068F636 /* CHGuarderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderCell.m; sourceTree = "<group>"; };
 		EED9394A1F56967000DFF409 /* CHPointAnnotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPointAnnotion.h; sourceTree = "<group>"; };
 		EED9394B1F56967000DFF409 /* CHPointAnnotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPointAnnotion.m; sourceTree = "<group>"; };
 		EED9394D1F56B9A000DFF409 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
@@ -499,6 +533,12 @@
 			children = (
 				EE6E88C71F4EE9120016104A /* CHLeftViewController.h */,
 				EE6E88C81F4EE9120016104A /* CHLeftViewController.m */,
+				EEC491601F638C300068F636 /* CHMemberViewController.h */,
+				EEC491611F638C310068F636 /* CHMemberViewController.m */,
+				EEC491631F638C930068F636 /* CHGuarderViewController.h */,
+				EEC491641F638C930068F636 /* CHGuarderViewController.m */,
+				EE322E841F63DDDF00FCA1CE /* CHEditGuarderTableViewController.h */,
+				EE322E851F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -515,6 +555,8 @@
 		EEB2C1B71F57E49100787EA0 /* VIEW */ = {
 			isa = PBXGroup;
 			children = (
+				EEC491661F6391850068F636 /* CELL */,
+				EEC4914F1F638BB90068F636 /* WMMenuView */,
 				EE21888E1F5A56FE004ACED1 /* MNWheelView.h */,
 				EE21888F1F5A56FE004ACED1 /* MNWheelView.m */,
 				EEB2C2181F5817A500787EA0 /* CHDeviceImage.h */,
@@ -533,6 +575,10 @@
 			children = (
 				EEB359501F525E12005C5064 /* UIView+Extensions.h */,
 				EEB359511F525E12005C5064 /* UIView+Extensions.m */,
+				EE322E7E1F63CE1300FCA1CE /* CHGuarderMode.h */,
+				EE322E7F1F63CE1300FCA1CE /* CHGuarderMode.m */,
+				EE322E811F63CF1600FCA1CE /* CHGuarderItemMode.h */,
+				EE322E821F63CF1600FCA1CE /* CHGuarderItemMode.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -643,6 +689,33 @@
 				EEC294281F4290E70029CA23 /* CHTextField+HQX.m */,
 			);
 			path = Textfield;
+			sourceTree = "<group>";
+		};
+		EEC4914F1F638BB90068F636 /* WMMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				EEC4915C1F638BC50068F636 /* WMPageConst.h */,
+				EEC4915D1F638BC50068F636 /* WMPageController.h */,
+				EEC4915E1F638BC50068F636 /* WMPageController.m */,
+				EEC491501F638BB90068F636 /* WMMenuItem.h */,
+				EEC491511F638BB90068F636 /* WMMenuItem.m */,
+				EEC491521F638BB90068F636 /* WMMenuView.h */,
+				EEC491531F638BB90068F636 /* WMMenuView.m */,
+				EEC491541F638BB90068F636 /* WMProgressView.h */,
+				EEC491551F638BB90068F636 /* WMProgressView.m */,
+				EEC491561F638BB90068F636 /* WMScrollView.h */,
+				EEC491571F638BB90068F636 /* WMScrollView.m */,
+			);
+			path = WMMenuView;
+			sourceTree = "<group>";
+		};
+		EEC491661F6391850068F636 /* CELL */ = {
+			isa = PBXGroup;
+			children = (
+				EEC491671F6391A10068F636 /* CHGuarderCell.h */,
+				EEC491681F6391A10068F636 /* CHGuarderCell.m */,
+			);
+			path = CELL;
 			sourceTree = "<group>";
 		};
 		EEEB8CC11F43D8B4003AE170 /* MODE */ = {
@@ -821,10 +894,16 @@
 				EE38B4CE1F4FFEE300C33C1D /* CHMKMapView.m in Sources */,
 				EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */,
 				EEB40A901F4ADCA3003C33EA /* FMDatabasePool.m in Sources */,
+				EE322E831F63CF1600FCA1CE /* CHGuarderItemMode.m in Sources */,
+				EE322E861F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m in Sources */,
 				EE6E88C11F4EE6B70016104A /* XLSlideMenu.m in Sources */,
+				EEC491691F6391A10068F636 /* CHGuarderCell.m in Sources */,
 				EE74AB771F4C3C05004F03B8 /* CHDeviceInfoViewController.m in Sources */,
 				EEB359641F5276E5005C5064 /* SMALocatiuonManager.m in Sources */,
+				EEC491591F638BB90068F636 /* WMMenuView.m in Sources */,
+				EEC4915F1F638BC50068F636 /* WMPageController.m in Sources */,
 				EEB3594B1F5256E9005C5064 /* UIView_extra.m in Sources */,
+				EEC491651F638C930068F636 /* CHGuarderViewController.m in Sources */,
 				EE74AB7B1F4C4FAA004F03B8 /* CHCalculatedMode.m in Sources */,
 				EEB40A911F4ADCA3003C33EA /* FMDatabaseQueue.m in Sources */,
 				EEB40A701F4A6FD1003C33EA /* CHLoginViewController.m in Sources */,
@@ -832,6 +911,7 @@
 				EEC294261F4290C30029CA23 /* CHTextField.m in Sources */,
 				EEB2C21A1F5817A500787EA0 /* CHDeviceImage.m in Sources */,
 				EE6E88C41F4EE7AE0016104A /* MainViewController.m in Sources */,
+				EEC491581F638BB90068F636 /* WMMenuItem.m in Sources */,
 				EEB3596A1F529A75005C5064 /* CHDeiceCollectionViewCell.m in Sources */,
 				EE14FE2F1F42DD37008E8387 /* CHButton+HQX.m in Sources */,
 				EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */,
@@ -848,6 +928,8 @@
 				EEEB8CC41F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m in Sources */,
 				EE6E88C91F4EE9120016104A /* CHLeftViewController.m in Sources */,
 				EEB40A8E1F4ADCA3003C33EA /* FMDatabase.m in Sources */,
+				EEC491621F638C310068F636 /* CHMemberViewController.m in Sources */,
+				EEC4915A1F638BB90068F636 /* WMProgressView.m in Sources */,
 				EEB40A9A1F4B00F1003C33EA /* CHBingViewController.m in Sources */,
 				EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */,
 				EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */,
@@ -855,6 +937,7 @@
 				EE21888A1F5A3E0F004ACED1 /* CHDevicePickView.m in Sources */,
 				EEC2941F1F428D1E0029CA23 /* CHLabel.m in Sources */,
 				EEB359671F529571005C5064 /* CHLocationInfoView.m in Sources */,
+				EEC4915B1F638BB90068F636 /* WMScrollView.m in Sources */,
 				EE74AB741F4C2411004F03B8 /* CHPutInViewController.m in Sources */,
 				EE6E88C01F4EE6B70016104A /* UIViewController+XLSlideMenu.m in Sources */,
 				EEB40A951F4ADCC9003C33EA /* FMDBConversionMode.m in Sources */,
@@ -875,6 +958,7 @@
 				EEC294291F4290E70029CA23 /* CHTextField+HQX.m in Sources */,
 				EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */,
 				EE2FCB061F3EDD4300A6457B /* UINavigationController+CHNav.m in Sources */,
+				EE322E801F63CE1300FCA1CE /* CHGuarderMode.m in Sources */,
 				EE2FCAFA1F3E9F8200A6457B /* CHLocalizeableMode.m in Sources */,
 				EE148CBB1F3D96E50089C5D2 /* main.m in Sources */,
 				EEEB8CCE1F43F122003AE170 /* MBProgressHUD_Tips.m in Sources */,

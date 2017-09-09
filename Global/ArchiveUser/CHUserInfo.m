@@ -50,6 +50,60 @@
     [aCoder encodeObject:_deviceIMEI forKey:@"_deviceIMEI"];
     [aCoder encodeObject:_deviceTy forKey:@"_deviceTy"];
     [aCoder encodeObject:_deviceMo forKey:@"_deviceMo"];
+    [aCoder encodeObject:_deviceBa forKey:@"_deviceBa"];
     [aCoder encodeObject:_relatoin forKey:@"_relatoin"];
+  
+}
+
+- (id)copyWithZone:(NSZone *)zone{
+    CHUserInfo *copy = [[[super class] allocWithZone:zone] init];
+    copy.userId = _userId;
+    copy.userPh = _userPh;
+    copy.userPs = _userPs;
+    copy.userNa = _userNa;
+    copy.userIm = _userIm;
+    copy.userTo = _userTo;
+    copy.deviceId = _deviceId;
+    copy.devicePh = _devicePh;
+    copy.deviceNa = _deviceNa;
+    copy.deviceIm = _deviceIm;
+    copy.deviceBi = _deviceBi;
+    copy.deviceHe = _deviceHe;
+    copy.deviceWi = _deviceWi;
+    copy.deviceGe = _deviceGe;
+    copy.deviceIMEI = _deviceIMEI;
+    copy.deviceTy = _deviceTy;
+    copy.deviceMo = _deviceMo;
+    copy.relatoin = _relatoin;
+    copy.deviceCoor = _deviceCoor;
+    copy.deviceBa = _deviceBa;
+    copy.GeoCoding = _GeoCoding;
+    return copy;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone{
+    CHUserInfo *copy = [CHUserInfo allocWithZone:zone];
+    copy.userId = _userId;
+    copy.userPh = _userPh;
+    copy.userPs = _userPs;
+    copy.userNa = _userNa;
+    copy.userIm = _userIm;
+    copy.userTo = _userTo;
+    copy.deviceId = _deviceId;
+    copy.devicePh = _devicePh;
+    copy.deviceNa = _deviceNa;
+    copy.deviceIm = _deviceIm;
+    copy.deviceBi = _deviceBi;
+    copy.deviceHe = _deviceHe;
+    copy.deviceWi = _deviceWi;
+    copy.deviceGe = _deviceGe;
+    copy.deviceIMEI = _deviceIMEI;
+    copy.deviceTy = _deviceTy;
+    copy.deviceMo = _deviceMo;
+    copy.relatoin = _relatoin;
+    copy.deviceCoor = _deviceCoor;
+    copy.deviceBa = _deviceBa;
+    copy.GeoCoding = _GeoCoding;
+    return copy;
 }
 @end

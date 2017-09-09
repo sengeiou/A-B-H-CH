@@ -11,4 +11,6 @@
 @interface CHDeiceCollectionViewCell : UICollectionViewCell
 @property (nonatomic, strong) CHLabel *titleLab;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, assign) BOOL cellMask;
 @end

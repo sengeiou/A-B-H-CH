@@ -29,6 +29,15 @@
 
 #import "MyPanGestureRecognizer.h"
 
+@protocol LeftSliderDelegate <NSObject>
+
+@optional
+- (void)leftViewWillApplear;
+
+- (void)leftViewWillDisApplear;
+
+@end
+
 @interface LeftSliderViewController : UIViewController
 
 //滑动速度系数-建议在0.5-1之间。默认为0.5
@@ -50,7 +59,7 @@
 //侧滑窗是否开启(关闭时显示为主页)
 @property (nonatomic, assign) BOOL closedDraw;
 
-
+@property (nonatomic, weak) id<LeftSliderDelegate> leftDelegate;
 /**
  @brief 初始化侧滑控制器
  @param leftVC 右视图控制器

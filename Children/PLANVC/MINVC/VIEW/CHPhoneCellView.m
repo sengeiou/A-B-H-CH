@@ -25,13 +25,9 @@
 
 - (void)createUI{
     self.backgroundColor = CHUIColorFromRGB(0x000000, 0.5);
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tpaAction)];
-//    [self addGestureRecognizer:tap];
     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-//    UIView *but = [UIView new];
     but.backgroundColor = [UIColor clearColor];
     [but addTarget:self action:@selector(tpaAction) forControlEvents:UIControlEventTouchUpInside];
-//     [but addGestureRecognizer:tap];
     [self addSubview:but];
     
     UITableView *cellTab = [UITableView new];

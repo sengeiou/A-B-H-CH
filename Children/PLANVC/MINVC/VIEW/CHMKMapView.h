@@ -18,4 +18,6 @@
 @property (nonatomic, assign) NSUInteger zoomLevel;
 + (CHMKMapView *)createMapView;
 - (void)addAnnotationsWithPoints:(NSMutableArray *)points;
+- (void)userDidSelectAnnotationView:(CHUserInfo *)selDevice;
+- (void)didSelectMapAnnotationView:(void (^)(CHUserInfo *didDevice))callBack;
 @end

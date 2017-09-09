@@ -10,6 +10,7 @@
 #import "InfiniteScrollPicker.h"
 #import "MNWheelView.h"
 #import "CHBaseViewController.h"
+#import "CHMemberViewController.h"
 typedef enum {
     LeftViewControllerRowTypeOne,
     LeftViewControllerRowTypeTwo,
@@ -24,4 +25,8 @@ typedef enum {
 
 @interface CHLeftViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) id <LeftViewControllerDelegate> delegate;
+@property (nonatomic, strong) CHUserInfo *user;
+@property (nonatomic, strong) NSMutableArray *deviceLists;
+@property (nonatomic, strong) NSArray *leftArrs;
+
 @end

@@ -19,9 +19,11 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_SavePersonProfile,         //保存手表属性信息
     REQUESTURL_SendCommand,               //发送指令至设备
     REQUESTURL_PersonTracking,            //个人设备单个获取详细信息
+    REQUESTURL_ShareList,                 //查询设备监护人列表
+    REQUESTURL_RemoveShare,               //解除绑定
+    REQUESTURL_ChangeMasterUser,          //更换设备主控用户
+    REQUESTURL_UpdateRelationName,        //更新监护人的关系名称
 };
-
-
 
 @interface CHAFNWorking : NSObject
 @property (nonatomic, strong) AFHTTPSessionManager * _Nullable sessionMgr;

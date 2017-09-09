@@ -7,11 +7,14 @@
 //
 
 #import "CHMKMapView.h"
-#define MERCATOR_RADIUS 85445659.44705395
+#define MERCATOR_RADIUS 85445659.44705395 
+
+typedef void(^didAnnotionViewBlock)(CHUserInfo *didDevice);
 
 @interface CHMKMapView ()
 {
     NSUInteger _zoomLevel;
+    didAnnotionViewBlock block;
 }
 @property (nonatomic, strong) NSMutableArray *polyliones;
 @property (nonatomic, strong) NSMutableArray *mapAnnotations;
@@ -84,6 +87,20 @@
     [self addAnnotations:_mapAnnotations];
 }
 
+- (void)userDidSelectAnnotationView:(CHUserInfo *)selDevice{
+    for (CHPointAnnotion*annotion in self.mapAnnotations) {
+        CHAnnotationView *annoView = (CHAnnotationView *)[self viewForAnnotation:annotion];
+       if ([[CHAccountTool user].deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
+            annoView.annSelect = YES;
+//            annoView.selected = YES;
+        }
+        else{
+            annoView.annSelect = NO;
+//            annoView.selected = NO;
+        }
+    }
+}
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     NSLog(@"didUpdateUserLocation %@",userLocation.location);
     if (self.userLocation.location && self.showsUserLocation && _firstLun) {
@@ -115,16 +132,28 @@
         CHAnnotationView *annoView = (CHAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:ID];
         if (annoView == nil) {
             annoView = [[CHAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ID];
+            annoView.enabled = NO;
             //   annoView.centerOffset = CGPointMake(0, -10); // 设置大头针的偏移
         }
         if ([[CHAccountTool user].deviceId isEqualToString:[(CHPointAnnotion *)annotation annotationUser].deviceId]) {
 //            annoView.selected = YES;
         }
         [annoView setLabTit:[(CHPointAnnotion *)annotation annotationUser].deviceNa];
-        [annoView didSelectAnnotaton:^(id<MKAnnotation> annotation) {
-            NSLog(@"didSelectAnnotaton %@",annotation);
+        [annoView didSelectAnnotaton:^(id<MKAnnotation> tapAnnotation) {
+            if (block) {
+                block(((CHPointAnnotion *)tapAnnotation).annotationUser);
+            }
+            NSLog(@"**********didSelectAnnotaton %@",tapAnnotation);
+            for (CHPointAnnotion*annotion in self.mapAnnotations) {
+                CHAnnotationView *subAnnoView = (CHAnnotationView *)[self viewForAnnotation:annotion];
+                if ([((CHPointAnnotion *)tapAnnotation).annotationUser.deviceId isEqualToString:[(CHPointAnnotion *)subAnnoView.annotation annotationUser].deviceId]) {
+                    subAnnoView.annSelect = YES;
+                }
+                else{
+                    subAnnoView.annSelect = NO;
+                }
+            }
         }];
-        //    MKPointAnnotation
         return annoView;
     }
     return nil;
@@ -134,9 +163,10 @@
     for (MKAnnotationView *view in views) {
         if (![view isKindOfClass:NSClassFromString(@"MKModernUserLocationView")]) {
             CHAnnotationView *annoView = (CHAnnotationView *)view;
-//            CHPointAnnotion *annotation = annoView.annotation;
+            annoView.annSelect = NO;
             if ([[CHAccountTool user].deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
-                annoView.selected = YES;
+                annoView.annSelect = YES;
+                NSLog(@"*******************************annoView %@",annoView);
             }
         }
     }
@@ -156,10 +186,12 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-//    if (![view isKindOfClass:[CHAnnotationView class]]) {
-//        view.selected = NO;
-//    }
+    
     NSLog(@"didSelectAnnotaton %@  ** %d",view,view.selected);
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+    NSLog(@"didDeselectAnnotationView %@  ** %d",view,view.selected);
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view didChangeDragState:(MKAnnotationViewDragState)newState
@@ -172,6 +204,10 @@
     if (!_firstLun) {
         _zoomLevel = [self getZoomLevel:self];
     }
+}
+
+- (void)didSelectMapAnnotationView:(void (^)(CHUserInfo *didDevice))callBack{
+    block = callBack;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

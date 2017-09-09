@@ -28,11 +28,25 @@
 //    self.imageView.backgroundColor = [UIColor greenColor];
     [self.contentView addSubview:self.imageView];
     
+    self.maskView = [UIView new];
+    self.maskView.layer.masksToBounds = YES;
+    self.maskView.layer.cornerRadius = self.frame.size.height/3;
+    self.maskView.backgroundColor = CHUIColorFromRGB(0x000000, 0.5);
+    self.maskView.hidden = YES;
+    [self.contentView addSubview:self.maskView];
+    
     self.titleLab = [CHLabel createWithTit:nil font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:nil textAlignment:1];
 //    self.titleLab.backgroundColor = [UIColor blueColor];
     [self.contentView addSubview:self.titleLab];
     
     [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(4);
+        make.centerX.mas_equalTo(self.contentView);
+        make.height.mas_equalTo(self.frame.size.height/1.5);
+        make.width.mas_equalTo(self.frame.size.height/1.5);
+    }];
+    
+    [self.maskView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(4);
         make.centerX.mas_equalTo(self.contentView);
         make.height.mas_equalTo(self.frame.size.height/1.5);
@@ -45,5 +59,17 @@
         make.bottom.mas_equalTo(self.contentView).mas_offset(-2);
         make.right.mas_equalTo(0);
     }];
+}
+
+- (void)setCellMask:(BOOL)cellMask{
+    _cellMask = cellMask;
+    if (cellMask) {
+        self.maskView.hidden = YES;
+        self.titleLab.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
+    }
+    else{
+        self.maskView.hidden = NO;
+        self.titleLab.textColor = CHUIColorFromRGB(0xafafaf, 1.0);
+    }
 }
 @end

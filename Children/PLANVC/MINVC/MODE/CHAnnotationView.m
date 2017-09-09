@@ -36,7 +36,7 @@
     _IconImageView = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_weixuandingwei"] backColor:nil];
     [self addSubview:_IconImageView];
 //    self.userInteractionEnabled = YES;
-//    _IconImageView.userInteractionEnabled = YES;
+    _IconImageView.userInteractionEnabled = YES;
     [_IconImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(0);
         make.centerX.mas_equalTo(self);
@@ -47,6 +47,21 @@
     _nameLab = [CHLabel createWithTit:nil font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xe66161, 1.0) backColor:CHUIColorFromRGB(0xffffff, 1.0) textAlignment:1];
     [self addSubview:_nameLab];
     [self updateLayer];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage)];
+    [self addGestureRecognizer:tap];
+    
+//    CHButton *but = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:[UIColor greenColor] touchBlock:^(CHButton *sender) {
+//        NSLog(@"createWithTit");
+//    }];
+//    [self addSubview:but];
+//    [but mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.mas_equalTo(0);
+//        make.centerX.mas_equalTo(self);
+//        make.height.mas_equalTo(50 * WIDTHAdaptive);
+//        make.width.mas_equalTo(50 * WIDTHAdaptive);
+//    }];
+//    NSLog(@"fwegg ==%@",self.gestureRecognizers);
 }
 
 - (void)setLabTit:(NSString *)tit{
@@ -67,19 +82,6 @@
         make.width.mas_equalTo(titRect.size.width);
     }];
     
-//        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, titRect.size.width, 20) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(8.0, 8.0)];
-//    
-//        CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
-//        //设置大小
-//        maskLayer.frame = CGRectMake(0, 0, titRect.size.width, 20);
-//        maskLayer.lineWidth = 1.0;
-//        maskLayer.borderColor = CHUIColorFromRGB(0xe66161, 1.0).CGColor;
-//        maskLayer.fillColor = [UIColor whiteColor].CGColor;
-//        //设置图形样子
-//        maskLayer.path = maskPath.CGPath;
-//        self.nameLab.layer.mask = maskLayer; //添加蒙板，无法设置边框颜色
-    //    [self.nameLab.layer insertSublayer:maskLayer atIndex:0];
-    
     _nameLab.layer.masksToBounds = YES;
     _nameLab.layer.borderWidth = 1.0;
     _nameLab.layer.borderColor = CHUIColorFromRGB(0xe66161, 1.0).CGColor;
@@ -92,26 +94,34 @@
     tapBlock(self.annotation);
 }
 
-- (void)setSelected:(BOOL)selected{
-    if (![self isKindOfClass:[CHAnnotationView class]]) {
-        return;
-    }
-    _selected = selected;
-    [self setSelect:_selected];
-    NSLog(@"_selected  %d",_selected);
+- (void)setAnnSelect:(BOOL)annSelect{
+    _annSelect = annSelect;
+    [self setSelect:_annSelect];
+    NSLog(@"_annSelect  %d",_annSelect);
 }
 
-- (BOOL)isSelected{
-    return _selected;
-}
+//- (void)setSelected:(BOOL)selected{
+//    if (![self isKindOfClass:[CHAnnotationView class]]) {
+//        return;
+//    }
+//    _selected = selected;
+//    [self setSelect:_selected];
+//    NSLog(@"_selected  %d",_selected);
+//}
+//
+//- (BOOL)isSelected{
+//    return _selected;
+//}
 
 - (void)setSelect:(BOOL)select{
     if (select) {
+        NSLog(@"*******************************annoViewYES %@",self);
         [_IconImageView setImage:[UIImage imageNamed:@"icon_dangqiandingwei"]];
         _nameLab.layer.borderColor = CHUIColorFromRGB(0xff0000, 1.0).CGColor;
         _nameLab.textColor = CHUIColorFromRGB(0xff0000, 1.0);
     }
     else{
+        NSLog(@"*******************************annoViewNO %@",self);
         _nameLab.layer.borderColor = CHUIColorFromRGB(0xe66161, 1.0).CGColor;
         _nameLab.textColor = CHUIColorFromRGB(0xe66161, 1.0);
         [_IconImageView setImage:[UIImage imageNamed:@"icon_weixuandingwei"]];
@@ -119,9 +129,7 @@
 }
 
 - (void)didSelectAnnotaton:(tapAnnotation)block{
-    if (block) {
         tapBlock = block;
-    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

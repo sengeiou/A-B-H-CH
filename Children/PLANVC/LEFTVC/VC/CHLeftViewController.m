@@ -10,10 +10,10 @@
 
 
 @interface CHLeftViewController ()
-@property (nonatomic, strong) CHUserInfo *user;
-@property (nonatomic, strong) NSMutableArray *deviceLists;
-@property (nonatomic, strong) NSArray *leftArrs;
 @property (nonatomic, strong) AppDelegate *app;
+@property (nonatomic, strong) CHLabel *electricityLab;
+@property (nonatomic, strong) MNWheelView *wheelView;
+@property (nonatomic, strong) UIImageView *electricityView;
 @end
 
 @implementation CHLeftViewController
@@ -44,9 +44,10 @@
             deInte = [self.deviceLists indexOfObject:deUse];
         }
     }
-     NSInteger mid = self.deviceLists.count/2;
+    NSInteger mid = self.deviceLists.count/2;
     [self.deviceLists exchangeObjectAtIndex:mid withObjectAtIndex:deInte];
     self.leftArrs = @[@[[UIImage imageNamed:@"leftbar_jtcy"],CHLocalizedString(@"家庭成员", nil)],@[[UIImage imageNamed:@"leftbar_aqwl"],CHLocalizedString(@"安全围栏", nil)],@[[UIImage imageNamed:@"leftbar_lsgj"],CHLocalizedString(@"历史轨迹", nil)],@[[UIImage imageNamed:@"leftbar_bbsb"],CHLocalizedString(@"宝贝手表", nil)],@[[UIImage imageNamed:@"leftbar_xxzx"],CHLocalizedString(@"消息中心", nil)],@[[UIImage imageNamed:@"leftbar_sz"],CHLocalizedString(@"更多设置", nil)]];
+    [CHNotifictionCenter addObserver:self selector:@selector(updateUI:) name:@"UPDATELEFTVC" object:nil];
 }
 
 - (CHUserInfo *)user{
@@ -56,34 +57,39 @@
     return _user;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear");
+}
+
 - (void)createUI{
-    self.view.backgroundColor = [UIColor greenColor];
+//    self.view.backgroundColor = [UIColor greenColor];
 
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (kScreenWidth - kMainPageDistance), 190 * WIDTHAdaptive)];
     headView.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:headView];
     
-    MNWheelView *wheelView = [[MNWheelView alloc] initWithFrame:CGRectMake(0, 20, (kScreenWidth - kMainPageDistance) - 30, 140 * WIDTHAdaptive)];
-    [headView addSubview:wheelView];
-    wheelView.center = CGPointMake(((kScreenWidth - kMainPageDistance))/2, wheelView.center.y);
-    wheelView.images = self.deviceLists;
-    wheelView.click = ^(CHDeviceView *user){
+    self.wheelView = [[MNWheelView alloc] initWithFrame:CGRectMake(0, 20, (kScreenWidth - kMainPageDistance) - 30, 140 * WIDTHAdaptive)];
+    [headView addSubview:self.wheelView];
+    self.wheelView.center = CGPointMake(((kScreenWidth - kMainPageDistance))/2, self.wheelView.center.y);
+    self.wheelView.images = self.deviceLists;
+    self.wheelView.click = ^(CHDeviceView *user){
          NSLog(@"11单击 %@",user);
     };
     
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:wheelView.bounds];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.wheelView.bounds];
     
     CAShapeLayer *makeLayer = [CAShapeLayer layer];
-    makeLayer.frame = wheelView.bounds;
+    makeLayer.frame = self.wheelView.bounds;
     makeLayer.backgroundColor = [UIColor clearColor].CGColor;
     makeLayer.path = path.CGPath;
-    wheelView.layer.mask = makeLayer;
+    self.wheelView.layer.mask = makeLayer;
     
-    UIImageView *electricityView = [UIImageView itemWithImage:[UIImage imageNamed:@"leftbar_dl_1"] backColor:nil];
-    [headView addSubview:electricityView];
+    self.electricityView = [UIImageView itemWithImage:[UIImage imageNamed:@"leftbar_dl_1"] backColor:nil];
+    [headView addSubview:self.electricityView];
     
-    CHLabel *electricityLab = [CHLabel createWithTit:@"100%" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
-    [headView addSubview:electricityLab];
+    self.electricityLab = [CHLabel createWithTit:@"100%" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
+    [headView addSubview:self.electricityLab];
     
     UITableView *leftTab = [UITableView new];
     leftTab.delegate = self;
@@ -91,14 +97,14 @@
     leftTab.tableFooterView = [UIView new];
     [self.view addSubview:leftTab];
     
-    [electricityLab mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.electricityLab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(-4);
         make.left.mas_equalTo(16);
     }];
     
-    [electricityView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(electricityLab.mas_top).mas_offset(-2);
-        make.left.mas_equalTo(electricityLab.mas_left);
+    [self.electricityView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self.electricityLab.mas_top).mas_offset(-2);
+        make.left.mas_equalTo(self.electricityLab.mas_left);
         make.width.mas_equalTo(28 * WIDTHAdaptive);
         make.height.mas_equalTo(15 * WIDTHAdaptive);
     }];
@@ -119,6 +125,30 @@
 //    }
 }
 
+- (void)updateUI:(NSNotification *)noti{
+    NSLog(@"updateLEFTUI %@",noti.userInfo);
+    NSDictionary *deviceDic = noti.userInfo;
+    self.user = deviceDic[@"USER"];
+    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+    CHUserInfo *addUser = [[CHUserInfo alloc] init];
+    addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    addUser.deviceNa = CHLocalizedString(@"添加设备", nil);
+    [self.deviceLists addObject:addUser];
+    NSUInteger deInte = 0;
+    for (CHUserInfo *deUse in self.deviceLists) {
+        if ([deUse.deviceId isEqualToString:self.user.deviceId]) {
+            deInte = [self.deviceLists indexOfObject:deUse];
+        }
+    }
+    NSInteger mid = self.deviceLists.count/2;
+    [self.deviceLists exchangeObjectAtIndex:mid withObjectAtIndex:deInte];
+    self.wheelView.images = self.deviceLists;
+    if (self.user.deviceBa) {
+        self.electricityLab.text = [NSString stringWithFormat:@"%d%%",[self.user.deviceBa intValue]];
+        self.electricityView.image = [self batteryImage:[self.user.deviceBa intValue]];
+    }
+    
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *leftCell = @"LEFTCELL";
@@ -145,7 +175,35 @@
     NSLog(@"fwgg == %@",self.app.leftSliderViewController.mainVC);
 //    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
     NSString * postName = @"HomePagePush";
-    [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHBaseViewController alloc] init]}];
+    if (indexPath.row == 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMemberViewController alloc] init]}];
+    }
+}
+
+- (void)dealloc{
+    NSLog(@"dealloc");
+    [CHNotifictionCenter removeObserver:self name:@"UPDATELEFTVC" object:nil];
+}
+
+- (UIImage *)batteryImage:(int)bat{
+    if (bat > 80) {
+        return [UIImage imageNamed:@"leftbar_dl_1"];
+    }
+    else if (bat > 60 && bat <= 80){
+       return [UIImage imageNamed:@"leftbar_dl_2"];
+    }
+    else if (bat > 40 && bat <= 60){
+        return [UIImage imageNamed:@"leftbar_dl_3"];
+    }
+    else if (bat > 20 && bat <= 40){
+        return [UIImage imageNamed:@"leftbar_dl_4"];
+    }
+    else if (bat > 10 && bat <= 20){
+        return [UIImage imageNamed:@"leftbar_dl_5"];
+    }
+    else{
+        return [UIImage imageNamed:@"leftbar_dl_6"];
+    }
 }
 
 /*

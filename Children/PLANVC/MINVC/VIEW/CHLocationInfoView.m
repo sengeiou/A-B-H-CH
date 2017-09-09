@@ -11,6 +11,9 @@
 @interface CHLocationInfoView ()
 {
     CHButton *updateBut;
+    NSIndexPath *selectIndex;
+    didSelectCollection block;
+    ButTouchedBlock butBlock;
 }
 @end
 
@@ -43,7 +46,7 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
     [locaView addSubview:self.locaLab];
     
     updateBut = [CHButton createWithTit:CHLocalizedString(@"刷新", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 9) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:22 touchBlock:^(CHButton *sender) {
-        NSLog(@"fwegg");
+        butBlock(sender);
     }];
     [updateBut setImage:[UIImage imageNamed:@"icon_shuaxin"] forState:UIControlStateNormal];
     
@@ -89,6 +92,14 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
     [self.deviceCollView reloadData];
 }
 
+- (void)didSelectItem:(didSelectCollection)callBack{
+    block = callBack;
+}
+
+- (void)didUpdateLogo:(ButTouchedBlock) callBack{
+    butBlock = callBack;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return _devices.count;
 //    return 6;
@@ -96,7 +107,6 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CHDeiceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor greenColor];
     dispatch_queue_t queue = dispatch_queue_create("imageQuiet", DISPATCH_QUEUE_CONCURRENT);
     CHUserInfo *device = [_devices objectAtIndex:indexPath.row];
     dispatch_async(queue, ^{
@@ -107,11 +117,33 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = deviceIma;
+            if (_selectDevice == device) {
+                cell.cellMask = YES;
+            }
+            else{
+                cell.cellMask = NO;
+            }
         });
     });
     
     cell.titleLab.text = [TypeConversionMode strongChangeString:device.deviceNa];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    for (int i = 0; i < _devices.count; i ++) {
+        CHDeiceCollectionViewCell *cell1 = (CHDeiceCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        if (indexPath.row == i) {
+            cell1.cellMask = YES;
+        }
+        else{
+            cell1.cellMask = NO;
+        }
+    }
+    _selectDevice = [_devices objectAtIndex:indexPath.row];
+    if (block) {
+        block(_selectDevice);
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{

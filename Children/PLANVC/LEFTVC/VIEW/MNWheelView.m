@@ -72,7 +72,16 @@
     //    if (count>6) {
     //        smallW=10;
     //    }
-    
+    for (UIView *view in _baseView.subviews) {
+        if ([view isKindOfClass:[CHDeviceView class]]) {
+             [view removeFromSuperview];
+        }
+    }
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            [(UIButton *)view removeFromSuperview];
+        }
+    }
     CGFloat myW=_baseView.frame.size.width-smallW*mid;
     CGFloat basW=_baseView.frame.size.width/3;
     for (int i=0; i<count; i++) {

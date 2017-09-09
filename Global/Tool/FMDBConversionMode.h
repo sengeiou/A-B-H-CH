@@ -18,6 +18,8 @@
  */
 - (void)deleteAllDevice:(CHUserInfo *)userInfo;
 
+- (void)updateDevice:(CHUserInfo *)deviceInfo;
+
 - (void)deleteDevice:(CHUserInfo *)userInfo;
 
 - (void)insertDevice:(CHUserInfo *)deviceInfo;
