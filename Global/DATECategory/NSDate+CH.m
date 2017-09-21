@@ -37,4 +37,18 @@
     [components setDay:day];
     return [calendar dateFromComponents:components];
 }
+
+- (NSDate *)timeDifferenceWithNumbers:(NSInteger)numbers{
+    return  [NSDate dateWithTimeInterval:(24*60*60)*numbers sinceDate:self];
+}
+
++ (NSDate *)getNowDateFromatAnDate:(NSDate *)date{
+    NSTimeZone *sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGTMOffset = [sourceTimeZone secondsFromGMTForDate:date];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:date];
+    NSInteger interval = destinationGMTOffset - sourceGTMOffset;
+    NSDate *nowDate = [NSDate dateWithTimeInterval:interval sinceDate:date];
+    return nowDate;
+}
 @end

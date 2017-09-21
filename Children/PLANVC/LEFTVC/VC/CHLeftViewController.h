@@ -11,6 +11,11 @@
 #import "MNWheelView.h"
 #import "CHBaseViewController.h"
 #import "CHMemberViewController.h"
+#import "CHJBWViewController.h"
+#import "CHHistoryTrackViewController.h"
+#import "CHDeviceDataViewController.h"
+#import "CHMessViewController.h"
+#import "CHMoreSetTableViewController.h"
 typedef enum {
     LeftViewControllerRowTypeOne,
     LeftViewControllerRowTypeTwo,

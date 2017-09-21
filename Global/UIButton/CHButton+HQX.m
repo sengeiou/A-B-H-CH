@@ -26,6 +26,7 @@ static const void *butBlockKey = &butBlockKey;
     CHButton *but = [CHButton buttonWithType:UIButtonTypeCustom];
     [but setTitle:tit ? tit:@"" forState:UIControlStateNormal];
     [but setTitleColor:color ? color:[UIColor blackColor] forState:UIControlStateNormal];
+    but.titleLabel.font = font;
     [but setBackgroundImage:[UIImage CHimageWithColor:backColor ? backColor:[UIColor clearColor] size:CHMainScreen.size] forState:UIControlStateNormal];
     objc_setAssociatedObject(but, butBlockKey, butTouchedBlack, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
@@ -60,6 +61,15 @@ static const void *butBlockKey = &butBlockKey;
     CHButton *but = [CHButton buttonWithType:UIButtonTypeCustom];
     [but setImage:norIma forState:UIControlStateNormal];
     [but setImage:liIma forState:UIControlStateHighlighted];
+    objc_setAssociatedObject(but, butBlockKey, butTouchedBlack, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [but addTarget:but action:@selector(didTouchBut:) forControlEvents:UIControlEventTouchUpInside];
+    return but;
+}
+
++ (CHButton *)createWithNorImage:(UIImage *)norIma selectIma:(UIImage *)liIma touchBlock:(ButTouchedBlock)butTouchedBlack{
+    CHButton *but = [CHButton buttonWithType:UIButtonTypeCustom];
+    [but setBackgroundImage:norIma forState:UIControlStateNormal];
+    [but setBackgroundImage:liIma forState:UIControlStateSelected];
     objc_setAssociatedObject(but, butBlockKey, butTouchedBlack, OBJC_ASSOCIATION_COPY_NONATOMIC);
     [but addTarget:but action:@selector(didTouchBut:) forControlEvents:UIControlEventTouchUpInside];
     return but;

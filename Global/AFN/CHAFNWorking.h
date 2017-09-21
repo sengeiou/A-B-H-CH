@@ -23,6 +23,15 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_RemoveShare,               //解除绑定
     REQUESTURL_ChangeMasterUser,          //更换设备主控用户
     REQUESTURL_UpdateRelationName,        //更新监护人的关系名称
+    REQUESTURL_UInviteUser,               //邀请用户
+    REQUESTURL_GeofenceList,              //查询安全圈列表
+    REQUESTURL_CreateGeofence,            //创建安全圈
+    REQUESTURL_EditGeofence,              //编辑安全圈信息
+    REQUESTURL_DeleteGeofence,            //删除安全圈信息
+    REQUESTURL_MonthHistoryDays,          //查询指定月份那些天存在轨迹数据
+    REQUESTURL_History,                   //查询手表历史定位数据
+    REQUESTURL_ExcdeptionListWhitoutCode, //获取报警信息列表
+    REQUESTURL_CommandList,               //获取报警信息列表
 };
 
 @interface CHAFNWorking : NSObject
@@ -30,6 +39,7 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
 @property (nonatomic, strong) NSMutableDictionary * _Nonnull requestDic;
 @property (nonatomic, strong) NSString * _Nullable GetOrderStatus;
 @property (nonatomic, assign) BOOL moreRequest;
+@property (nonatomic, assign) BOOL requestMess;
 + (instancetype _Nullable )shareAFNworking;
 - (void)CHAFNPostRequestUrl:(REQUESTURL)url parameters:(NSMutableDictionary *_Nullable)par Mess:(NSString *_Nullable)messtr showError:(BOOL)show progress:(void (^_Nullable)(NSProgress * _Nonnull uploadProgress))Progress success:(void (^_Nullable)(NSURLSessionDataTask * _Nonnull task, id _Nullable result))success failure:(void (^_Nullable)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
 @end

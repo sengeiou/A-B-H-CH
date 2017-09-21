@@ -47,15 +47,14 @@ static id _instace;
 //    _formatter = [[NSDateFormatter alloc] init];
 //    [_formatter setDateFormat:@"yyyyMMddHHmmss"];
 //    _datebase = [[SMADatabase alloc] init];
-    
     _manager = [[CLLocationManager alloc] init];
     _manager.delegate = self;
     _manager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
-    //    _manager.distanceFilter = 30; //控制定位服务更新频率。单位是“米”
+// _manager.distanceFilter = 30; //控制定位服务更新频率。单位是“米”
     [_manager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
     [_manager requestWhenInUseAuthorization];
     _manager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
-    //        [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
+//   [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
     _manager.distanceFilter = kCLDistanceFilterNone;  //不需要移动都可以刷新
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
 //        _manager.allowsBackgroundLocationUpdates = YES;
@@ -129,12 +128,6 @@ static id _instace;
     }
     _gatherLocation = NO;
     CLLocation * currLocation = [locations lastObject];
-//    NSDictionary *locationDic = [NSDictionary dictionaryWithObjectsAndKeys:[SMAAccountTool userInfo].userID,@"USERID",[_runStepDic objectForKey:@"DATE"],@"DATE",[NSString stringWithFormat:@"%f",currLocation.coordinate.longitude],@"LONGITUDE",[NSString stringWithFormat:@"%f",currLocation.coordinate.latitude],@"LATITUDE",[_runStepDic objectForKey:@"STEP"],@"STEP",[_runStepDic objectForKey:@"MODE"],@"MODE",@"0",@"WEB", nil];
-    
-//    NSMutableArray *locationArr = [NSMutableArray arrayWithObject:locationDic];
-//    [_datebase insertLocatainDataArr:locationArr finish:^(id finish) {
-//        
-//    }];
     NSLog(@"---%@",[NSString stringWithFormat:@"%f",currLocation.coordinate.latitude]);
     NSLog(@"+++%@",[NSString stringWithFormat:@"%f",currLocation.coordinate.longitude]);
 }
@@ -146,8 +139,11 @@ static id _instace;
         if (!error) {
             NSLog(@"placemarks %@",placemarks);
             CLPlacemark *pMark = [placemarks firstObject];
-            NSDictionary *dic = pMark.addressDictionary;
+            NSMutableDictionary *dic = [pMark.addressDictionary mutableCopy];
+            [dic addEntriesFromDictionary:@{@"latitude":[NSNumber numberWithFloat:pMark.location.coordinate.latitude]}];
+            [dic addEntriesFromDictionary:@{@"longitude":[NSNumber numberWithFloat:pMark.location.coordinate.longitude]}];
             CHGeoCodingMode *geo = [CHGeoCodingMode mj_objectWithKeyValues:dic];
+            NSLog(@"regeoCodingpMark.name %@ \n pMark.thoroughfare %@ \n pMark.subThoroughfare %@  \n pMark.locality %@ \n pMark.subLocality %@ \n pMark.administrativeArea %@ \n pMark.subAdministrativeArea %@ \n pMark.postalCode %@ \n pMark.ISOcountryCode %@ \n pMark.country %@  \n pMark.inlandWater %@ \n pMark.ocean %@ ",pMark.name,pMark.thoroughfare,pMark.subThoroughfare,pMark.locality,pMark.subLocality,pMark.administrativeArea,pMark.subAdministrativeArea,pMark.postalCode,pMark.ISOcountryCode,pMark.country,pMark.inlandWater,pMark.ocean);
             if (callBack) {
                 callBack(geo);
             }
@@ -159,4 +155,30 @@ static id _instace;
     }];
 }
 
+- (void)geocodeAddressString:(NSString *)string callBlack:(void(^)(NSMutableArray *geos))callBack{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:string completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"placemarks %@",placemarks);
+            NSMutableArray *geos = [NSMutableArray array];
+            for (CLPlacemark *pMark in placemarks) {
+                NSMutableDictionary *dic = [pMark.addressDictionary mutableCopy];
+                [dic addEntriesFromDictionary:@{@"latitude":[NSNumber numberWithFloat:pMark.location.coordinate.latitude]}];
+                [dic addEntriesFromDictionary:@{@"longitude":[NSNumber numberWithFloat:pMark.location.coordinate.longitude]}];
+                NSLog(@"geocodeAddressStringpMark.name %@ \n pMark.thoroughfare %@ \n pMark.subThoroughfare %@  \n pMark.locality %@ \n pMark.subLocality %@ \n pMark.administrativeArea %@ \n pMark.subAdministrativeArea %@ \n pMark.postalCode %@ \n pMark.ISOcountryCode %@ \n pMark.country %@  \n pMark.inlandWater %@ \n pMark.ocean %@ ",pMark.name,pMark.thoroughfare,pMark.subThoroughfare,pMark.locality,pMark.subLocality,pMark.administrativeArea,pMark.subAdministrativeArea,pMark.postalCode,pMark.ISOcountryCode,pMark.country,pMark.inlandWater,pMark.ocean);
+    
+                 CHGeoCodingMode *geo = [CHGeoCodingMode mj_objectWithKeyValues:dic];
+                [geos addObject:geo];
+            }
+           
+            if (callBack) {
+                callBack(geos);
+            }
+        }
+        else{
+            callBack([NSMutableArray array]);
+            NSLog(@"%@", error);
+        }
+    }];
+}
 @end

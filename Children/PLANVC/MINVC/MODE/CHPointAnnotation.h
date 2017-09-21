@@ -7,7 +7,9 @@
 //
 
 #import <MapKit/MapKit.h>
-
+           
 @interface CHPointAnnotation : MKPointAnnotation
-@property (nonatomic, strong) CHUserInfo *poinUser;
+@property (nonatomic, strong) UIImage *annoTionImage;
+@property (nonatomic, strong) NSString *textStr;
+@property (nonatomic, strong) UIColor *headColor;
 @end

@@ -60,6 +60,7 @@ static id _instace;
 }
 
 - (void)CHAFNPostRequestUrl:(REQUESTURL)url parameters:(NSMutableDictionary *)par Mess:(NSString *)messtr showError:(BOOL)show progress:(void (^)(NSProgress * _Nonnull uploadProgress))Progress success:(void (^)(NSURLSessionDataTask * _Nonnull task, id _Nullable result))success failure:(void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure{
+    @WeakObj(self)
     if (show && messtr) {
         [MBProgressHUD showMessage:messtr];
     }
@@ -71,9 +72,8 @@ static id _instace;
         if (show && !_moreRequest) {
             [MBProgressHUD hideHUD];
         }
+       selfWeak.requestMess = [selfWeak showMessAgeWithResponse:responseObject];
         success(task,responseObject);
-        
-        [self showMessAgeWithResponse:responseObject];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"\error***********************\n%@\nrequesturl: %@\n********************",error,[prfixStr stringByAppendingString:GetOrderStatus(url)]);
@@ -126,18 +126,41 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/User/ChangeMasterUser";
         case REQUESTURL_UpdateRelationName:
             return @"api/AuthShare/UpdateRelationName";
+        case REQUESTURL_UInviteUser:
+            return @"api/User/InviteUser";
+        case REQUESTURL_GeofenceList:
+            return @"api/Geofence/GeofenceList";
+        case REQUESTURL_CreateGeofence:
+            return @"api/Geofence/CreateGeofence";
+        case REQUESTURL_EditGeofence:
+            return @"api/Geofence/EditGeofence";
+        case REQUESTURL_DeleteGeofence:
+            return @"api/Geofence/DeleteGeofence";
+        case REQUESTURL_MonthHistoryDays:
+            return @"api/Location/MonthHistoryDays";
+        case REQUESTURL_History:
+            return @"api/Location/History";
+        case REQUESTURL_ExcdeptionListWhitoutCode:
+            return @"api/ExceptionMessage/ExcdeptionListWhitoutCode";
+        case REQUESTURL_CommandList:
+            return @"api/Command/CommandList";
         default:
             return @"";
     }
 }
 
-- (void)showMessAgeWithResponse:(id _Nullable)responseObject{
+- (BOOL)showMessAgeWithResponse:(id _Nullable)responseObject{
     
     if (responseObject && [[responseObject objectForKey:@"State"] intValue] != 0 && [[responseObject objectForKey:@"State"] intValue] != 1107 && [[responseObject objectForKey:@"State"] intValue] != 1500 && [[responseObject objectForKey:@"State"] intValue] != 1501) {
-        if ([responseObject objectForKey:@"Message"] && ![[responseObject objectForKey:@"Message"] isEqualToString:@""]) {
+        if (![[responseObject objectForKey:@"Message"] isEqual:[NSNull null]] && [responseObject objectForKey:@"Message"] != nil && [responseObject objectForKey:@"Message"] && ![[responseObject objectForKey:@"Message"] isEqualToString:@""]) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showError:[responseObject objectForKey:@"Message"]];
+            return YES;
+        }
+        else{
+            return NO;
         }
     }
+    return YES;
 }
 @end

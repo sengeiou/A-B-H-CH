@@ -51,6 +51,7 @@
 #define CHMediumSkyBlueColor 0x28ccfa
 #define CHMediumBlackColor 0x212121
 #define IOS_VERSION_10 (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_9_x_Max)?(YES):(NO) 
+#define Is_up_Ios_9 ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
 #define WORK_MODE = @"0120"        //工作模式
 #define DORMANT_TIME_BUCKET @"1020"  //晚间时间段
 #define CHANGE_DEVICE @"2806"  //更换小普夹子
@@ -61,8 +62,11 @@
 #define SET_WATCH_PHONE @"2807"  //设置手表号码
 #define SHIELD_DEVICE @"2814"  //小普夹子开关
 #define QUERY_TELEHONE_CHARGE @"2804"  //查询话费 cmdValue:app用户手机号码,目标号码,短信内容
-#define GREET_CMD @"2810"  //问候指令 cmdvalue:app用户的手机号码,问候内容
-
+#define PHONE_BOOK  @"2801"  //批量设置电话本
+#define PHONE_BOOK_SINGLE @"2802"  //单条设置电话本
+#define LESSONS_TIME @"0117"  //上课禁用
+#define ALARM_CLOCK @"0116"  //闹钟提醒
+#define DEVICE_LISTEN @"0024"  //一键监听
 
 #if DEBUG
 #define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -70,8 +74,8 @@
 #define NSLog(FORMAT, ...) nil
 #endif
 
-#define CHLocalizedString(str,nil) [CHLocalizeableMode CHlocalizedStringDic:str comment:nil]
-#define CHFontNormal(nil,f) [UIFont fontWithName:nil ? nil:@".SFUIText" size:f]
+#define CHLocalizedString(str,nil) [CHLocalizeableMode CHlocalizedStringDic:str comment:nil] //.HelveticaNeueInterface-Regular SFUIText
+#define CHFontNormal(nil,f) [UIFont fontWithName:nil ? nil:@".HelveticaNeueInterface-Regular" size:f]
 #define CHFontBold(nil,f) [UIFont fontWithName:nil ? nil:@".SFUIDisplay-Semibold" size:f * WIDTHAdaptive]
 
 #define CHUIColorFromRGB(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]

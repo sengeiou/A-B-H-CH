@@ -226,7 +226,7 @@
                         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                             NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:0];
                             user.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
-                            
+                            user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
                             [CHAFNWorking shareAFNworking].moreRequest = NO;
                             [activityIndicatorView stopAnimating];
                             

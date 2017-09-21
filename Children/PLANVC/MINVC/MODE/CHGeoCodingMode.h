@@ -19,4 +19,6 @@
 @property (copy, nonatomic) NSString *SubLocality;
 @property (copy, nonatomic) NSString *SubThoroughfare;
 @property (copy, nonatomic) NSString *Thoroughfare;
+@property (assign, nonatomic) CGFloat latitude;
+@property (assign, nonatomic) CGFloat longitude;
 @end

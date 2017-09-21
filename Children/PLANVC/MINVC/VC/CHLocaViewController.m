@@ -265,6 +265,7 @@ static int request;
                 self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit0[@"NickName"]];
                 self.user.deviceBa = [TypeConversionMode strongChangeString:itemDit0[@"Battery"]];
                 self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit0[@"Model"]];
+                self.user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit0[@"SerialNumber"]];
                 self.user.deviceCoor = CLLocationCoordinate2DMake([itemDit0[@"Latitude"] floatValue], [itemDit0[@"Longitude"] floatValue]);
             }
             
@@ -292,6 +293,7 @@ static int request;
             userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
             userList.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
             userList.deviceBa = [TypeConversionMode strongChangeString:itemDit[@"Battery"]];
+            userList.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
             userList.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
             
             [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {

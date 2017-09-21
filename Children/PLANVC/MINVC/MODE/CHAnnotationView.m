@@ -17,7 +17,6 @@
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self) {
         [self createUI];
-//        self.image = [UIImage imageNamed:@"icon_weixuandingwei"];
     }
     return self;
 }
@@ -31,8 +30,6 @@
 }
 
 - (void)createUI{
-//    MKPinAnnotationView
-//    self.backgroundColor = [UIColor greenColor];
     _IconImageView = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_weixuandingwei"] backColor:nil];
     [self addSubview:_IconImageView];
 //    self.userInteractionEnabled = YES;
@@ -50,18 +47,6 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage)];
     [self addGestureRecognizer:tap];
-    
-//    CHButton *but = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:[UIColor greenColor] touchBlock:^(CHButton *sender) {
-//        NSLog(@"createWithTit");
-//    }];
-//    [self addSubview:but];
-//    [but mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.mas_equalTo(0);
-//        make.centerX.mas_equalTo(self);
-//        make.height.mas_equalTo(50 * WIDTHAdaptive);
-//        make.width.mas_equalTo(50 * WIDTHAdaptive);
-//    }];
-//    NSLog(@"fwegg ==%@",self.gestureRecognizers);
 }
 
 - (void)setLabTit:(NSString *)tit{

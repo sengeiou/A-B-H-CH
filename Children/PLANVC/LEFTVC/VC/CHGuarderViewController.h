@@ -10,6 +10,7 @@
 #import "CHGuarderCell.h"
 #import "CHGuarderItemMode.h"
 #import "CHEditGuarderTableViewController.h"
+#import "CHSAddGuarderViewController.h"
 
 @interface CHGuarderViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 

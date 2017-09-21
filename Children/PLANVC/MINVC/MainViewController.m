@@ -32,33 +32,35 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+     [self.navigationController setNavigationBarHidden:YES animated: YES];
      [self initializeMethod];
-    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
 }
-
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:animated];
-//    [self.navigationController setNavigationBarHidden:NO animated:NO];
-//}
 
 - (void)viewDidAppear:(BOOL)animated{
     [self setPanIsOpen:YES];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (NSMutableArray *)deviceLists{
+    if (!_deviceLists) {
+        _deviceLists = [NSMutableArray array];
+    }
+    return _deviceLists;
 }
 
 - (void)initializeMethod{
-    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+//    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.afnRequest = [CHAFNWorking shareAFNworking];
     //    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.app.leftSliderViewController.leftDelegate = self;
     [self updateDeviceListWithRequestTimes:1];
+    
+//    [self clearDevice];
+//    [self updateUI];
 }
 
 //static int request;
@@ -124,6 +126,7 @@
                 self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit0[@"NickName"]];
                 self.user.deviceBa = [TypeConversionMode strongChangeString:itemDit0[@"Battery"]];
                 self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit0[@"Model"]];
+                self.user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit0[@"SerialNumber"]];
                 self.user.deviceCoor = CLLocationCoordinate2DMake([itemDit0[@"Latitude"] floatValue], [itemDit0[@"Longitude"] floatValue]);
             }
             
@@ -140,6 +143,7 @@
             userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
             userList.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
             userList.deviceBa = [TypeConversionMode strongChangeString:itemDit[@"Battery"]];
+            userList.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
             userList.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
             
             [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
@@ -180,7 +184,6 @@
             //            }
         }
     }];
-    
     //    request --;
     //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     //        [self updateDeviceListWithRequestTimes:request];
@@ -243,7 +246,6 @@
     }
     
     self.leftBut = [CHButton createWithImage:deviceIma Radius:25 touchBlock:^(CHButton *sender) {
-        [selfWeak requestDivice];
         [selfWeak.app.leftSliderViewController openLeftView];
         
     }];
@@ -339,7 +341,6 @@
     [phoneBut sizeToFit];
     [phoneLab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(phoneBut.mas_top).mas_offset(-1);
-        NSLog(@"fw %f",phoneBut.frame.size.width);
         make.centerX.mas_equalTo(phoneBut.mas_centerX).mas_offset(-phoneBut.frame.size.width/5);
     }];
     
@@ -373,6 +374,10 @@
 }
 
 - (void)requestDivice{
+    if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+         [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
+        return;
+    }
     @WeakObj(self)
     NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
     [dic addEntriesFromDictionary:@{@"UserId": self.user.userId,
@@ -391,6 +396,7 @@
         self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
         self.user.deviceBa = [TypeConversionMode strongChangeString:itemDit[@"Battery"]];
         self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
+        self.user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
         self.user.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
         [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
             
@@ -441,6 +447,8 @@
 }
 
 - (void)leftViewWillApplear{
+      [self requestDivice];
+//   [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
      NSLog(@"leftViewWillApplear");
 }
 
@@ -454,7 +462,9 @@
     //关闭抽屉
     AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
     [appDelegate.leftSliderViewController closeLeftView];
-    
+    if ([pushViewController isKindOfClass:[CHJBWViewController class]]) {
+        ((CHJBWViewController *)pushViewController).user = self.user;
+    }
     [self.navigationController pushViewController:pushViewController animated:YES];
     
     self.hidesBottomBarWhenPushed = NO;

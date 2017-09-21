@@ -24,4 +24,21 @@
     }
     return (NSString *)data;
 }
+
++ (BOOL)checkHomeFaceLocalizeable:(NSString *)str{
+    BOOL result = NO;
+    NSString *translation_key = @"fence_home";
+    NSArray *paths = @[@"en",@"zh-Hans"];
+    for (NSString *Resource in paths) {
+        NSString * path = [[NSBundle mainBundle] pathForResource:Resource ofType:@"lproj"];
+        NSBundle * languageBundle = [NSBundle bundleWithPath:path];
+        NSString *s = [NSString localizedStringWithFormat:[languageBundle localizedStringForKey:translation_key value:@"" table:nil],nil];
+       
+        if ([s isEqualToString:str]) {
+            result = YES;
+            break;
+        }
+    }
+    return result;
+}
 @end

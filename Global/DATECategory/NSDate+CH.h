@@ -13,4 +13,6 @@
 - (NSUInteger)getMonth;
 - (NSUInteger)getYear;
 + (NSDate *)dateWithYear:(NSInteger)year month:(NSUInteger)month day:(NSUInteger)day;
+- (NSDate *)timeDifferenceWithNumbers:(NSInteger)numbers;
++ (NSDate *)getNowDateFromatAnDate:(NSDate *)date;
 @end

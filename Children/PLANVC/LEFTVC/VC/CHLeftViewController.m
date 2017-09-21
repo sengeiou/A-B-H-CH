@@ -31,7 +31,7 @@
 }
 
 - (void)initializeMethod{
-    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+//    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     CHUserInfo *addUser = [[CHUserInfo alloc] init];
     addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -61,6 +61,7 @@
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
 }
+
 
 - (void)createUI{
 //    self.view.backgroundColor = [UIColor greenColor];
@@ -125,11 +126,18 @@
 //    }
 }
 
+- (NSMutableArray *)deviceLists{
+    if (!_deviceLists) {
+        _deviceLists = [NSMutableArray array];
+    }
+    return _deviceLists;
+}
+
 - (void)updateUI:(NSNotification *)noti{
     NSLog(@"updateLEFTUI %@",noti.userInfo);
     NSDictionary *deviceDic = noti.userInfo;
     self.user = deviceDic[@"USER"];
-    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+    self.deviceLists = [deviceDic[@"DEVICELIST"] mutableCopy];
     CHUserInfo *addUser = [[CHUserInfo alloc] init];
     addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     addUser.deviceNa = CHLocalizedString(@"添加设备", nil);
@@ -174,9 +182,29 @@
    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSLog(@"fwgg == %@",self.app.leftSliderViewController.mainVC);
 //    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
+    if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+        [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
+        return;
+    }
+
     NSString * postName = @"HomePagePush";
     if (indexPath.row == 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMemberViewController alloc] init]}];
+    }
+    if (indexPath.row == 1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHJBWViewController alloc] init]}];
+    }
+    if (indexPath.row == 2) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHHistoryTrackViewController alloc] init]}];
+    }
+    if (indexPath.row ==3) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHDeviceDataViewController alloc] init]}];
+    }
+    if (indexPath.row ==4) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMessViewController alloc] init]}];
+    }
+    if (indexPath.row ==5) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMoreSetTableViewController alloc] init]}];
     }
 }
 

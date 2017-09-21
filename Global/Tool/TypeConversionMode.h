@@ -10,4 +10,6 @@
 
 @interface TypeConversionMode : NSObject
 + (NSString *)strongChangeString:(id)data;
++ (BOOL)checkFaceLocalizeable:(NSString *)str withHome:(BOOL)home;
++ (BOOL)checkHomeFaceLocalizeable:(NSString *)str;
 @end

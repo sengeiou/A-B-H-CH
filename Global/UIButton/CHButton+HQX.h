@@ -67,6 +67,8 @@ typedef void (^ButTouchedBlock)(CHButton* sender);
  */
 + (CHButton *)createWithNorImage:(UIImage *)norIma lightIma:(UIImage *)liIma touchBlock:(ButTouchedBlock)butTouchedBlack;
 
++ (CHButton *)createWithNorImage:(UIImage *)norIma selectIma:(UIImage *)liIma touchBlock:(ButTouchedBlock)butTouchedBlack;
+
 /**
  创建富文本CHButton
 

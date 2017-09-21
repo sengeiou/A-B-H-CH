@@ -48,6 +48,7 @@
 
 - (void)didClickBackBarButtonItem:(id)sender{
     [self.view endEditing:YES];
+    NSLog(@"self.childViewControllers.count %d",self.childViewControllers.count);
     [self popViewControllerAnimated:YES];
 }
 

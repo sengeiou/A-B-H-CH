@@ -13,6 +13,7 @@
 @property (nonatomic, strong) CHUserInfo *user;
 @property (nonatomic, strong) NSArray *itemArrs;
 @property (nonatomic, strong) UITableView *table;
+@property (nonatomic, assign) CHButton *addBut;
 @property (nonatomic, assign) BOOL isAdmin;
 @end
 
@@ -22,6 +23,7 @@ static NSString *Identifier = @"GUARDERCELL";
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self initializeMetod];
+    _user = [CHAccountTool user];
     [self createUI];
 }
 
@@ -35,10 +37,16 @@ static NSString *Identifier = @"GUARDERCELL";
     NSLog(@"viewWillAppear");
 }
 
+//- (void)viewWillDisappear:(BOOL)animated{
+//    [self.navigationController setNavigationBarHidden:YES animated:NO];
+//}
+
 - (void)initializeMetod{
     self.isAdmin = NO;
-    _user = [CHAccountTool user];
     CHAFNWorking *afn = [CHAFNWorking shareAFNworking];
+    if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+        return;
+    }
     NSMutableDictionary *dic = afn.requestDic;
     [dic addEntriesFromDictionary:@{@"DeviceId":_user.deviceId}];
     @WeakObj(self)
@@ -47,6 +55,11 @@ static NSString *Identifier = @"GUARDERCELL";
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         @StrongObj(self)
         self.itemArrs = [CHGuarderItemMode mj_objectArrayWithKeyValuesArray:result[@"Items"]];
+        [self setGuarderNum];
+        self.addBut.enabled = YES;
+        if (self.itemArrs.count >= 20) {
+            self.addBut.enabled = NO;
+        }
         [self.table reloadData];
         NSLog(@"_itemArrs %@",_itemArrs);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
@@ -55,20 +68,20 @@ static NSString *Identifier = @"GUARDERCELL";
 }
 
 - (void)createUI{
+    
     self.guarderNumLab = [CHLabel new];
-    NSString *str = [NSString stringWithFormat:@"电话本还可以添加%@个",@"17"];
-    
-    NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
-    
-    [attrDescribeStr addAttribute:NSForegroundColorAttributeName  value:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) range:[str rangeOfString:@"17"]];
-    self.guarderNumLab.attributedText = attrDescribeStr;
+    [self setGuarderNum];
     [self.view addSubview:self.guarderNumLab];
-    
-    CHButton *addBut = [CHButton createWithTit:CHLocalizedString(@"添加新成员", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-    
+    @WeakObj(self)
+    self.addBut = [CHButton createWithTit:CHLocalizedString(@"添加新成员", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        CHSAddGuarderViewController *addVc = [[CHSAddGuarderViewController alloc] init];
+        [selfWeak.navigationController pushViewController:addVc animated:YES];
     }];
-    [self.view addSubview:addBut];
-    
+    [self.view addSubview:self.addBut];
+    if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+        self.guarderNumLab.hidden = YES;
+        self.addBut.hidden = YES;
+    }
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width, 40)];
     CHLabel *headLab = [CHLabel createWithTit:self.addressBook ? CHLocalizedString(@"电话本（帮手表存储电话号码）", nil):CHLocalizedString(@"亲情号（手机可与手表相互拔通）", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x646464, 1.0) backColor:nil textAlignment:0];
     [headView addSubview:headLab];
@@ -104,7 +117,7 @@ static NSString *Identifier = @"GUARDERCELL";
         make.centerX.mas_equalTo(self.view);
     }];
     
-    [addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.guarderNumLab.mas_top).mas_offset(-4);
         make.centerX.mas_equalTo(self.view);
         make.left.mas_equalTo(30);
@@ -116,9 +129,17 @@ static NSString *Identifier = @"GUARDERCELL";
     [self.table mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(headView.mas_bottom);
         make.left.mas_equalTo(0);
-        make.bottom.mas_equalTo(addBut.mas_top).mas_offset(-12);
+        make.bottom.mas_equalTo(self.addBut.mas_top).mas_offset(-12);
         make.right.mas_equalTo(0);
     }];
+}
+
+- (void)setGuarderNum{
+    NSString *str1 = [NSString stringWithFormat:@"%lu",20 - self.itemArrs.count];
+    NSString *str = CHLocalizedString(@"电话本还可以添加%@个", str1);
+    NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
+        [attrDescribeStr addAttribute:NSForegroundColorAttributeName  value:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) range:[str rangeOfString:str1]];
+    self.guarderNumLab.attributedText = attrDescribeStr;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

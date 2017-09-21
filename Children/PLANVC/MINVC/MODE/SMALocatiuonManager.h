@@ -24,4 +24,6 @@
 - (void)regeoCoding:(CLLocationCoordinate2D)coor;
 
 - (void)regeoCoding:(CLLocationCoordinate2D)coor callBack:(void(^)(CHGeoCodingMode *geo))callBack;
+
+- (void)geocodeAddressString:(NSString *)string callBlack:(void(^)(NSMutableArray *geos))callBack;
 @end

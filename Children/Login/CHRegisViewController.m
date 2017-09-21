@@ -591,6 +591,7 @@
                     userList.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
                     userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
                     userList.deviceMo = [TypeConversionMode strongChangeString:itemDit[@"Model"]];
+                    userList.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
                     [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                         
                     } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {

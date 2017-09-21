@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5E6BB84AB80DB05758470AC1DEC913D6FAE300E7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5E6BB84AB80DB05758470AC1DEC913D6FAE300E7" : 9223372036854775807,
+    "8F9546778054B1550F8F3863D076771C80F02232" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9F144FC3-F384-4568-BC96-0BDF70F7853D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5E6BB84AB80DB05758470AC1DEC913D6FAE300E7" : "Children\/",
+    "8F9546778054B1550F8F3863D076771C80F02232" : "..\/SMA%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%96%99\/%E8%80%81%E4%BA%BA%E6%9C%BA\/%E6%BA%90%E7%A0%81\/%E9%9A%8F%E5%BF%83%E8%A1%8C"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Children",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Children.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/guancj\/ChildrenM2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5E6BB84AB80DB05758470AC1DEC913D6FAE300E7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/guancj\/xuixinxing.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8F9546778054B1550F8F3863D076771C80F02232"
+    }
+  ]
+}
