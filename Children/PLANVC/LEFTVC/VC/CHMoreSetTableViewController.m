@@ -83,6 +83,9 @@
     if (indexPath.section == 1) {
         [self.navigationController pushViewController:[[CHAlarmViewController alloc] init] animated:YES];
     }
+    if (indexPath.section == 2) {
+        [self.navigationController pushViewController:[[CHVolumeViewController alloc] init] animated:YES];
+    }
 }
 
 @end

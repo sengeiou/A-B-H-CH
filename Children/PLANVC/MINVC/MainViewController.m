@@ -27,6 +27,7 @@
     // Do any additional setup after loading the view.
     //接收抽屉点击事件的HomePage0Push通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(pushViewControllerFromLeftView:) name:@"HomePagePush" object:nil];
+   
     [self createUI];
 }
 
@@ -175,6 +176,8 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+//        [self clearDevice];
+//        [self updateUI];
         if (error.code != 999) {
             //            request = 0;
             //            for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
@@ -227,6 +230,7 @@
 }
 
 - (void)createUI{
+     [self clearDevice];
     @WeakObj(self)
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *backImage = [UIImageView itemWithImage:[UIImage imageNamed:@"bk_shouyebeijing"] backColor:nil];
@@ -444,10 +448,15 @@
 
 - (void)leftViewWillDisApplear{
     NSLog(@"leftViewWillDisApplear");
+     [self updateDeviceListWithRequestTimes:1];
 }
 
 - (void)leftViewWillApplear{
+     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+         [self updateDeviceListWithRequestTimes:1];
+     }else{
       [self requestDivice];
+     }
 //   [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
      NSLog(@"leftViewWillApplear");
 }

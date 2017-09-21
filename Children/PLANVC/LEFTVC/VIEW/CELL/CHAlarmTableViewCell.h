@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CHAlarmTableViewCell : UITableViewCell
+@property (nonatomic, strong) CHCmdClassDemo *demo;
 - (void)selectSwitchCallBack:(void(^)(UISwitch *oSwitch))callBack;
 @end

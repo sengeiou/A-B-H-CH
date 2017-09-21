@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CHAlarmTableViewCell.h"
+#import "CHSubAlarmViewController.h"
 
-@interface CHAlarmViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-
+@interface CHAlarmViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,VCwillPopViewDelegate>
+@property (nonatomic, strong) NSMutableArray <CHCmdClassDemo *>* commandList;
 @end

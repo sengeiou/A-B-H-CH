@@ -11,9 +11,10 @@
 #import "CHGuarderItemMode.h"
 #import "CHEditGuarderTableViewController.h"
 #import "CHSAddGuarderViewController.h"
+#import "CHAdressMode.h"
 
 @interface CHGuarderViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
-
+@property (nonatomic, strong) NSMutableArray <CHAdressMode *>*adressArrs;
 @property (nonatomic, assign) BOOL addressBook;
 
 - (void)initializeMetod;

@@ -47,7 +47,7 @@ typedef void(^didSelectSwitchBlock)(UISwitch *oSwitch);
     [self.contentView addSubview:_timeLab];
     
     _openSwitch = [[UISwitch alloc] init];
-    _openSwitch.onTintColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+    _openSwitch.onTintColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [_openSwitch addTarget:self action:@selector(didSelectSwitch:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_openSwitch];
     
@@ -98,5 +98,40 @@ typedef void(^didSelectSwitchBlock)(UISwitch *oSwitch);
     if (_block) {
         _block(sender);
     }
+}
+
+- (void)setDemo:(CHCmdClassDemo *)demo{
+    _demo = demo;
+    _timeLab.text = demo.starTime;
+    _weekLab.text = [[self weekSelectWithMode:demo] componentsJoinedByString:@","];
+    _openSwitch.on = demo.open.intValue;
+}
+
+- (NSMutableArray *)weekSelectWithMode:(CHCmdClassDemo *)mode{
+    NSArray *weekTits = @[CHLocalizedString(@"周一", nil),CHLocalizedString(@"周二", nil),CHLocalizedString(@"周三", nil),CHLocalizedString(@"周四", nil),CHLocalizedString(@"周五", nil),CHLocalizedString(@"周六", nil),CHLocalizedString(@"周日", nil)];
+    NSMutableArray *arr = [NSMutableArray array];
+    NSString *weekStr = mode.week;
+    if ([weekStr containsString:@"1"]) {
+        [arr addObject:weekTits[0]];
+    }
+    if ([weekStr containsString:@"2"]) {
+        [arr addObject:weekTits[1]];
+    }
+    if ([weekStr containsString:@"3"]) {
+        [arr addObject:weekTits[2]];
+    }
+    if ([weekStr containsString:@"4"]) {
+        [arr addObject:weekTits[3]];
+    }
+    if ([weekStr containsString:@"5"]) {
+      [arr addObject:weekTits[4]];
+    }
+    if ([weekStr containsString:@"6"]) {
+       [arr addObject:weekTits[5]];
+    }
+    if ([weekStr containsString:@"7"]) {
+        [arr addObject:weekTits[6]];
+    }
+    return arr;
 }
 @end

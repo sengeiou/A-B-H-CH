@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CHDatePickView.h"
+#import "CHCmdClassDemo.h"
+
+@protocol VCwillPopViewDelegate <NSObject>
+- (void)viewWillPop;
+@end
 
 @interface CHSubAlarmViewController : UIViewController
-
+@property (nonatomic, weak) id<VCwillPopViewDelegate> delegate;
+@property (nonatomic, strong) CHCmdClassDemo *cmdDemo;
 @end

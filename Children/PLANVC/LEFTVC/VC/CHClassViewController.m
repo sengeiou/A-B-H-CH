@@ -162,6 +162,7 @@
     self.morMode.week = weekStr;
     self.aftMode.week = weekStr;
 }
+
 - (void)createUI{
     self.title = CHLocalizedString(@"上课禁用", nil);
     self.view.backgroundColor = [UIColor whiteColor];

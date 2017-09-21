@@ -146,6 +146,8 @@
 		EEF2132E1F6BC91900E79E9A /* CHTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF2132D1F6BC91900E79E9A /* CHTracking.m */; };
 		EEF213341F6BD69000E79E9A /* CHTrackHeadVeiw.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF213331F6BD69000E79E9A /* CHTrackHeadVeiw.m */; };
 		EEF213371F6BF99D00E79E9A /* CHTrackingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF213361F6BF99D00E79E9A /* CHTrackingAnnotationView.m */; };
+		EEF4D4CA1F73A045006AE540 /* CHAdressMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF4D4C91F73A045006AE540 /* CHAdressMode.m */; };
+		EEF4D4CD1F73BC3E006AE540 /* CHVolumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF4D4CC1F73BC3E006AE540 /* CHVolumeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -424,6 +426,10 @@
 		EEF213331F6BD69000E79E9A /* CHTrackHeadVeiw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTrackHeadVeiw.m; sourceTree = "<group>"; };
 		EEF213351F6BF99D00E79E9A /* CHTrackingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTrackingAnnotationView.h; sourceTree = "<group>"; };
 		EEF213361F6BF99D00E79E9A /* CHTrackingAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTrackingAnnotationView.m; sourceTree = "<group>"; };
+		EEF4D4C81F73A045006AE540 /* CHAdressMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHAdressMode.h; sourceTree = "<group>"; };
+		EEF4D4C91F73A045006AE540 /* CHAdressMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHAdressMode.m; sourceTree = "<group>"; };
+		EEF4D4CB1F73BC3E006AE540 /* CHVolumeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHVolumeViewController.h; sourceTree = "<group>"; };
+		EEF4D4CC1F73BC3E006AE540 /* CHVolumeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHVolumeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -709,6 +715,8 @@
 				EE64EB5F1F72515E00BDA753 /* CHAlarmViewController.m */,
 				EE64EB641F726E6800BDA753 /* CHSubAlarmViewController.h */,
 				EE64EB651F726E6800BDA753 /* CHSubAlarmViewController.m */,
+				EEF4D4CB1F73BC3E006AE540 /* CHVolumeViewController.h */,
+				EEF4D4CC1F73BC3E006AE540 /* CHVolumeViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -771,6 +779,8 @@
 				EE64EB531F71FBF400BDA753 /* CHCommandMode.m */,
 				EE64EB5B1F72030800BDA753 /* CHCmdClassDemo.h */,
 				EE64EB5C1F72030800BDA753 /* CHCmdClassDemo.m */,
+				EEF4D4C81F73A045006AE540 /* CHAdressMode.h */,
+				EEF4D4C91F73A045006AE540 /* CHAdressMode.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -1212,6 +1222,7 @@
 				EEDF90B41F6F645A005AE1FB /* MJRefreshBackFooter.m in Sources */,
 				EEDF90C61F6F645A005AE1FB /* UIView+MJExtension.m in Sources */,
 				EEC491591F638BB90068F636 /* WMMenuView.m in Sources */,
+				EEF4D4CA1F73A045006AE540 /* CHAdressMode.m in Sources */,
 				EEC4915F1F638BC50068F636 /* WMPageController.m in Sources */,
 				EEB3594B1F5256E9005C5064 /* UIView_extra.m in Sources */,
 				EEC491651F638C930068F636 /* CHGuarderViewController.m in Sources */,
@@ -1286,6 +1297,7 @@
 				EE2FCAF71F3E9D5E00A6457B /* CHDefaultionfos.m in Sources */,
 				EEDF90B51F6F645A005AE1FB /* MJRefreshComponent.m in Sources */,
 				EEB40A8F1F4ADCA3003C33EA /* FMDatabaseAdditions.m in Sources */,
+				EEF4D4CD1F73BC3E006AE540 /* CHVolumeViewController.m in Sources */,
 				EE41DB3F1F4D9BE0009B230A /* NSDate+CH.m in Sources */,
 				EEDF90BA1F6F645A005AE1FB /* MJRefreshAutoStateFooter.m in Sources */,
 				EE74AB6E1F4BFFF7004F03B8 /* KLTNavigationController.m in Sources */,

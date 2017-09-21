@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Children/PLANVC/LEFTVC/VIEW/WMMenuView/WMPageController.m"
-            timestampString = "526622129.915842"
+            timestampString = "527677448.090692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "294"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Children/PLANVC/LEFTVC/VIEW/WMMenuView/WMPageController.m"
-            timestampString = "526621977.692446"
+            timestampString = "527677448.090782"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "284"
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Children/PLANVC/LEFTVC/VIEW/WMMenuView/WMPageController.m"
-            timestampString = "526621984.487391"
+            timestampString = "527677448.090838"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "302"
@@ -150,16 +150,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Children/PLANVC/LEFTVC/VC/CHMemberViewController.m"
-            timestampString = "527250158.440833"
+            filePath = "Children/PLANVC/LEFTVC/VC/CHClassViewController.m"
+            timestampString = "527684933.251094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "-init"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
+            landmarkName = "-saveClass"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,14 +169,46 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Children/PLANVC/LEFTVC/VC/CHClassViewController.m"
-            timestampString = "527580865.665419"
+            filePath = "Children/PLANVC/LEFTVC/VC/CHSAddGuarderViewController.m"
+            timestampString = "527684933.25118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
-            landmarkName = "-saveClass"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
+            landmarkName = "-arrangeAdressList"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CHSAddGuarderViewController arrangeAdressList]"
+                  moduleName = "Children"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aibaohu/Desktop/%E5%84%BF%E7%AB%A5/Children/Children/PLANVC/LEFTVC/VC/CHSAddGuarderViewController.m"
+                  timestampString = "527677976.72904"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198"
+                  offsetFromSymbolStart = "652">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CHSAddGuarderViewController arrangeAdressList]"
+                  moduleName = "Children"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aibaohu/Desktop/%E5%84%BF%E7%AB%A5/Children/Children/PLANVC/LEFTVC/VC/CHSAddGuarderViewController.m"
+                  timestampString = "527677976.732223"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198"
+                  offsetFromSymbolStart = "668">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

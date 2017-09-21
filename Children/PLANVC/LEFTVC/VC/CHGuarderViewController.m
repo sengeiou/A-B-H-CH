@@ -37,15 +37,37 @@ static NSString *Identifier = @"GUARDERCELL";
     NSLog(@"viewWillAppear");
 }
 
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [self.navigationController setNavigationBarHidden:YES animated:NO];
-//}
+- (NSMutableArray <CHAdressMode *> *)adressArrs{
+    if (!_adressArrs) {
+        _adressArrs = [NSMutableArray array];
+    }
+    return _adressArrs;
+}
 
 - (void)initializeMetod{
     self.isAdmin = NO;
     CHAFNWorking *afn = [CHAFNWorking shareAFNworking];
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
         return;
+    }
+    if (self.addressBook) {
+        NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+        [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId}];
+        @WeakObj(self)
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CommandList parameters:dic Mess:nil showError:NO progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+            for (NSDictionary *dic in result[@"Items"]) {
+                if ([dic[@"Code"] intValue] == [PHONE_BOOK intValue]) {
+                    NSLog(@"fwgoijgo == %@",dic);
+//                    [selfWeak BreakUpAarmValue:dic];
+                    break;
+                }
+            }
+//            [selfWeak createUI];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+//            [selfWeak createUI];
+        }];
     }
     NSMutableDictionary *dic = afn.requestDic;
     [dic addEntriesFromDictionary:@{@"DeviceId":_user.deviceId}];
@@ -61,20 +83,31 @@ static NSString *Identifier = @"GUARDERCELL";
             self.addBut.enabled = NO;
         }
         [self.table reloadData];
+         [MBProgressHUD hideHUD];
         NSLog(@"_itemArrs %@",_itemArrs);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
     }];
 }
 
+- (CHAdressMode *)setNewMode{
+    CHAdressMode *mode = [[CHAdressMode alloc] init];
+    return mode;
+}
+
 - (void)createUI{
-    
     self.guarderNumLab = [CHLabel new];
     [self setGuarderNum];
     [self.view addSubview:self.guarderNumLab];
     @WeakObj(self)
     self.addBut = [CHButton createWithTit:CHLocalizedString(@"添加新成员", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         CHSAddGuarderViewController *addVc = [[CHSAddGuarderViewController alloc] init];
+        addVc.isAddress = selfWeak.addressBook;
+        CHAdressMode *mode = [selfWeak setNewMode];
+        [selfWeak.adressArrs addObject:mode];
+        addVc.mode = mode;
+        addVc.cmdList = selfWeak.adressArrs;
+        addVc.itemArrs = selfWeak.itemArrs;
         [selfWeak.navigationController pushViewController:addVc animated:YES];
     }];
     [self.view addSubview:self.addBut];
@@ -136,7 +169,12 @@ static NSString *Identifier = @"GUARDERCELL";
 
 - (void)setGuarderNum{
     NSString *str1 = [NSString stringWithFormat:@"%lu",20 - self.itemArrs.count];
-    NSString *str = CHLocalizedString(@"电话本还可以添加%@个", str1);
+     NSString *str = CHLocalizedString(@"监护人还可以添加%@个", str1);
+    if (self.addressBook) {
+        str1 = [NSString stringWithFormat:@"%lu",20 - self.adressArrs.count];
+        str = CHLocalizedString(@"电话本还可以添加%@个", str1);
+    }
+   
     NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
         [attrDescribeStr addAttribute:NSForegroundColorAttributeName  value:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) range:[str rangeOfString:str1]];
     self.guarderNumLab.attributedText = attrDescribeStr;
@@ -159,6 +197,9 @@ static NSString *Identifier = @"GUARDERCELL";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.addressBook) {
+        return self.adressArrs.count;
+    }
     return _itemArrs.count;
 }
 
@@ -181,6 +222,7 @@ static NSString *Identifier = @"GUARDERCELL";
 
 - (void)dealloc{
     NSLog(@"dealloc");
+    [CHAFNWorking shareAFNworking].moreRequest = NO;
 }
 /*
 #pragma mark - Navigation

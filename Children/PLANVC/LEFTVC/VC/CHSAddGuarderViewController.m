@@ -147,6 +147,29 @@
 }
 
 - (void)addGuarder{
+    if (self.isAddress) {
+        NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+        NSString *params = [self arrangeAdressList];
+        [dic addEntriesFromDictionary:@{@"DeviceId":[CHAccountTool user].deviceId,
+                                        @"DeviceModel": [CHAccountTool user].deviceMo,
+                                        @"CmdCode": PHONE_BOOK,
+                                        @"Params": params,
+                                        @"UserId": [CHAccountTool user].userId}];
+        @WeakObj(self)
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+            if ([result[@"State"] intValue] == 0) {
+                [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [selfWeak.navigationController popViewControllerAnimated:YES];
+                });
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+            
+        }];
+        return;
+    }
     @WeakObj(self)
     NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
     [dic addEntriesFromDictionary:@{@"Phone": selfWeak.phoneField.text,
@@ -165,6 +188,29 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
     }];
+}
+
+- (NSString *)arrangeAdressList{
+    self.mode.name = self.relationField.text;
+    self.mode.relation = self.relationField.text;
+    self.mode.phoneNum = self.phoneField.text;
+    NSMutableString *adressLogo = [[NSMutableString alloc] initWithString:@"000"];
+    for (CHGuarderItemMode *guarder in self.itemArrs) {
+        if ([self.phoneField.text containsString:guarder.RelationPhone]) {
+            [adressLogo replaceCharactersInRange:NSMakeRange(1, 1) withString:@"1"];
+        }
+        if (guarder.IsAdmin && [self.phoneField.text containsString:guarder.RelationPhone]) {
+            [adressLogo replaceCharactersInRange:NSMakeRange(0, 1) withString:@"1"];
+        }
+    }
+    self.mode.adressLogo = adressLogo;
+    
+    NSMutableArray <CHAdressMode *>* cmdList = self.cmdList;
+    NSString *alarmListStr = @"";
+    for (int i = 0; i < cmdList.count; i ++) {
+        alarmListStr = [alarmListStr stringByAppendingString:[NSString stringWithFormat:@"%@%@,%@,%@,%@",i != 0 ? @",":@"",cmdList[i].name,cmdList[i].relation,cmdList[i].adressLogo,cmdList[i].phoneNum]];
+    }
+    return alarmListStr;
 }
 
 - (void)openAddress{

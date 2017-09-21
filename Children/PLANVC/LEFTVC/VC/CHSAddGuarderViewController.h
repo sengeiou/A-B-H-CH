@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <ContactsUI/ContactsUI.h>
+#import "CHAdressMode.h"
 
 @interface CHSAddGuarderViewController : UIViewController<UITextFieldDelegate,ABPeoplePickerNavigationControllerDelegate,CNContactPickerDelegate>
-
+@property (nonatomic, assign) BOOL isAddress;
+@property (nonatomic, strong) CHAdressMode *mode;
+@property (nonatomic, strong) NSArray *itemArrs;
+@property (nonatomic, strong) NSMutableArray *cmdList;
 @end

@@ -10,6 +10,7 @@
 #import "CHMoreSetTableViewCell.h"
 #import "CHClassViewController.h"
 #import "CHAlarmViewController.h"
+#import "CHVolumeViewController.h"
 @interface CHMoreSetTableViewController : UITableViewController
 
 @end
