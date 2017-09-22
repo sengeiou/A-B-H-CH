@@ -41,6 +41,9 @@
 		EE421B621F67B2B900B078AA /* CHFenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B611F67B2B900B078AA /* CHFenceTableViewCell.m */; };
 		EE421B651F67CE4200B078AA /* CHFenceInfoMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B641F67CE4200B078AA /* CHFenceInfoMode.m */; };
 		EE421B681F67EB7300B078AA /* CHFenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B671F67EB7300B078AA /* CHFenceViewController.m */; };
+		EE5A847C1F74D8E700B5DE86 /* CHSOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A847B1F74D8E700B5DE86 /* CHSOSViewController.m */; };
+		EE5A84831F74F25400B5DE86 /* CHUserSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A84821F74F25400B5DE86 /* CHUserSetViewController.m */; };
+		EE5A84861F75028100B5DE86 /* CHSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A84851F75028100B5DE86 /* CHSetTableViewCell.m */; };
 		EE64D18A1F45960D00CCBFDF /* CHAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EE64D1891F45960D00CCBFDF /* CHAccountTool.m */; };
 		EE64EB541F71FBF400BDA753 /* CHCommandMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE64EB531F71FBF400BDA753 /* CHCommandMode.m */; };
 		EE64EB5D1F72030800BDA753 /* CHCmdClassDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE64EB5C1F72030800BDA753 /* CHCmdClassDemo.m */; };
@@ -218,6 +221,12 @@
 		EE421B641F67CE4200B078AA /* CHFenceInfoMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHFenceInfoMode.m; sourceTree = "<group>"; };
 		EE421B661F67EB7300B078AA /* CHFenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHFenceViewController.h; sourceTree = "<group>"; };
 		EE421B671F67EB7300B078AA /* CHFenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHFenceViewController.m; sourceTree = "<group>"; };
+		EE5A847A1F74D8E700B5DE86 /* CHSOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHSOSViewController.h; sourceTree = "<group>"; };
+		EE5A847B1F74D8E700B5DE86 /* CHSOSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHSOSViewController.m; sourceTree = "<group>"; };
+		EE5A84811F74F25400B5DE86 /* CHUserSetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHUserSetViewController.h; sourceTree = "<group>"; };
+		EE5A84821F74F25400B5DE86 /* CHUserSetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHUserSetViewController.m; sourceTree = "<group>"; };
+		EE5A84841F75028100B5DE86 /* CHSetTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHSetTableViewCell.h; sourceTree = "<group>"; };
+		EE5A84851F75028100B5DE86 /* CHSetTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHSetTableViewCell.m; sourceTree = "<group>"; };
 		EE64D1881F45960D00CCBFDF /* CHAccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHAccountTool.h; sourceTree = "<group>"; };
 		EE64D1891F45960D00CCBFDF /* CHAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHAccountTool.m; sourceTree = "<group>"; };
 		EE64EB521F71FBF400BDA753 /* CHCommandMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCommandMode.h; sourceTree = "<group>"; };
@@ -622,6 +631,8 @@
 				EE74AB761F4C3C05004F03B8 /* CHDeviceInfoViewController.m */,
 				EEEB8CBE1F43D884003AE170 /* SectionsViewController.h */,
 				EEEB8CBF1F43D884003AE170 /* SectionsViewController.m */,
+				EE5A847A1F74D8E700B5DE86 /* CHSOSViewController.h */,
+				EE5A847B1F74D8E700B5DE86 /* CHSOSViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -644,9 +655,45 @@
 			path = DATECategory;
 			sourceTree = "<group>";
 		};
+		EE5A847D1F74ECC600B5DE86 /* RIGHTVC */ = {
+			isa = PBXGroup;
+			children = (
+				EE5A84801F74F23300B5DE86 /* VC */,
+				EE5A847F1F74F22700B5DE86 /* MODE */,
+				EE5A847E1F74EFFC00B5DE86 /* VIEW */,
+			);
+			path = RIGHTVC;
+			sourceTree = "<group>";
+		};
+		EE5A847E1F74EFFC00B5DE86 /* VIEW */ = {
+			isa = PBXGroup;
+			children = (
+				EE5A84841F75028100B5DE86 /* CHSetTableViewCell.h */,
+				EE5A84851F75028100B5DE86 /* CHSetTableViewCell.m */,
+			);
+			path = VIEW;
+			sourceTree = "<group>";
+		};
+		EE5A847F1F74F22700B5DE86 /* MODE */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MODE;
+			sourceTree = "<group>";
+		};
+		EE5A84801F74F23300B5DE86 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EE5A84811F74F25400B5DE86 /* CHUserSetViewController.h */,
+				EE5A84821F74F25400B5DE86 /* CHUserSetViewController.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		EE6E88B91F4EE6890016104A /* PLANVC */ = {
 			isa = PBXGroup;
 			children = (
+				EE5A847D1F74ECC600B5DE86 /* RIGHTVC */,
 				EE6E88C51F4EE8FB0016104A /* LEFTVC */,
 				EE6E88BA1F4EE6A90016104A /* MINVC */,
 			);
@@ -1252,6 +1299,7 @@
 				EEB3594A1F5256E9005C5064 /* MyPanGestureRecognizer.m in Sources */,
 				EEDF90B61F6F645A005AE1FB /* MJRefreshFooter.m in Sources */,
 				EEE69F181F661DD0008C2AF3 /* CHSAddGuarderViewController.m in Sources */,
+				EE5A84861F75028100B5DE86 /* CHSetTableViewCell.m in Sources */,
 				EEB359611F5272CF005C5064 /* CHLocationMar.m in Sources */,
 				EE421B681F67EB7300B078AA /* CHFenceViewController.m in Sources */,
 				EEDF90B31F6F645A005AE1FB /* MJRefreshAutoFooter.m in Sources */,
@@ -1263,6 +1311,7 @@
 				EE14FE2C1F42DD21008E8387 /* CHButton.m in Sources */,
 				EEEB8CCA1F43DEDF003AE170 /* CHAFNWorking.m in Sources */,
 				EEEB8CC41F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m in Sources */,
+				EE5A84831F74F25400B5DE86 /* CHUserSetViewController.m in Sources */,
 				EE6E88C91F4EE9120016104A /* CHLeftViewController.m in Sources */,
 				EEB40A8E1F4ADCA3003C33EA /* FMDatabase.m in Sources */,
 				EEC491621F638C310068F636 /* CHMemberViewController.m in Sources */,
@@ -1272,6 +1321,7 @@
 				EEDF90CC1F6F78E9005AE1FB /* CHMoreSetTableViewController.m in Sources */,
 				EE64EB661F726E6800BDA753 /* CHSubAlarmViewController.m in Sources */,
 				EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */,
+				EE5A847C1F74D8E700B5DE86 /* CHSOSViewController.m in Sources */,
 				EEDF90C01F6F645A005AE1FB /* MJRefreshStateHeader.m in Sources */,
 				EEF213371F6BF99D00E79E9A /* CHTrackingAnnotationView.m in Sources */,
 				EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */,

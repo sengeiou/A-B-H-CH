@@ -10,6 +10,7 @@
 #import "XLSlideMenu.h"
 #import "CHPhoneCellView.h"
 #import "CHLocaViewController.h"
+#import "CHUserSetViewController.h"
 
 @interface MainViewController : UIViewController
 

@@ -12,4 +12,5 @@
 
 @interface CHDeviceInfoViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) CHUserInfo *user;
+@property (nonatomic, assign) BOOL setUser;
 @end

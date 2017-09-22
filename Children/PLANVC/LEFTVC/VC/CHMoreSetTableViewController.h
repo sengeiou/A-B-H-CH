@@ -11,6 +11,7 @@
 #import "CHClassViewController.h"
 #import "CHAlarmViewController.h"
 #import "CHVolumeViewController.h"
+#import "CHSOSViewController.h"
 @interface CHMoreSetTableViewController : UITableViewController
 
 @end

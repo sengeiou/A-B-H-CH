@@ -72,7 +72,6 @@
     }
     cell.textLabel.text = _titArr[indexPath.section];
     cell.textLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
-    
     return cell;
 }
 
@@ -85,6 +84,9 @@
     }
     if (indexPath.section == 2) {
         [self.navigationController pushViewController:[[CHVolumeViewController alloc] init] animated:YES];
+    }
+    if (indexPath.section == 3) {
+        [self.navigationController pushViewController:[[CHSOSViewController alloc] init] animated:YES];
     }
 }
 

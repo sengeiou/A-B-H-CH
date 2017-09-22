@@ -31,7 +31,8 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_MonthHistoryDays,          //查询指定月份那些天存在轨迹数据
     REQUESTURL_History,                   //查询手表历史定位数据
     REQUESTURL_ExcdeptionListWhitoutCode, //获取报警信息列表
-    REQUESTURL_CommandList,               //获取报警信息列表
+    REQUESTURL_CommandList,               //获取设备指令集合
+    REQUESTURL_EditUserInfo,              //编辑登录app的用户信息
 };
 
 @interface CHAFNWorking : NSObject

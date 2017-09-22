@@ -144,6 +144,8 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/ExceptionMessage/ExcdeptionListWhitoutCode";
         case REQUESTURL_CommandList:
             return @"api/Command/CommandList";
+        case REQUESTURL_EditUserInfo:
+            return @"api/User/EditUserInfo";
         default:
             return @"";
     }

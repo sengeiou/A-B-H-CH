@@ -67,6 +67,8 @@
 #define LESSONS_TIME @"0117"  //上课禁用
 #define ALARM_CLOCK @"0116"  //闹钟提醒
 #define DEVICE_LISTEN @"0024"  //一键监听
+#define SOUND_SWITCH @"1021"  //静音开关
+#define VIBRATION_SWITCH @"0134"  //震动时长控制
 
 #if DEBUG
 #define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);

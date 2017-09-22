@@ -41,6 +41,10 @@
 }
 
 - (void)initializeMethod{
+    if (_setUser) {
+        titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"手机号码", nil)];
+        return;
+    }
     titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"生日", nil),CHLocalizedString(@"身高", nil),CHLocalizedString(@"体重", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"IMEI", nil)];
     formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
@@ -65,20 +69,13 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"宝贝资料", nil);
+    
     UIView *headView = [UIView new];
     headView.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:headView];
     __block UIImagePickerControllerSourceType sourceType ;
     
     UIImage *headIma = [UIImage imageNamed:@"pho_touxiang"];
-    if (user.deviceIm && ![[user deviceIm] isEqualToString:@""]) {
-        NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        headIma = [UIImage imageWithData:imaData];
-        if (!headIma) {
-            headIma = [UIImage imageNamed:@"pho_touxiang"];
-        }
-    }
     
     headBut = [CHButton createWithImage:[UIImage mergeMainIma:headIma subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] Radius:(CHMainScreen.size.width * WIDTHAdaptive)/7 touchBlock:^(CHButton *sender) {
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -109,6 +106,7 @@
                 if (!picker) {
                     picker = [[UIImagePickerController alloc] init];//初始化
                     picker.delegate = self;
+                    picker.view.backgroundColor = [UIColor whiteColor];
                     picker.allowsEditing = YES;//设置可编辑
                 }
                 picker.sourceType = sourceType;
@@ -154,7 +152,63 @@
     }
     [headView addSubview:gailBut];
     
+    if (_setUser) {
+        self.title = CHLocalizedString(@"用户资料", nil);
+        gailBut.hidden = YES;
+        mainBut.hidden = YES;
+        if (user.userIm && ![[user userIm] isEqualToString:@""]) {
+            NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.userIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            headIma = [UIImage imageWithData:imaData];
+            if (!headIma) {
+                headIma = [UIImage imageNamed:@"pho_touxiang"];
+            }
+        }
+    }
+    else{
+        self.title = CHLocalizedString(@"宝贝资料", nil);
+        if (user.deviceIm && ![[user deviceIm] isEqualToString:@""]) {
+            NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            headIma = [UIImage imageWithData:imaData];
+            if (!headIma) {
+                headIma = [UIImage imageNamed:@"pho_touxiang"];
+            }
+        }
+    }
+    
     CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"确定", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
+        if (_setUser) {
+            NSMutableDictionary *saveDic = [CHAFNWorking shareAFNworking].requestDic;
+            [saveDic addEntriesFromDictionary:@{@"UserId": [TypeConversionMode strongChangeString:user.userId],
+                                                @"Username": [TypeConversionMode strongChangeString:user.userNa],
+                                                @"Email": @"",
+                                                @"Address": @"",
+                                                @"Avatar": [TypeConversionMode strongChangeString:user.userIm],
+                                                @"CellPhone": [TypeConversionMode strongChangeString:user.userPh],
+                                                @"Sim": @"",
+                                                @"Gender": @0,
+                                                @"Birthday": @"",
+                                                @"Weight": @0,
+                                                @"Height": @0,
+                                                @"Steps": @0,
+                                                @"Distance": @0,
+                                                @"SportTime": @0,
+                                                @"Calorie": @0}];
+            @WeakObj(self)
+            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_EditUserInfo parameters:saveDic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                if ([[result objectForKey:@"State"] intValue] == 0) {
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                    [CHAccountTool saveUser:user];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [selfWeak.navigationController popViewControllerAnimated:YES];
+                    });
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                
+            }];
+            return ;
+        }
         if (!user.devicePh) {
             [MBProgressHUD showError:CHLocalizedString(@"请输入手机号码", nil)];
             return ;
@@ -162,25 +216,25 @@
         
         NSMutableDictionary *saveDic = [CHAFNWorking shareAFNworking].requestDic;
         [saveDic addEntriesFromDictionary:@{@"Item":@{@"Birthday": [TypeConversionMode strongChangeString:user.deviceBi],
-                                                  @"DeviceID": [TypeConversionMode strongChangeString:user.deviceId],
-                                                  @"Gender": [TypeConversionMode strongChangeString:user.deviceGe],
-                                                  @"Grade": @"",
-                                                  @"Height": [TypeConversionMode strongChangeString:user.deviceHe],
-                                                  @"Nickname": [TypeConversionMode strongChangeString:user.deviceNa],
-                                                  @"UpdateTime": @"",
-                                                  @"Weight": [TypeConversionMode strongChangeString:user.deviceWi],
-                                                  @"Avatar": [TypeConversionMode strongChangeString:user.deviceIm],
-                                                  @"UserId": [TypeConversionMode strongChangeString:user.userId],
-                                                  @"Sim": [TypeConversionMode strongChangeString:user.devicePh],
-                                                  @"Age": @"",
-                                                  @"BloodType": @"",
-                                                  @"CellPhone": @"",
-                                                  @"CellPhone2": @"",
-                                                  @"Address": @"",
-                                                  @"Breed": @"",
-                                                  @"IDnumber": @"",
-                                                  @"Remark": @"",
-                                                  @"MarkerColor": @""}}];
+                                                      @"DeviceID": [TypeConversionMode strongChangeString:user.deviceId],
+                                                      @"Gender": [TypeConversionMode strongChangeString:user.deviceGe],
+                                                      @"Grade": @"",
+                                                      @"Height": [TypeConversionMode strongChangeString:user.deviceHe],
+                                                      @"Nickname": [TypeConversionMode strongChangeString:user.deviceNa],
+                                                      @"UpdateTime": @"",
+                                                      @"Weight": [TypeConversionMode strongChangeString:user.deviceWi],
+                                                      @"Avatar": [TypeConversionMode strongChangeString:user.deviceIm],
+                                                      @"UserId": [TypeConversionMode strongChangeString:user.userId],
+                                                      @"Sim": [TypeConversionMode strongChangeString:user.devicePh],
+                                                      @"Age": @"",
+                                                      @"BloodType": @"",
+                                                      @"CellPhone": @"",
+                                                      @"CellPhone2": @"",
+                                                      @"Address": @"",
+                                                      @"Breed": @"",
+                                                      @"IDnumber": @"",
+                                                      @"Remark": @"",
+                                                      @"MarkerColor": @""}}];
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SavePersonProfile parameters:saveDic Mess:CHLocalizedString(@"正在保存", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -299,11 +353,17 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.row == titArr.count - 1) {
         cell.accessoryType = UITableViewCellAccessoryNone;
+        if (!_setUser) {
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+        }
+    }
+    if (indexPath.row == 0 && _setUser) {
         cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
     }
     cell.textLabel.text = [titArr objectAtIndex:indexPath.row];
-    if (indexPath.row == 0) cell.detailTextLabel.text = user.deviceNa;
-    if (indexPath.row == 1) cell.detailTextLabel.text = user.deviceBi;
+    if (indexPath.row == 0) cell.detailTextLabel.text = _setUser ? user.userNa : user.deviceNa;
+    if (indexPath.row == 1) cell.detailTextLabel.text = _setUser ? user.userPh : user.deviceBi;
     if (indexPath.row == 2) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"厘米", nil)];
     if (indexPath.row == 3) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"公斤", nil)];
     if (indexPath.row == 4) cell.detailTextLabel.text = user.devicePh ? user.devicePh:CHLocalizedString(@"", nil);
@@ -317,7 +377,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.row == 0) {
         UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -326,8 +386,11 @@
         }];
         UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UITextField *nickField = (UITextField *)aler.textFields[0];
-            user.deviceNa = nickField.text;
-            
+            if (_setUser) {
+                user.userNa = nickField.text;
+            }else{
+                user.deviceNa = nickField.text;
+            }
             cell.detailTextLabel.text = nickField.text;
         }];
         UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -339,7 +402,7 @@
             
         }];
     }
-    if (indexPath.row == 1) {
+    if (indexPath.row == 1 && !_setUser) {
         CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
         NSDate *date = [formatter dateFromString:user.deviceBi];
         [PickView createBirthdayUIWithOriginDate:date DidSelectConfirm:^(CHButton *sender, NSString *date) {
@@ -348,7 +411,7 @@
         }];
         [app.window addSubview:PickView];
     }
-    else if (indexPath.row == 2){
+    if (indexPath.row == 2){
         CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
         [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"厘米", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
             user.deviceHe = date;
@@ -356,7 +419,7 @@
         }];
         [app.window addSubview:PickView];
     }
-    else if (indexPath.row == 3){
+    if (indexPath.row == 3){
         CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
         [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"公斤", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
             user.deviceWi = date;
@@ -364,7 +427,7 @@
         }];
         [app.window addSubview:PickView];
     }
-    else if(indexPath.row == 4){
+    if(indexPath.row == 4){
         UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"手机号码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -383,7 +446,7 @@
         [self presentViewController:aler animated:YES completion:^{
             
         }];
-
+        
     }
 }
 
@@ -402,7 +465,11 @@
         }
     }
     [self dismissViewControllerAnimated:YES completion:^{
-        user.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        if (_setUser) {
+            user.userIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        }else{
+            user.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        }
         [headBut setImage:[UIImage mergeMainIma:image subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] forState:UIControlStateNormal];
     }];
 }

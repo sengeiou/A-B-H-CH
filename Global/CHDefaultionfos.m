@@ -8,6 +8,7 @@
 
 #import "CHDefaultionfos.h"
 NSString * const CHAPPTOKEN = @"CHAPPTOKEN";
+NSString * const CHVOLUMEVALUE = @"CHVOLUMEVALUE";
 
 @implementation CHDefaultionfos
 + (void)CHputKey:(NSString *)key andValue:(NSObject *)value{

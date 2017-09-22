@@ -61,6 +61,7 @@
     
     self.phoneField = [CHTextField createWithPlace:CHLocalizedString(@"请输入电话号码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.phoneField.delegate = self;
+    self.phoneField.keyboardType = UIKeyboardTypePhonePad;
     [self.view addSubview:self.phoneField];
     
     @WeakObj(self)
@@ -322,6 +323,7 @@
             }
             else{
              contactStr = [NSString stringWithFormat:@"%@",contactProperty.value];
+                return;
             }
             NSString *text1 = [NSString stringWithFormat:@"%@%@",contactProperty.contact.familyName,contactProperty.contact.givenName];
         
@@ -351,6 +353,7 @@
     }
     else{
         propertyID = kABPersonEmailProperty;
+        return;
     }
     [self dismissViewControllerAnimated:YES completion:^{
         if (property == 3 || property == 4) {

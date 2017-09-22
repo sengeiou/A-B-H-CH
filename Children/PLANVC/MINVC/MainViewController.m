@@ -260,7 +260,7 @@
     [backImage addSubview:leftIma];
     
     CHButton *rightBut = [CHButton createWithNorImage:[UIImage imageNamed:@"icon_caidan_n"] lightIma:[UIImage imageNamed:@"icon_caidan_h"] touchBlock:^(CHButton *sender) {
-        
+        [selfWeak.navigationController pushViewController:[[CHUserSetViewController alloc] init] animated:YES];
     }];
     [backImage addSubview:rightBut];
     
@@ -283,7 +283,7 @@
     
     CHButton *locaBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_dinwei"] Radius:0 touchBlock:^(CHButton *sender) {
         //        UINavigationController *nav = (UINavigationController *)self.xl_sldeMenu.rootViewController;
-        //                [nav pushViewController:newVc animated:false];
+        //        [nav pushViewController:newVc animated:false];
         //关闭抽屉
         @StrongObj(self)
         AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
