@@ -554,10 +554,10 @@
 }
 
 - (void)resignSuccess:(id)result{
-    self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
-    CHBingViewController *binVC = [[CHBingViewController alloc] init];
-    [self.navigationController pushViewController:binVC animated:YES];
-    return ;
+//    self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
+//    CHBingViewController *binVC = [[CHBingViewController alloc] init];
+//    [self.navigationController pushViewController:binVC animated:YES];
+//    return ;
     if ([[result objectForKey:@"State"] intValue] == 0) {
         CHUserInfo *user = [[CHUserInfo alloc] init];
         user.userId = [NSString stringWithFormat:@"%d",[[[result objectForKey:@"User"] objectForKey:@"UserId"] intValue]];

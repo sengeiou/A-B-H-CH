@@ -406,7 +406,7 @@
             
         } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
             if (!image) {
-                image = [UIImage imageNamed:@"pho_touxiang"];
+                image = [UIImage imageNamed:@"pho_usetouxiang"];
             }
             self.user.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             [[FMDBConversionMode sharedCoreBlueTool] updateDevice:self.user];

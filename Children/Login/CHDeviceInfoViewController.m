@@ -75,7 +75,7 @@
     [self.view addSubview:headView];
     __block UIImagePickerControllerSourceType sourceType ;
     
-    UIImage *headIma = [UIImage imageNamed:@"pho_touxiang"];
+    UIImage *headIma = [UIImage imageNamed:@"pho_usetouxiang"];
     
     headBut = [CHButton createWithImage:[UIImage mergeMainIma:headIma subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] Radius:(CHMainScreen.size.width * WIDTHAdaptive)/7 touchBlock:^(CHButton *sender) {
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -160,7 +160,7 @@
             NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.userIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
             headIma = [UIImage imageWithData:imaData];
             if (!headIma) {
-                headIma = [UIImage imageNamed:@"pho_touxiang"];
+                headIma = [UIImage imageNamed:@"pho_usetouxiang"];
             }
         }
     }

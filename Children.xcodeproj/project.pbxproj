@@ -110,6 +110,11 @@
 		EED4579D1F6D131500FFAAA3 /* CHDeviceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4579C1F6D131500FFAAA3 /* CHDeviceDataViewController.m */; };
 		EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394B1F56967000DFF409 /* CHPointAnnotion.m */; };
 		EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */; };
+		EEDA8E281F75EE97001103FE /* CHRequestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDA8E271F75EE97001103FE /* CHRequestTableViewController.m */; };
+		EEDA8E2B1F75F2FF001103FE /* CHRequestInfoMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDA8E2A1F75F2FF001103FE /* CHRequestInfoMode.m */; };
+		EEDA8E2E1F75F550001103FE /* CHRequestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDA8E2D1F75F550001103FE /* CHRequestTableViewCell.m */; };
+		EEDA8E311F7634EF001103FE /* CHChangePassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDA8E301F7634EF001103FE /* CHChangePassViewController.m */; };
+		EEDA8E341F7659D9001103FE /* CHFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDA8E331F7659D9001103FE /* CHFeedbackViewController.m */; };
 		EEDF90831F6F58F8005AE1FB /* CHMessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDF90821F6F58F8005AE1FB /* CHMessTableViewCell.m */; };
 		EEDF90B31F6F645A005AE1FB /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDF90871F6F645A005AE1FB /* MJRefreshAutoFooter.m */; };
 		EEDF90B41F6F645A005AE1FB /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDF90891F6F645A005AE1FB /* MJRefreshBackFooter.m */; };
@@ -359,6 +364,16 @@
 		EED9394B1F56967000DFF409 /* CHPointAnnotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPointAnnotion.m; sourceTree = "<group>"; };
 		EED9394D1F56B9A000DFF409 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
+		EEDA8E261F75EE97001103FE /* CHRequestTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHRequestTableViewController.h; sourceTree = "<group>"; };
+		EEDA8E271F75EE97001103FE /* CHRequestTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHRequestTableViewController.m; sourceTree = "<group>"; };
+		EEDA8E291F75F2FF001103FE /* CHRequestInfoMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHRequestInfoMode.h; sourceTree = "<group>"; };
+		EEDA8E2A1F75F2FF001103FE /* CHRequestInfoMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHRequestInfoMode.m; sourceTree = "<group>"; };
+		EEDA8E2C1F75F550001103FE /* CHRequestTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHRequestTableViewCell.h; sourceTree = "<group>"; };
+		EEDA8E2D1F75F550001103FE /* CHRequestTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHRequestTableViewCell.m; sourceTree = "<group>"; };
+		EEDA8E2F1F7634EF001103FE /* CHChangePassViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHChangePassViewController.h; sourceTree = "<group>"; };
+		EEDA8E301F7634EF001103FE /* CHChangePassViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHChangePassViewController.m; sourceTree = "<group>"; };
+		EEDA8E321F7659D9001103FE /* CHFeedbackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHFeedbackViewController.h; sourceTree = "<group>"; };
+		EEDA8E331F7659D9001103FE /* CHFeedbackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHFeedbackViewController.m; sourceTree = "<group>"; };
 		EEDF90811F6F58F8005AE1FB /* CHMessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMessTableViewCell.h; sourceTree = "<group>"; };
 		EEDF90821F6F58F8005AE1FB /* CHMessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMessTableViewCell.m; sourceTree = "<group>"; };
 		EEDF90861F6F645A005AE1FB /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
@@ -670,6 +685,8 @@
 			children = (
 				EE5A84841F75028100B5DE86 /* CHSetTableViewCell.h */,
 				EE5A84851F75028100B5DE86 /* CHSetTableViewCell.m */,
+				EEDA8E2C1F75F550001103FE /* CHRequestTableViewCell.h */,
+				EEDA8E2D1F75F550001103FE /* CHRequestTableViewCell.m */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -677,6 +694,8 @@
 		EE5A847F1F74F22700B5DE86 /* MODE */ = {
 			isa = PBXGroup;
 			children = (
+				EEDA8E291F75F2FF001103FE /* CHRequestInfoMode.h */,
+				EEDA8E2A1F75F2FF001103FE /* CHRequestInfoMode.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -686,6 +705,12 @@
 			children = (
 				EE5A84811F74F25400B5DE86 /* CHUserSetViewController.h */,
 				EE5A84821F74F25400B5DE86 /* CHUserSetViewController.m */,
+				EEDA8E261F75EE97001103FE /* CHRequestTableViewController.h */,
+				EEDA8E271F75EE97001103FE /* CHRequestTableViewController.m */,
+				EEDA8E2F1F7634EF001103FE /* CHChangePassViewController.h */,
+				EEDA8E301F7634EF001103FE /* CHChangePassViewController.m */,
+				EEDA8E321F7659D9001103FE /* CHFeedbackViewController.h */,
+				EEDA8E331F7659D9001103FE /* CHFeedbackViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1277,6 +1302,7 @@
 				EEB40A911F4ADCA3003C33EA /* FMDatabaseQueue.m in Sources */,
 				EEB40A701F4A6FD1003C33EA /* CHLoginViewController.m in Sources */,
 				EEDF90C21F6F645A005AE1FB /* MJRefreshConst.m in Sources */,
+				EEDA8E2B1F75F2FF001103FE /* CHRequestInfoMode.m in Sources */,
 				EEDF90B91F6F645A005AE1FB /* MJRefreshAutoNormalFooter.m in Sources */,
 				EE41DB3B1F4D2498009B230A /* CHPhotoView.m in Sources */,
 				EEDF90831F6F58F8005AE1FB /* CHMessTableViewCell.m in Sources */,
@@ -1301,14 +1327,17 @@
 				EEE69F181F661DD0008C2AF3 /* CHSAddGuarderViewController.m in Sources */,
 				EE5A84861F75028100B5DE86 /* CHSetTableViewCell.m in Sources */,
 				EEB359611F5272CF005C5064 /* CHLocationMar.m in Sources */,
+				EEDA8E2E1F75F550001103FE /* CHRequestTableViewCell.m in Sources */,
 				EE421B681F67EB7300B078AA /* CHFenceViewController.m in Sources */,
 				EEDF90B31F6F645A005AE1FB /* MJRefreshAutoFooter.m in Sources */,
 				EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */,
+				EEDA8E281F75EE97001103FE /* CHRequestTableViewController.m in Sources */,
 				EED4579D1F6D131500FFAAA3 /* CHDeviceDataViewController.m in Sources */,
 				EEF2132B1F6BAEB900E79E9A /* CHHistoryInfo.m in Sources */,
 				EE1D90BC1F6A7E1600885C10 /* CHHistoryTrackViewController.m in Sources */,
 				EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */,
 				EE14FE2C1F42DD21008E8387 /* CHButton.m in Sources */,
+				EEDA8E311F7634EF001103FE /* CHChangePassViewController.m in Sources */,
 				EEEB8CCA1F43DEDF003AE170 /* CHAFNWorking.m in Sources */,
 				EEEB8CC41F43D8C3003AE170 /* NSDictionary-DeepMutableCopy.m in Sources */,
 				EE5A84831F74F25400B5DE86 /* CHUserSetViewController.m in Sources */,
@@ -1317,6 +1346,7 @@
 				EEC491621F638C310068F636 /* CHMemberViewController.m in Sources */,
 				EEC4915A1F638BB90068F636 /* WMProgressView.m in Sources */,
 				EEB40A9A1F4B00F1003C33EA /* CHBingViewController.m in Sources */,
+				EEDA8E341F7659D9001103FE /* CHFeedbackViewController.m in Sources */,
 				EE74A1111F6E60DA00395167 /* CHMessViewController.m in Sources */,
 				EEDF90CC1F6F78E9005AE1FB /* CHMoreSetTableViewController.m in Sources */,
 				EE64EB661F726E6800BDA753 /* CHSubAlarmViewController.m in Sources */,

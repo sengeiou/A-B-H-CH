@@ -8,8 +8,7 @@
 
 #import "CHBingViewController.h"
 
-@interface CHBingViewController ()
-{
+@interface CHBingViewController (){
     UIImageView *searchView;
     UIActivityIndicatorView *activityIndicatorView;
     

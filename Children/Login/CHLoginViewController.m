@@ -298,6 +298,7 @@
                 self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
                 CHRegisViewController *findPass = [[CHRegisViewController alloc] init];
                 findPass.operationStype = _operationStype ? 3:2;
+                findPass.title = CHLocalizedString(@"找回密码", nil);
                 [self.navigationController pushViewController:findPass animated:YES];
             }
         }];
@@ -316,12 +317,14 @@
             loginBut = [CHButton createWithTit:CHLocalizedString(@"登录", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
                 [self.view endEditing:YES];
                 NSMutableDictionary *requestDic = [[CHAFNWorking shareAFNworking] requestDic];
+                [CHAFNWorking shareAFNworking].moreRequest = YES;
                 [requestDic addEntriesFromDictionary:@{@"Name":phoneLab.text, @"Pass":passFiled.text,@"LoginType":@"0"}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Login parameters:requestDic Mess:CHLocalizedString(@"正在登录...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                     
                     if ([[result objectForKey:@"State"] intValue] == 1000) {
+                        [MBProgressHUD hideHUD];
                         [MBProgressHUD showError:CHLocalizedString(@"账号或密码不正确", nil)];
                     }
                     if ([[result objectForKey:@"State"] intValue] == 0) {
@@ -338,7 +341,7 @@
                             } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                                 NSLog(@"%ld SDIMAGEDONE*** %@",(long)cacheType,image);//pho_touxiang
                                 if (!image) {
-                                    image = [UIImage imageNamed:@"pho_touxiang"];
+                                    image = [UIImage imageNamed:@"pho_usetouxiang"];
                                 }
                                 user.userIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                                 
@@ -352,6 +355,7 @@
                                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_PersonDeviceList parameters:deviceDic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                                     
                                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                                    [CHAFNWorking shareAFNworking].moreRequest = NO;
                                     if ([[result objectForKey:@"State"] intValue] == 0) {
                                         [CHDefaultionfos CHputKey:CHAPPTOKEN andValue:user.userTo];
                                     }
@@ -377,19 +381,27 @@
                                                 }
                                                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
                                                 if (i == 0) {
+                                                    [MBProgressHUD hideHUD];
                                                     [CHAccountTool saveUser:userList];
+                                                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                                                    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+                                                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+                                                    slideMenu.leftViewController = leftVC;
+                                                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
                                                 }
                                             }];
                                         }
                                     }
                                     else{
+                                        [MBProgressHUD hideHUD];
                                         [CHAccountTool saveUser:user];
+                                        CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                                        CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+                                        XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+                                        slideMenu.leftViewController = leftVC;
+                                        [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
                                     }
-                                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-                                    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
-                                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
-                                    slideMenu.leftViewController = leftVC;
-                                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                                    
                                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
                                     
                                 }];

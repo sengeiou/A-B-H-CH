@@ -33,7 +33,7 @@
 
 - (NSArray *)setTits{
     if (!_setTits) {
-//        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yhzl"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_sqxx"]]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_xgmm"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_jcgx"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yjfk"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_gywm"]]]]];
+        //        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yhzl"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_sqxx"]]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_xgmm"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_jcgx"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yjfk"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_gywm"]]]]];
         _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage imageNamed:@"icon_yhzl"],[UIImage imageNamed:@"icon_sqxx"]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage imageNamed:@"icon_xgmm"],[UIImage imageNamed:@"icon_jcgx"],[UIImage imageNamed:@"icon_yjfk"],[UIImage imageNamed:@"icon_gywm"]]]];
     }
     return _setTits;
@@ -56,11 +56,29 @@
     [_setTab setSeparatorInset:UIEdgeInsetsMake(0, CHMainScreen.size.width, 0, 0)];
     [self.view addSubview:_setTab];
     
+    @WeakObj(self)
     CHButton *signOutBut = [CHButton createWithTit:CHLocalizedString(@"退出登录", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"确认退出登录？", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         
+        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            CHUserInfo *user = [[CHUserInfo alloc] init];
+            [CHAccountTool saveUser:user];
+            [CHDefaultionfos CHremoveValueForKey:CHAPPTOKEN];
+            CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[CHRegAnLogViewController alloc] init]];
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            app.window.rootViewController = nav;
+        }];
+        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [aler addAction:cancelAct];
+        [aler addAction:conFimAct];
+        [selfWeak presentViewController:aler animated:YES completion:^{
+            
+        }];
     }];
-   [self.view addSubview:signOutBut];
-     
+    [self.view addSubview:signOutBut];
+    
     [signOutBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(-20);
         make.left.mas_equalTo(30);
@@ -103,7 +121,7 @@
         cell.detailTextLabel.font = CHFontNormal(nil, 12);
         cell.detailTextLabel.text = [NSString stringWithFormat:@"V%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     }
-     cell.line1.hidden = YES;
+    cell.line1.hidden = YES;
     if (indexPath.row == ([[self.setTits[indexPath.section] firstObject] count] - 1)) {
         cell.line1.hidden = NO;
     }
@@ -133,15 +151,39 @@
         userVC.setUser = YES;
         [self.navigationController pushViewController:userVC animated:YES];
     }
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        [self.navigationController pushViewController:[[CHRequestTableViewController alloc] init] animated:YES];
+    }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [self.navigationController pushViewController:[[CHChangePassViewController alloc] init] animated:YES];
+    }
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        [self.navigationController pushViewController:[[CHFeedbackViewController alloc] init] animated:YES];
+    }
+    if (indexPath.section == 1 && indexPath.row == 3){
+        //        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        //        NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
+        //        NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
+        //        if (![preferredLang isEqualToString:@"zh"]){
+        //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.smawatch.com/?_l=en"]];
+        //        }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.smawatch.com"]];
+        //        }
+    }
+    
+}
+
+- (void)dealloc{
+    
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

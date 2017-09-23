@@ -48,6 +48,7 @@
 #define CHMainScreen [UIScreen mainScreen].bounds
 #define SizeScale (([[UIScreen mainScreen] bounds].size.height) > 568 ? ([[UIScreen mainScreen] bounds].size.height)/568 : 1.0)
 #define WIDTHAdaptive [UIScreen mainScreen].bounds.size.width/375
+//#define WIDTHAdaptive (([[UIScreen mainScreen] bounds].size.width) > 375 ? ([UIScreen mainScreen].bounds.size.width/375) : 1.0)
 #define CHMediumSkyBlueColor 0x28ccfa
 #define CHMediumBlackColor 0x212121
 #define IOS_VERSION_10 (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_9_x_Max)?(YES):(NO) 

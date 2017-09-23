@@ -146,6 +146,12 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/Command/CommandList";
         case REQUESTURL_EditUserInfo:
             return @"api/User/EditUserInfo";
+        case REQUESTURL_RequestList:
+            return @"api/AuthShare/RequestList";
+        case REQUESTURL_Process:
+            return @"api/AuthShare/Process";
+        case REQUESTURL_ChangePassword:
+            return @"api/User/ChangePassword";
         default:
             return @"";
     }

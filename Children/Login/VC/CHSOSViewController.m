@@ -9,6 +9,11 @@
 #import "CHSOSViewController.h"
 
 @interface CHSOSViewController ()
+{
+    bool passInt1;
+    bool passInt2;
+    bool passInt3;
+}
 @property (nonatomic, strong) CHTextField *phoneField;
 @property (nonatomic, strong) CHTextField *phoneField1;
 @property (nonatomic, strong) CHTextField *phoneField2;
@@ -391,11 +396,36 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (_phoneField.text.length > 0 && _phoneField1.text.length > 0 && _phoneField2.text.length > 0) {
-        _confimBut.enabled = YES;
+    NSString *aString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (_phoneField == textField) {
+        if (aString.length > 0) {
+            passInt1 = YES;
+        }
+        else{
+            passInt1 = NO;
+        }
+    }
+    if (_phoneField1 == textField) {
+        if (aString.length > 0) {
+            passInt2 = YES;
+        }
+        else{
+            passInt2 = NO;
+        }
+    }
+    if (_phoneField2 == textField) {
+        if (aString.length > 0) {
+            passInt3 = YES;
+        }
+        else{
+            passInt3 = NO;
+        }
+    }
+    if (passInt1 && passInt2 && passInt3) {
+        self.confimBut.enabled = YES;
     }
     else{
-        _confimBut.enabled = NO;
+        self.confimBut.enabled = NO;
     }
     return YES;
 }

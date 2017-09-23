@@ -9,7 +9,10 @@
 #import "CHSAddGuarderViewController.h"
 
 @interface CHSAddGuarderViewController ()
-
+{
+    bool passInt1;
+    bool passInt2;
+}
 @property (nonatomic, strong) CHTextField *relationField;
 @property (nonatomic, strong) CHTextField *phoneField;
 @property (nonatomic, strong) CHButton *confimBut;
@@ -397,11 +400,28 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (_phoneField.text.length > 0 && _relationField.text.length > 0) {
-        _confimBut.enabled = YES;
+    NSString *aString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (_phoneField == textField) {
+        if (aString.length > 0) {
+            passInt1 = YES;
+        }
+        else{
+            passInt1 = NO;
+        }
+    }
+    if (_relationField == textField) {
+        if (aString.length > 0) {
+            passInt2 = YES;
+        }
+        else{
+            passInt2 = NO;
+        }
+    }
+    if (passInt1 && passInt2 ) {
+        self.confimBut.enabled = YES;
     }
     else{
-        _confimBut.enabled = NO;
+        self.confimBut.enabled = NO;
     }
     return YES;
 }

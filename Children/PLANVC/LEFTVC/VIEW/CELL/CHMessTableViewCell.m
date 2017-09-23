@@ -40,10 +40,10 @@
     _cellImageView = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_dld"] backColor:nil];
     [self.contentView addSubview:_cellImageView];
     
-    _headLab = [CHLabel createWithTit:@"icon_dldicon_dldicon_dldicon_dld" font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x242424, 1.0) backColor:nil textAlignment:0];
+    _headLab = [CHLabel createWithTit:@"" font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x242424, 1.0) backColor:nil textAlignment:0];
     [self.contentView addSubview:_headLab];
     
-    _messLab = [CHLabel createWithTit:@"icon_dldicon_dldicon_dldicon_dld" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
+    _messLab = [CHLabel createWithTit:@"" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
     _messLab.numberOfLines = 0;
     [self.contentView addSubview:_messLab];
     

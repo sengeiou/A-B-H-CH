@@ -33,6 +33,9 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_ExcdeptionListWhitoutCode, //获取报警信息列表
     REQUESTURL_CommandList,               //获取设备指令集合
     REQUESTURL_EditUserInfo,              //编辑登录app的用户信息
+    REQUESTURL_RequestList,               //绑定申请的消息列表
+    REQUESTURL_Process,                   //处理分享请求
+    REQUESTURL_ChangePassword,            //修改密码
 };
 
 @interface CHAFNWorking : NSObject

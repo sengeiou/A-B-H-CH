@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CHSetTableViewCell.h"
+#import "CHRequestTableViewController.h"
+#import "CHChangePassViewController.h"
+#import "CHFeedbackViewController.h"
 @interface CHUserSetViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @end

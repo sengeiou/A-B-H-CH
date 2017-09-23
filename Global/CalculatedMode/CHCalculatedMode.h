@@ -10,4 +10,7 @@
 
 @interface CHCalculatedMode : NSObject
 + (CGRect)CHCalculatedWithStr:(NSString *)string size:(CGSize) size attributes:(NSDictionary *)arrDic;
++ (BOOL)isValidateEmail:(NSString *)email;
++ (BOOL)validateEmail:(NSString*)email;
++ (BOOL)isPureNumandCharacters:(NSString *)string;
 @end

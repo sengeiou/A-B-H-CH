@@ -121,7 +121,7 @@
         make.bottom.mas_equalTo(unBindBut.mas_top).mas_offset(-16);
     }];
     
-    UIImage *deviceIma = [UIImage imageNamed:@"pho_touxiang"];
+    UIImage *deviceIma = [UIImage imageNamed:@"pho_usetouxiang"];
     if (self.user.deviceIm && ![self.user.deviceIm isEqualToString:@""]) {
         NSData *imaData = [[NSData alloc] initWithBase64EncodedString:self.user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
         deviceIma = [UIImage imageWithData:imaData];
