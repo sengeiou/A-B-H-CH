@@ -122,6 +122,7 @@
         
         view1.image.image= [UIImage drawWithSize:CGSizeMake(_baseView.frame.size.width/3, _baseView.frame.size.width/3) Radius:_baseView.frame.size.width/6 image:deviceIma];
         view1.lable.text = user.deviceNa;
+        view1.user = user;
 //        view1.backgroundColor=[UIColor redColor];
         view1.tag=i+1;
         //view1.clipsToBounds  = YES;

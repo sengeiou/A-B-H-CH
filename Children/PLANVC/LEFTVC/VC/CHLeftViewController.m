@@ -75,6 +75,9 @@
     self.wheelView.center = CGPointMake(((kScreenWidth - kMainPageDistance))/2, self.wheelView.center.y);
     self.wheelView.images = self.deviceLists;
     self.wheelView.click = ^(CHDeviceView *user){
+        if (!user.user.deviceId) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"HomePagePush" object:nil userInfo:@{@"pushViewController":[[CHBingViewController alloc] init]}];
+        }
          NSLog(@"11单击 %@",user);
     };
     
@@ -86,10 +89,10 @@
     makeLayer.path = path.CGPath;
     self.wheelView.layer.mask = makeLayer;
     
-    self.electricityView = [UIImageView itemWithImage:[UIImage imageNamed:@"leftbar_dl_1"] backColor:nil];
+    self.electricityView = [UIImageView itemWithImage:[UIImage imageNamed:@"leftbar_dl_6"] backColor:nil];
     [headView addSubview:self.electricityView];
     
-    self.electricityLab = [CHLabel createWithTit:@"100%" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
+    self.electricityLab = [CHLabel createWithTit:@"0%" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
     [headView addSubview:self.electricityLab];
     
     UITableView *leftTab = [UITableView new];
@@ -184,7 +187,7 @@
 //    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
         [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
-        return;
+//        return;
     }
 
     NSString * postName = @"HomePagePush";

@@ -132,7 +132,7 @@
         UIImage *newIma = [self mergeMainIma:codeImage subIma:deviceIma callBackSize:codeImage.size];
         dispatch_async(dispatch_get_main_queue(), ^{
             encodeImage.image = newIma;
-            encodeImage.backgroundColor = [UIColor greenColor];
+//            encodeImage.backgroundColor = [UIColor greenColor];
         });
     });
    
@@ -159,6 +159,7 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([result[@"State"] intValue] == 0) {
+                [MBProgressHUD hideHUD];
                 [MBProgressHUD showSuccess:CHLocalizedString(@"解绑成功", nil)];
                 [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:selfWeak.user];
                 [selfWeak clearDevice];

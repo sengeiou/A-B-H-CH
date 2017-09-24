@@ -273,8 +273,7 @@
         [tempButton setUserInteractionEnabled:NO];
     }
     //单击
-    if (!self.sideslipTapGes)
-    {
+    if (!self.sideslipTapGes){
         //单击手势
         self.sideslipTapGes= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handeTap:)];
         [self.sideslipTapGes setNumberOfTapsRequired:1];

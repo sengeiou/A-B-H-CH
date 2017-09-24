@@ -65,8 +65,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"141 * WIDTHAdaptive %f",141 * WIDTHAdaptive);
-    return 148 * WIDTHAdaptive;
+    return 148 * (([[UIScreen mainScreen] bounds].size.width) > 375 ? ([UIScreen mainScreen].bounds.size.width/375) : 1.0);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

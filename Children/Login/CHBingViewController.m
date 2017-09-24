@@ -228,7 +228,7 @@
                             user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
                             [CHAFNWorking shareAFNworking].moreRequest = NO;
                             [activityIndicatorView stopAnimating];
-                            
+                            [MBProgressHUD hideHUD];
                             CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
                             deviceVC.user = user;
                             [self.navigationController pushViewController:deviceVC animated:YES];
@@ -249,6 +249,7 @@
                 [activityIndicatorView stopAnimating];
                 CHPutInViewController *putInVC = [[CHPutInViewController alloc] init];
                 putInVC.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
+                putInVC.user = user;
                 [self.navigationController pushViewController:putInVC animated:YES];
             }else{
                 [MBProgressHUD showError:[result objectForKey:@"Message"]];

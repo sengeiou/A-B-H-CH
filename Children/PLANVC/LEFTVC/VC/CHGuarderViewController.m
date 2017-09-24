@@ -223,6 +223,7 @@ static NSString *Identifier = @"GUARDERCELL";
 - (void)dealloc{
     NSLog(@"dealloc");
     [CHAFNWorking shareAFNworking].moreRequest = NO;
+    [MBProgressHUD hideHUD];
 }
 /*
 #pragma mark - Navigation

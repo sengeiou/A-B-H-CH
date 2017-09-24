@@ -28,19 +28,8 @@
     //    CHNavViewController *nav = [[CHNavViewController alloc] initWithRootViewController:[[CHRegAnLogViewController alloc] init]];
     else if ([CHAccountTool user].userId && ![[CHAccountTool user].userId isEqualToString:@""]) {
         CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-//          UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
         CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
-//        XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
-//        slideMenu.leftViewController = leftVC;
-//         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:slideMenu];
-//        self.window.rootViewController = slideMenu;
-        
-//        CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[CHRegAnLogViewController alloc] init]];
-//        self.window.rootViewController = nav;
-        
-//        CSLeftSlideControllerOne *leftSliderViewController = [[CSLeftSlideControllerOne alloc] initWithLeftViewController:leftVC MainViewController:nav];
          self.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
-        //        self.window.rootViewController = [[CHBaseViewController alloc] init];; eftSliderViewController =<LeftSliderViewController: 0x145e28950>
         NSLog(@"leftSliderViewController =%@",self.leftSliderViewController);
         self.window.rootViewController = self.leftSliderViewController;
     }

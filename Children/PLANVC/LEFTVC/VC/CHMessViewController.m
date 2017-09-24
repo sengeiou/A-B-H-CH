@@ -168,11 +168,15 @@
     dateFormatter.dateFormat = @"HH:mm";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     NSString *titStr = @"";
-    if (intevalTime < 86400) {
-        titStr = [dateFormatter stringFromDate:lastDate];
-    }
-    else if (intevalTime < 86400 * 2){
-        titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter stringFromDate:lastDate]];
+    if (intevalTime < 60*60*24){
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
+        if ([[dateFormatter stringFromDate:lastDate] isEqualToString:[dateFormatter stringFromDate:currentDate]]) {
+            dateFormatter.dateFormat = @"HH:mm";
+            titStr = [dateFormatter stringFromDate:lastDate];
+        }else{
+            dateFormatter.dateFormat = @"HH:mm";
+            titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter stringFromDate:lastDate]];
+        }
     }
     else{
         dateFormatter.dateFormat = @"MM/dd HH:mm";

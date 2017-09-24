@@ -147,11 +147,37 @@ typedef void(^didTouchUpInBlock)(BOOL Agree);
     _infoMode = infoMode;
     [_cellImageView sd_setImageWithURL:[NSURL URLWithString:infoMode.Avatar] placeholderImage:[UIImage imageNamed:@"pho_usetouxiang"]];
     self.dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate *date = [NSDate getNowDateFromatAnDate:[_dateFormatter dateFromString:infoMode.Created]];
-    NSLog(@"fniowegj %@",[self.dateFormatter stringFromDate:date]);
-    self.dateFormatter.dateFormat = @"HH:mm";
-    NSLog(@"fniowegj %@",[_dateFormatter stringFromDate:date]);
-    _titLab.text = [self.dateFormatter stringFromDate:date];
+    NSDate *lastTime = [NSDate getNowDateFromatAnDate:[_dateFormatter dateFromString:infoMode.Created]];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    //上次时间
+    NSDate *lastDate = [lastTime dateByAddingTimeInterval:[timeZone secondsFromGMTForDate:lastTime]];
+    //当前时间
+    NSDate *currentDate = [[NSDate date] dateByAddingTimeInterval:[timeZone secondsFromGMTForDate:[NSDate date]]];
+    //时间间隔
+    NSInteger intevalTime = [currentDate timeIntervalSinceReferenceDate] - [lastDate timeIntervalSinceReferenceDate];
+    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+    dateFormatter1.dateFormat = @"HH:mm";
+    dateFormatter1.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSString *titStr = @"";
+//    if (intevalTime < 86400) {
+//        titStr = [dateFormatter1 stringFromDate:lastDate];
+//    }
+//    else
+    if (intevalTime < 60*60*24){
+        dateFormatter1.dateFormat = @"yyyy-MM-dd";
+        if ([[dateFormatter1 stringFromDate:lastDate] isEqualToString:[dateFormatter1 stringFromDate:currentDate]]) {
+            dateFormatter1.dateFormat = @"HH:mm";
+            titStr = [dateFormatter1 stringFromDate:lastDate];
+        }else{
+            dateFormatter1.dateFormat = @"HH:mm";
+          titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter1 stringFromDate:lastDate]];
+        }
+    }
+    else{
+        dateFormatter1.dateFormat = @"MM/dd HH:mm";
+        titStr = [dateFormatter1 stringFromDate:lastDate];
+    }
+    _titLab.text = titStr;
     _headLab.text = infoMode.Nickname;
     _messLab.text = [NSString stringWithFormat:@"%@%@",[TypeConversionMode strongChangeString:infoMode.UserName],CHLocalizedString(@"申请成为%@的监护人", [TypeConversionMode strongChangeString:infoMode.Nickname])];
     _consentBut.hidden = YES;

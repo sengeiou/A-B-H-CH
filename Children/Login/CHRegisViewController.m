@@ -602,6 +602,11 @@
                         [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
                         if (i == 0) {
                             [CHAccountTool saveUser:userList];
+                            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                            CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                            CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+                            app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+                            [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
                         }
                     }];
                 }

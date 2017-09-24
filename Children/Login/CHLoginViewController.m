@@ -355,6 +355,7 @@
                                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_PersonDeviceList parameters:deviceDic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                                     
                                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                                    [MBProgressHUD hideHUD];
                                     [CHAFNWorking shareAFNworking].moreRequest = NO;
                                     if ([[result objectForKey:@"State"] intValue] == 0) {
                                         [CHDefaultionfos CHputKey:CHAPPTOKEN andValue:user.userTo];
@@ -383,11 +384,19 @@
                                                 if (i == 0) {
                                                     [MBProgressHUD hideHUD];
                                                     [CHAccountTool saveUser:userList];
+//                                                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+//                                                    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+//                                                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+//                                                    slideMenu.leftViewController = leftVC;
+                                                    
+                                                    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                                                    
                                                     CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
                                                     CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
-                                                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
-                                                    slideMenu.leftViewController = leftVC;
-                                                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                                                    app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+                                                    
+                                                    [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
+                                                   
                                                 }
                                             }];
                                         }
@@ -395,11 +404,18 @@
                                     else{
                                         [MBProgressHUD hideHUD];
                                         [CHAccountTool saveUser:user];
+//                                        CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+//                                        CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+//                                        XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
+//                                        slideMenu.leftViewController = leftVC;
+//                                        [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                                        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                                        
                                         CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
                                         CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
-                                        XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
-                                        slideMenu.leftViewController = leftVC;
-                                        [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                                        app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+                                        
+                                        [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
                                     }
                                     
                                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//#import "CHUserInfo.h"
+@class CHUserInfo;
 @interface CHPutInViewController : UIViewController<UITextViewDelegate>
 @property (nonatomic, strong) NSString *deviceId;
+@property (nonatomic, strong) CHUserInfo *user;
 @end

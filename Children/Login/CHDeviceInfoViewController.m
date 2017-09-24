@@ -244,11 +244,11 @@
                 [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:user];
                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:user];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
                     CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
                     CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
-                    XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
-                    slideMenu.leftViewController = leftVC;
-                    [UIApplication sharedApplication].keyWindow.rootViewController = slideMenu;
+                    app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+                    [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
                 });
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
