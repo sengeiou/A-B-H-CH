@@ -46,6 +46,11 @@
     {
         NSLog(@"单击了第%@项",i);
     };
+    _setClick=^(CHDeviceView *i)
+    {
+        NSLog(@"单击了第%@项",i);
+    };
+
     _baseView=[[UIView alloc]init];
     _baseView.frame=self.bounds;
     NSLog(@"_%f",_baseView.frame.size.height);
@@ -62,10 +67,8 @@
     
     
 }
--(void)setImages:(NSArray *)images
-{
+-(void)setImages:(NSArray *)images{
     _images=images;
-    
     int count=(int)images.count;
     int mid=count/2;
     CGFloat smallW=8;
@@ -96,14 +99,13 @@
         {
             view1.frame=CGRectMake(myW+smallW*(dd) + 4,smallW*(dd) ,_baseView.frame.size.width/3-smallW, _baseView.frame.size.width/3+smallW*dd/1.8);
             view1.center = CGPointMake(_baseView.center.x+basW*dd, view1.center.y);
-        }else
-        {
+        }else{
             view1.frame=CGRectMake(smallW*mid, 0, _baseView.frame.size.width/3,  _baseView.frame.size.height);
             view1.center = CGPointMake(_baseView.center.x, view1.center.y);
         }
         
         if (basW == view1.width) {
-            _index = i + 1;
+            _index = i + 101;
             [view1 updateView:1];
             view1.lable.font = CHFontNormal(nil, 18);
         }
@@ -124,7 +126,7 @@
         view1.lable.text = user.deviceNa;
         view1.user = user;
 //        view1.backgroundColor=[UIColor redColor];
-        view1.tag=i+1;
+        view1.tag=i+101;
         //view1.clipsToBounds  = YES;
         //添加四个边阴影
 //        view1.layer.shadowColor = [UIColor blackColor].CGColor;//阴影颜色
@@ -194,21 +196,20 @@
 {
     NSLog(@"TAG==%lD",btn.tag);
     if (btn.tag==3) {
+         CHDeviceView *vieww = [_baseView viewWithTag:_index];
         NSLog(@"22单击了 %@  %d",[_baseView viewWithTag:_index],[_baseView viewWithTag:_index].tag);
         _click([_baseView viewWithTag:_index]);
         
     }else
     {
+//        _click([_baseView viewWithTag:_index]);
         [self setAllFramge:(int)btn.tag];
     }
 }
--(void)setAllFramge:(int)tag
-{
-    
+-(void)setAllFramge:(int)tag{
     if (anibool==NO) {
         return;
     }
-    
     anibool=NO;
     unsigned long count=_baseView.subviews.count;
     if (tag==2) {
@@ -217,68 +218,57 @@
         CGFloat maxW= 0.0f;
         for (int i=1; i<count+1; i++)
         {
-            UIView *view1=[_baseView viewWithTag:i];
+            UIView *view1=[_baseView viewWithTag:i + 100];
             CGFloat min=CGRectGetMaxY(view1.frame);
             CGFloat max = CGRectGetWidth(view1.frame);
             if (min>minH) {
                 minH=min;
-                minHiew=[_baseView viewWithTag:i];
+                minHiew=[_baseView viewWithTag:i + 100];
             }
             if (max > maxW) {
                 maxW = max;
             }
-            
         }
         if (minH>0) {
             for (int j=0; j<count; j++)[_baseView sendSubviewToBack:minHiew];
-            
         }
         [UIView animateWithDuration:0.4 animations:^{
-            CGRect rect=[[_baseView viewWithTag:1] frame];
+            CGRect rect=[[_baseView viewWithTag:1 + 100] frame];
             for (int i=1; i<count+1; i++)
             {
-                
                 if (i==count) {
-                    [[_baseView viewWithTag:i] setFrame:rect];
+                    [[_baseView viewWithTag:i + 100] setFrame:rect];
                 }
                 else
                 {
-                    [[_baseView viewWithTag:i] setFrame:[[_baseView viewWithTag:i+1] frame]];
+                    [[_baseView viewWithTag:i + 100] setFrame:[[_baseView viewWithTag:i+1 + 100] frame]];
                 }
-               
-                
-                CHDeviceView *device = (CHDeviceView *)[_baseView viewWithTag:i];
+                CHDeviceView *device = (CHDeviceView *)[_baseView viewWithTag:i + 100];
                 if (maxW == device.width) {
-                     [[_baseView viewWithTag:i] updateView:1];
+                     [[_baseView viewWithTag:i + 100] updateView:1];
                     device.lable.font = CHFontNormal(nil, 18);
                 }
                 else{
-                     [[_baseView viewWithTag:i] updateView:0.8];
+                     [[_baseView viewWithTag:i + 100] updateView:0.8];
                     device.lable.font = CHFontNormal(nil, 14);
                 }
-                
             }
-            
         } completion:^(BOOL finished) {
             anibool=YES;
             [self bigtop];
         }];
-        
-    }else
-    {
-        
+    }else{
         CGFloat minH=10000;
         CGFloat maxW= 0.0f;
         NSUInteger maxTag = 0;
         UIView *minHiew;
-        for (int i=1; i<count+1; i++)
-        {
-            UIView *view1=[_baseView viewWithTag:i];
+        for (int i=1; i<count+1; i++){
+            UIView *view1=[_baseView viewWithTag:i + 100];
             CGFloat min=CGRectGetMinY(view1.frame);
             CGFloat max = CGRectGetWidth(view1.frame);
             if (min<minH) {
                 minH=min;
-                minHiew=[_baseView viewWithTag:i];
+                minHiew=[_baseView viewWithTag:i + 100];
             }
             if (max > maxW) {
                 maxW = max;
@@ -288,26 +278,23 @@
         if (minH<10000) {
             for (int j=0; j<count; j++)[_baseView sendSubviewToBack:minHiew];
         }
-        
         [UIView animateWithDuration:0.4 animations:^{
-            CGRect rect=[[_baseView viewWithTag:count] frame];
-            for (int i=1; i<count+1; i++)
-            {
+            CGRect rect=[[_baseView viewWithTag:count + 100] frame];
+            for (int i=1; i<count+1; i++){
                 if (i==count) {
-                    [[_baseView viewWithTag:count-i+1] setFrame:rect];
+                    [[_baseView viewWithTag:count-i+1 + 100] setFrame:rect];
                 }
-                else
-                {
-                    [[_baseView viewWithTag:count-i+1] setFrame:[[_baseView viewWithTag:count-i] frame]];
-                    NSLog(@"fwiojojg io == %@",NSStringFromCGRect([[_baseView viewWithTag:count-i] frame]));
+                else{
+                    [[_baseView viewWithTag:count-i+1 + 100] setFrame:[[_baseView viewWithTag:count-i + 100] frame]];
+                    NSLog(@"fwiojojg io == %@",NSStringFromCGRect([[_baseView viewWithTag:count-i + 100] frame]));
                 }
-                CHDeviceView *device = (CHDeviceView *)[_baseView viewWithTag:count-i+1];
+                CHDeviceView *device = (CHDeviceView *)[_baseView viewWithTag:count-i+1 + 100];
                 if (maxW == device.width) {
-                    [[_baseView viewWithTag:count-i+1] updateView:1];
+                    [[_baseView viewWithTag:count-i+1 + 100] updateView:1];
                     device.lable.font = CHFontNormal(nil, 18);
                 }
                 else{
-                    [[_baseView viewWithTag:count-i+1] updateView:0.8];
+                    [[_baseView viewWithTag:count-i+1 + 100] updateView:0.8];
                     device.lable.font = CHFontNormal(nil, 14);
                 }
             }
@@ -316,30 +303,27 @@
             [self bigtop];
         }];
     }
-    
-    
 }
 
--(void)bigtop
-{
+- (void)bigtop{
     unsigned long count=_baseView.subviews.count;
     CGFloat maxW=0;
     UIView *maxHiew;
     for (int i=1; i<count+1; i++)
     {
-        UIView *view1=[_baseView viewWithTag:i];
+        UIView *view1=[_baseView viewWithTag:i + 100];
         if (view1.frame.size.width>maxW) {
             maxW=view1.frame.size.width;
-            maxHiew=[_baseView viewWithTag:i];
-            _index=i;
+            maxHiew=[_baseView viewWithTag:i + 100];
+            _index=i + 100;
         }
-        
     }
     if (maxW>0) {
         for (int j=0; j<count; j++)[_baseView bringSubviewToFront:maxHiew];
-        
     }
-    
+    CHDeviceView *vieww = [_baseView viewWithTag:_index];
+    _setClick(vieww);
+    NSLog(@"_setClick ==%@",vieww.user.deviceId);
 }
 @end
 

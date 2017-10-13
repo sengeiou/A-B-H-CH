@@ -100,26 +100,26 @@
             self.morMode.open = cmdValues[0];
             self.aftMode.open = cmdValues[0];
         }
+        if (cmdValues.count <= 1) return;
+        if (cmdValues[1]) {
+            self.morMode.week = cmdValues[1];
+            self.aftMode.week = cmdValues[1];
+        }
         if (cmdValues.count <= 2) return;
         if (cmdValues[2]) {
-            self.morMode.week = cmdValues[2];
-            self.aftMode.week = cmdValues[2];
+            self.morMode.starTime = cmdValues[2];
         }
         if (cmdValues.count <= 3) return;
         if (cmdValues[3]) {
-            self.morMode.starTime = cmdValues[3];
+            self.morMode.stopTime = cmdValues[3];
         }
-        if (cmdValues.count <= 4) return;
-        if (cmdValues[4]) {
-            self.morMode.stopTime = cmdValues[4];
+        if (cmdValues.count <= 5) return;
+        if (cmdValues[5]) {
+            self.aftMode.starTime = cmdValues[5];
         }
         if (cmdValues.count <= 6) return;
         if (cmdValues[6]) {
-            self.aftMode.starTime = cmdValues[6];
-        }
-        if (cmdValues.count <= 7) return;
-        if (cmdValues[7]) {
-            self.aftMode.stopTime = cmdValues[7];
+            self.aftMode.stopTime = cmdValues[6];
         }
     }
 }
@@ -407,7 +407,7 @@
                 return ;
             }
             else{
-                selfWeak.aftMode.stopTime = dateStr;
+                selfWeak.morMode.stopTime = dateStr;
                 [sender setTitle:dateStr forState:UIControlStateNormal];
             }
         }
@@ -437,7 +437,7 @@
     [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId,
                                     @"DeviceModel": self.user.deviceMo,
                                     @"CmdCode": LESSONS_TIME,
-                                    @"Params": [NSString stringWithFormat:@"%d,2,%@,%@,%@,%@,%@,%@",self.openSwitch.on,self.morMode.week,self.morMode.starTime,self.morMode.stopTime,self.aftMode.week,self.aftMode.starTime,self.aftMode.stopTime],
+                                    @"Params": [NSString stringWithFormat:@"%d,%@,%@,%@,%@,%@,%@",self.openSwitch.on,self.morMode.week,self.morMode.starTime,self.morMode.stopTime,self.aftMode.week,self.aftMode.starTime,self.aftMode.stopTime],
                                     @"UserId": self.user.userId}];
     @WeakObj(self)
     [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {

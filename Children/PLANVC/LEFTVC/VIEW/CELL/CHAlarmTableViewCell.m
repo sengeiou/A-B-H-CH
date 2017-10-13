@@ -79,7 +79,7 @@ typedef void(^didSelectSwitchBlock)(UISwitch *oSwitch);
         make.top.mas_equalTo(_timeLab.mas_bottom).mas_offset(4);
         make.left.mas_equalTo(33);
         make.bottom.mas_equalTo(self.contentView.mas_bottom);
-        make.width.mas_equalTo(60);
+        make.width.mas_lessThanOrEqualTo(60);
     }];
     
     [_weekLab mas_remakeConstraints:^(MASConstraintMaker *make) {

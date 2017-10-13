@@ -303,6 +303,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+        deviceVC.user = self.user;
+        [self.navigationController pushViewController:deviceVC animated:YES];
+    }
+}
+
 - (void)dealloc{
     NSLog(@"dealloc");
 }

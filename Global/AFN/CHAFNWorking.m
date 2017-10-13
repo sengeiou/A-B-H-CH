@@ -45,7 +45,7 @@ static id _instace;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
     NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
-    _requestDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[CHDefaultionfos CHgetValueforKey:CHAPPTOKEN] ? [CHDefaultionfos CHgetValueforKey:CHAPPTOKEN]:@"",@"Token",@"71",@"AppId",preferredLang,@"Language", nil];
+    _requestDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[CHDefaultionfos CHgetValueforKey:CHAPPTOKEN] ? [CHDefaultionfos CHgetValueforKey:CHAPPTOKEN]:@"",@"Token",@"87",@"AppId",preferredLang,@"Language", nil];
     //    }
     return _requestDic;
 }
@@ -54,7 +54,7 @@ static id _instace;
     _sessionMgr = [AFHTTPSessionManager manager];
     _sessionMgr.requestSerializer = [AFJSONRequestSerializer serializer];
     _sessionMgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects: @"application/json",@"text/json", nil];
-    [_sessionMgr.requestSerializer setValue:@"3A73DE89-2C32-4DD8-A8F8-B43C1FC26C17" forHTTPHeaderField:@"key"];
+    [_sessionMgr.requestSerializer setValue:@"EF3F9B98-E528-47B2-B0D0-B849D6A3209A" forHTTPHeaderField:@"key"];
     [_sessionMgr.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
     [_sessionMgr.requestSerializer setTimeoutInterval:60.0];
 }
@@ -72,7 +72,7 @@ static id _instace;
         if (show && !_moreRequest) {
             [MBProgressHUD hideHUD];
         }
-       selfWeak.requestMess = [selfWeak showMessAgeWithResponse:responseObject];
+        selfWeak.requestMess = [selfWeak showMessAgeWithResponse:responseObject];
         success(task,responseObject);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -102,6 +102,8 @@ NSString * GetOrderStatus(REQUESTURL status) {
             /*"api/User/Register" 测试注册  正式注册 api/User/RegisterNeedSMSCode*/
             //            return @"api/User/RegisterNeedSMSCode";
             return @"api/User/Register";
+        case REQUESTURL_RegisterNeedSMSCode:
+            return @"api/User/RegisterNeedSMSCode";
         case REQUESTURL_PersonDeviceList:
             return @"api/Device/PersonDeviceList";
         case REQUESTURL_Login:
@@ -152,13 +154,22 @@ NSString * GetOrderStatus(REQUESTURL status) {
             return @"api/AuthShare/Process";
         case REQUESTURL_ChangePassword:
             return @"api/User/ChangePassword";
+        case REQUESTURL_VoiceUpload:
+            return @"api/Files/VoiceUpload";
+        case REQUESTURL_VoiceFileListByTime:
+            return @"api/Files/VoiceFileListByTime";
+        case REQUESTURL_FindPassword:
+            return @"api/User/FindPassword";
+        case REQUESTURL_UserInfo:
+            return @"api/User/UserInfo";
+        case REQUESTURL_GetVoice:
+            return @"api/Files/GetVoice";
         default:
             return @"";
     }
 }
 
 - (BOOL)showMessAgeWithResponse:(id _Nullable)responseObject{
-    
     if (responseObject && [[responseObject objectForKey:@"State"] intValue] != 0 && [[responseObject objectForKey:@"State"] intValue] != 1107 && [[responseObject objectForKey:@"State"] intValue] != 1500 && [[responseObject objectForKey:@"State"] intValue] != 1501) {
         if (![[responseObject objectForKey:@"Message"] isEqual:[NSNull null]] && [responseObject objectForKey:@"Message"] != nil && [responseObject objectForKey:@"Message"] && ![[responseObject objectForKey:@"Message"] isEqualToString:@""]) {
             [MBProgressHUD hideHUD];

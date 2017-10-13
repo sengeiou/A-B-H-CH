@@ -117,7 +117,7 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = deviceIma;
-            if (_selectDevice == device) {
+            if (_selectDevice.deviceId.intValue == device.deviceId.intValue) {
                 cell.cellMask = YES;
             }
             else{
@@ -125,7 +125,6 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
             }
         });
     });
-    
     cell.titleLab.text = [TypeConversionMode strongChangeString:device.deviceNa];
     return cell;
 }

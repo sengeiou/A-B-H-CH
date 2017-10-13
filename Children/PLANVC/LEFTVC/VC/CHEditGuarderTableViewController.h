@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^updatePopViewBlock)(CHGuarderItemMode *itemMode);
+typedef void(^updatePopViewBlock)(CHGuarderItemMode *itemMode, BOOL deleMode);
 
 @interface CHEditGuarderTableViewController : UITableViewController
 @property (nonatomic, strong) CHGuarderItemMode *itemMode;

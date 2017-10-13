@@ -253,8 +253,8 @@
             break;
         }
     }
-    NSString *alarmListStr = [NSString stringWithFormat:@"1,%lu",(unsigned long)cmdList.count];
-
+//    NSString *alarmListStr = [NSString stringWithFormat:@"1,%lu",(unsigned long)cmdList.count];
+    NSString *alarmListStr = @"1";
     for (int i = 0; i < cmdList.count; i ++) {
         alarmListStr = [alarmListStr stringByAppendingString:[NSString stringWithFormat:@",%@,%@,%@",cmdList[i].starTime,cmdList[i].week,cmdList[i].open]];
     }

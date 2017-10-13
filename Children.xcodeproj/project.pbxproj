@@ -65,6 +65,12 @@
 		EE74AB741F4C2411004F03B8 /* CHPutInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB731F4C2411004F03B8 /* CHPutInViewController.m */; };
 		EE74AB771F4C3C05004F03B8 /* CHDeviceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB761F4C3C05004F03B8 /* CHDeviceInfoViewController.m */; };
 		EE74AB7B1F4C4FAA004F03B8 /* CHCalculatedMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */; };
+		EE8F57711F7A220B00E66DD6 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8F57641F7A220A00E66DD6 /* amrFileCodec.m */; };
+		EE8F57721F7A220B00E66DD6 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8F576D1F7A220A00E66DD6 /* libopencore-amrnb.a */; };
+		EE8F57731F7A220B00E66DD6 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8F576E1F7A220A00E66DD6 /* libopencore-amrwb.a */; };
+		EE8F57741F7A220B00E66DD6 /* RecordVoice.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8F57701F7A220A00E66DD6 /* RecordVoice.m */; };
+		EE8F57771F7A269B00E66DD6 /* CHViceUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8F57761F7A269B00E66DD6 /* CHViceUploadModel.m */; };
+		EE8F577A1F7A279000E66DD6 /* CHVideoMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8F57791F7A279000E66DD6 /* CHVideoMode.m */; };
 		EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */; };
 		EEA2CDA61F558971005A3A97 /* CHPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA51F558971005A3A97 /* CHPointAnnotation.m */; };
 		EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2CDA81F558C37005A3A97 /* CHAnnotationView.m */; };
@@ -106,6 +112,18 @@
 		EEC491621F638C310068F636 /* CHMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491611F638C310068F636 /* CHMemberViewController.m */; };
 		EEC491651F638C930068F636 /* CHGuarderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491641F638C930068F636 /* CHGuarderViewController.m */; };
 		EEC491691F6391A10068F636 /* CHGuarderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC491681F6391A10068F636 /* CHGuarderCell.m */; };
+		EED29FB31F789C1300A012B4 /* CHChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EED29FB21F789C1300A012B4 /* CHChatTableViewCell.m */; };
+		EED29FE91F78E83000A012B4 /* D3RecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EED29FDA1F78E83000A012B4 /* D3RecordButton.m */; };
+		EED29FEA1F78E83000A012B4 /* mic_0.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FDC1F78E83000A012B4 /* mic_0.png */; };
+		EED29FEB1F78E83000A012B4 /* mic_1.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FDD1F78E83000A012B4 /* mic_1.png */; };
+		EED29FEC1F78E83000A012B4 /* mic_2.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FDE1F78E83000A012B4 /* mic_2.png */; };
+		EED29FED1F78E83000A012B4 /* mic_3.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FDF1F78E83000A012B4 /* mic_3.png */; };
+		EED29FEE1F78E83000A012B4 /* mic_4.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FE01F78E83000A012B4 /* mic_4.png */; };
+		EED29FEF1F78E83000A012B4 /* mic_5.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FE11F78E83000A012B4 /* mic_5.png */; };
+		EED29FF01F78E83000A012B4 /* mic_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = EED29FE21F78E83000A012B4 /* mic_cancel.png */; };
+		EED29FF11F78E83000A012B4 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EED29FE41F78E83000A012B4 /* libmp3lame.a */; };
+		EED29FF21F78E83000A012B4 /* Mp3Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = EED29FE61F78E83000A012B4 /* Mp3Recorder.m */; };
+		EED29FF31F78E83000A012B4 /* RecordHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EED29FE81F78E83000A012B4 /* RecordHUD.m */; };
 		EED4579A1F6CFDDF00FFAAA3 /* CHPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = EED457991F6CFDDF00FFAAA3 /* CHPolyline.m */; };
 		EED4579D1F6D131500FFAAA3 /* CHDeviceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4579C1F6D131500FFAAA3 /* CHDeviceDataViewController.m */; };
 		EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED9394B1F56967000DFF409 /* CHPointAnnotion.m */; };
@@ -273,6 +291,20 @@
 		EE74AB761F4C3C05004F03B8 /* CHDeviceInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHDeviceInfoViewController.m; path = ../CHDeviceInfoViewController.m; sourceTree = "<group>"; };
 		EE74AB791F4C4FAA004F03B8 /* CHCalculatedMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCalculatedMode.h; sourceTree = "<group>"; };
 		EE74AB7A1F4C4FAA004F03B8 /* CHCalculatedMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCalculatedMode.m; sourceTree = "<group>"; };
+		EE8F57631F7A220A00E66DD6 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
+		EE8F57641F7A220A00E66DD6 /* amrFileCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = amrFileCodec.m; sourceTree = "<group>"; };
+		EE8F57671F7A220A00E66DD6 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
+		EE8F57681F7A220A00E66DD6 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
+		EE8F576A1F7A220A00E66DD6 /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
+		EE8F576B1F7A220A00E66DD6 /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
+		EE8F576D1F7A220A00E66DD6 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		EE8F576E1F7A220A00E66DD6 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		EE8F576F1F7A220A00E66DD6 /* RecordVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordVoice.h; sourceTree = "<group>"; };
+		EE8F57701F7A220A00E66DD6 /* RecordVoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordVoice.m; sourceTree = "<group>"; };
+		EE8F57751F7A269B00E66DD6 /* CHViceUploadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHViceUploadModel.h; sourceTree = "<group>"; };
+		EE8F57761F7A269B00E66DD6 /* CHViceUploadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHViceUploadModel.m; sourceTree = "<group>"; };
+		EE8F57781F7A279000E66DD6 /* CHVideoMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHVideoMode.h; sourceTree = "<group>"; };
+		EE8F57791F7A279000E66DD6 /* CHVideoMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHVideoMode.m; sourceTree = "<group>"; };
 		EE9B73691F77537200B86B0E /* Children.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Children.entitlements; sourceTree = "<group>"; };
 		EEA2CDA11F553F01005A3A97 /* CHGeoCodingMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGeoCodingMode.h; sourceTree = "<group>"; };
 		EEA2CDA21F553F01005A3A97 /* CHGeoCodingMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGeoCodingMode.m; sourceTree = "<group>"; };
@@ -357,6 +389,23 @@
 		EEC491641F638C930068F636 /* CHGuarderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderViewController.m; sourceTree = "<group>"; };
 		EEC491671F6391A10068F636 /* CHGuarderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHGuarderCell.h; sourceTree = "<group>"; };
 		EEC491681F6391A10068F636 /* CHGuarderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHGuarderCell.m; sourceTree = "<group>"; };
+		EED29FB11F789C1300A012B4 /* CHChatTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHChatTableViewCell.h; sourceTree = "<group>"; };
+		EED29FB21F789C1300A012B4 /* CHChatTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHChatTableViewCell.m; sourceTree = "<group>"; };
+		EED29FD91F78E83000A012B4 /* D3RecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D3RecordButton.h; sourceTree = "<group>"; };
+		EED29FDA1F78E83000A012B4 /* D3RecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = D3RecordButton.m; sourceTree = "<group>"; };
+		EED29FDC1F78E83000A012B4 /* mic_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_0.png; sourceTree = "<group>"; };
+		EED29FDD1F78E83000A012B4 /* mic_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_1.png; sourceTree = "<group>"; };
+		EED29FDE1F78E83000A012B4 /* mic_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_2.png; sourceTree = "<group>"; };
+		EED29FDF1F78E83000A012B4 /* mic_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_3.png; sourceTree = "<group>"; };
+		EED29FE01F78E83000A012B4 /* mic_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_4.png; sourceTree = "<group>"; };
+		EED29FE11F78E83000A012B4 /* mic_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_5.png; sourceTree = "<group>"; };
+		EED29FE21F78E83000A012B4 /* mic_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_cancel.png; sourceTree = "<group>"; };
+		EED29FE31F78E83000A012B4 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		EED29FE41F78E83000A012B4 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		EED29FE51F78E83000A012B4 /* Mp3Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mp3Recorder.h; sourceTree = "<group>"; };
+		EED29FE61F78E83000A012B4 /* Mp3Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mp3Recorder.m; sourceTree = "<group>"; };
+		EED29FE71F78E83000A012B4 /* RecordHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordHUD.h; sourceTree = "<group>"; };
+		EED29FE81F78E83000A012B4 /* RecordHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordHUD.m; sourceTree = "<group>"; };
 		EED457981F6CFDDF00FFAAA3 /* CHPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHPolyline.h; sourceTree = "<group>"; };
 		EED457991F6CFDDF00FFAAA3 /* CHPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHPolyline.m; sourceTree = "<group>"; };
 		EED4579B1F6D131500FFAAA3 /* CHDeviceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDeviceDataViewController.h; sourceTree = "<group>"; };
@@ -463,11 +512,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEE69F1A1F6630E1008C2AF3 /* AddressBookUI.framework in Frameworks */,
+				EE8F57721F7A220B00E66DD6 /* libopencore-amrnb.a in Frameworks */,
 				EEB3595D1F526F64005C5064 /* CoreLocation.framework in Frameworks */,
 				EE38B4C61F4FFD7700C33C1D /* MapKit.framework in Frameworks */,
+				EE8F57731F7A220B00E66DD6 /* libopencore-amrwb.a in Frameworks */,
 				EE74AB681F4BCE7B004F03B8 /* AVFoundation.framework in Frameworks */,
 				EEB40A971F4AE129003C33EA /* libsqlite3.0.tbd in Frameworks */,
 				9E7FB312481B6392B6395EEE /* Pods_Children.framework in Frameworks */,
+				EED29FF11F78E83000A012B4 /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +667,7 @@
 		EE38B4CB1F4FFEBF00C33C1D /* VIEW */ = {
 			isa = PBXGroup;
 			children = (
+				EED29FD81F78E83000A012B4 /* D3RecordBtutton */,
 				EE38B4CC1F4FFEE300C33C1D /* CHMKMapView.h */,
 				EE38B4CD1F4FFEE300C33C1D /* CHMKMapView.m */,
 				EE38B4CF1F50084F00C33C1D /* CHPhoneCellView.h */,
@@ -625,6 +678,8 @@
 				EEB359691F529A75005C5064 /* CHDeiceCollectionViewCell.m */,
 				EEF213351F6BF99D00E79E9A /* CHTrackingAnnotationView.h */,
 				EEF213361F6BF99D00E79E9A /* CHTrackingAnnotationView.m */,
+				EED29FB11F789C1300A012B4 /* CHChatTableViewCell.h */,
+				EED29FB21F789C1300A012B4 /* CHChatTableViewCell.m */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -804,6 +859,63 @@
 			path = CalculatedMode;
 			sourceTree = "<group>";
 		};
+		EE8F573B1F7A1E9300E66DD6 /* ARMFILECODEC */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F57621F7A220A00E66DD6 /* arm */,
+			);
+			path = ARMFILECODEC;
+			sourceTree = "<group>";
+		};
+		EE8F57621F7A220A00E66DD6 /* arm */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F57631F7A220A00E66DD6 /* amrFileCodec.h */,
+				EE8F57641F7A220A00E66DD6 /* amrFileCodec.m */,
+				EE8F57651F7A220A00E66DD6 /* include */,
+				EE8F576C1F7A220A00E66DD6 /* lib */,
+				EE8F576F1F7A220A00E66DD6 /* RecordVoice.h */,
+				EE8F57701F7A220A00E66DD6 /* RecordVoice.m */,
+			);
+			path = arm;
+			sourceTree = "<group>";
+		};
+		EE8F57651F7A220A00E66DD6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F57661F7A220A00E66DD6 /* opencore-amrnb */,
+				EE8F57691F7A220A00E66DD6 /* opencore-amrwb */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		EE8F57661F7A220A00E66DD6 /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F57671F7A220A00E66DD6 /* interf_dec.h */,
+				EE8F57681F7A220A00E66DD6 /* interf_enc.h */,
+			);
+			path = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		EE8F57691F7A220A00E66DD6 /* opencore-amrwb */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F576A1F7A220A00E66DD6 /* dec_if.h */,
+				EE8F576B1F7A220A00E66DD6 /* if_rom.h */,
+			);
+			path = "opencore-amrwb";
+			sourceTree = "<group>";
+		};
+		EE8F576C1F7A220A00E66DD6 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				EE8F576D1F7A220A00E66DD6 /* libopencore-amrnb.a */,
+				EE8F576E1F7A220A00E66DD6 /* libopencore-amrwb.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		EEB2C1B71F57E49100787EA0 /* VIEW */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,6 +998,7 @@
 		EEB3595E1F5272B3005C5064 /* MODE */ = {
 			isa = PBXGroup;
 			children = (
+				EE8F573B1F7A1E9300E66DD6 /* ARMFILECODEC */,
 				EED9394D1F56B9A000DFF409 /* MKMapView+ZoomLevel.h */,
 				EED9394E1F56B9A000DFF409 /* MKMapView+ZoomLevel.m */,
 				EEB359621F5276E5005C5064 /* SMALocatiuonManager.h */,
@@ -902,6 +1015,10 @@
 				EED9394B1F56967000DFF409 /* CHPointAnnotion.m */,
 				EED457981F6CFDDF00FFAAA3 /* CHPolyline.h */,
 				EED457991F6CFDDF00FFAAA3 /* CHPolyline.m */,
+				EE8F57751F7A269B00E66DD6 /* CHViceUploadModel.h */,
+				EE8F57761F7A269B00E66DD6 /* CHViceUploadModel.m */,
+				EE8F57781F7A279000E66DD6 /* CHVideoMode.h */,
+				EE8F57791F7A279000E66DD6 /* CHVideoMode.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -1004,6 +1121,36 @@
 				EE64EB621F72559B00BDA753 /* CHAlarmTableViewCell.m */,
 			);
 			path = CELL;
+			sourceTree = "<group>";
+		};
+		EED29FD81F78E83000A012B4 /* D3RecordBtutton */ = {
+			isa = PBXGroup;
+			children = (
+				EED29FD91F78E83000A012B4 /* D3RecordButton.h */,
+				EED29FDA1F78E83000A012B4 /* D3RecordButton.m */,
+				EED29FDB1F78E83000A012B4 /* imgs */,
+				EED29FE31F78E83000A012B4 /* lame.h */,
+				EED29FE41F78E83000A012B4 /* libmp3lame.a */,
+				EED29FE51F78E83000A012B4 /* Mp3Recorder.h */,
+				EED29FE61F78E83000A012B4 /* Mp3Recorder.m */,
+				EED29FE71F78E83000A012B4 /* RecordHUD.h */,
+				EED29FE81F78E83000A012B4 /* RecordHUD.m */,
+			);
+			path = D3RecordBtutton;
+			sourceTree = "<group>";
+		};
+		EED29FDB1F78E83000A012B4 /* imgs */ = {
+			isa = PBXGroup;
+			children = (
+				EED29FDC1F78E83000A012B4 /* mic_0.png */,
+				EED29FDD1F78E83000A012B4 /* mic_1.png */,
+				EED29FDE1F78E83000A012B4 /* mic_2.png */,
+				EED29FDF1F78E83000A012B4 /* mic_3.png */,
+				EED29FE01F78E83000A012B4 /* mic_4.png */,
+				EED29FE11F78E83000A012B4 /* mic_5.png */,
+				EED29FE21F78E83000A012B4 /* mic_cancel.png */,
+			);
+			path = imgs;
 			sourceTree = "<group>";
 		};
 		EEDF90841F6F645A005AE1FB /* MJRefresh */ = {
@@ -1176,7 +1323,7 @@
 				TargetAttributes = {
 					EE148CB51F3D96E50089C5D2 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = UXHZJEX24R;
+						DevelopmentTeam = VHVLE5FL92;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1211,10 +1358,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE148CC91F3D96E50089C5D2 /* LaunchScreen.storyboard in Resources */,
+				EED29FED1F78E83000A012B4 /* mic_3.png in Resources */,
 				EE2FCAFD1F3EA5BA00A6457B /* Localizable.strings in Resources */,
+				EED29FEC1F78E83000A012B4 /* mic_2.png in Resources */,
+				EED29FEA1F78E83000A012B4 /* mic_0.png in Resources */,
+				EED29FF01F78E83000A012B4 /* mic_cancel.png in Resources */,
+				EED29FEF1F78E83000A012B4 /* mic_5.png in Resources */,
 				EEDF90C11F6F645A005AE1FB /* MJRefresh.bundle in Resources */,
 				EEEB8CD01F43F212003AE170 /* MBProgressHUD.bundle in Resources */,
+				EED29FEB1F78E83000A012B4 /* mic_1.png in Resources */,
 				EE148CC61F3D96E50089C5D2 /* Assets.xcassets in Resources */,
+				EED29FEE1F78E83000A012B4 /* mic_4.png in Resources */,
 				EEB40A7A1F4ABDD8003C33EA /* country.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1277,6 +1431,7 @@
 				EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */,
 				EEDF90C31F6F645A005AE1FB /* NSBundle+MJRefresh.m in Sources */,
 				EE148CC11F3D96E50089C5D2 /* ViewController.m in Sources */,
+				EED29FE91F78E83000A012B4 /* D3RecordButton.m in Sources */,
 				EE64EB541F71FBF400BDA753 /* CHCommandMode.m in Sources */,
 				EEB2C1C21F57E4C700787EA0 /* UIView+viewController.m in Sources */,
 				EEF213341F6BD69000E79E9A /* CHTrackHeadVeiw.m in Sources */,
@@ -1285,14 +1440,17 @@
 				EEB359521F525E12005C5064 /* UIView+Extensions.m in Sources */,
 				EEDF90CF1F6F7902005AE1FB /* CHMoreSetTableViewCell.m in Sources */,
 				EEDF90BB1F6F645A005AE1FB /* MJRefreshBackGifFooter.m in Sources */,
+				EE8F57741F7A220B00E66DD6 /* RecordVoice.m in Sources */,
 				EEDF90DB1F6FCED4005AE1FB /* CHDatePickView.m in Sources */,
 				EEB40A811F4AC30E003C33EA /* TypeConversionMode.m in Sources */,
 				EE38B4CE1F4FFEE300C33C1D /* CHMKMapView.m in Sources */,
 				EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */,
 				EEB40A901F4ADCA3003C33EA /* FMDatabasePool.m in Sources */,
+				EE8F57711F7A220B00E66DD6 /* amrFileCodec.m in Sources */,
 				EE322E831F63CF1600FCA1CE /* CHGuarderItemMode.m in Sources */,
 				EE322E861F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m in Sources */,
 				EE6E88C11F4EE6B70016104A /* XLSlideMenu.m in Sources */,
+				EE8F57771F7A269B00E66DD6 /* CHViceUploadModel.m in Sources */,
 				EE421B621F67B2B900B078AA /* CHFenceTableViewCell.m in Sources */,
 				EEC491691F6391A10068F636 /* CHGuarderCell.m in Sources */,
 				EE74AB771F4C3C05004F03B8 /* CHDeviceInfoViewController.m in Sources */,
@@ -1324,6 +1482,7 @@
 				EE14FE2F1F42DD37008E8387 /* CHButton+HQX.m in Sources */,
 				EEA2CDA91F558C37005A3A97 /* CHAnnotationView.m in Sources */,
 				EE74AB6D1F4BFFF7004F03B8 /* AnimationContoller.m in Sources */,
+				EED29FB31F789C1300A012B4 /* CHChatTableViewCell.m in Sources */,
 				EE64EB601F72515F00BDA753 /* CHAlarmViewController.m in Sources */,
 				EE38DBFC1F414CB8003C3B9A /* CHRegisViewController.m in Sources */,
 				EEDF90C91F6F7272005AE1FB /* CHMessageListInfoMode.m in Sources */,
@@ -1340,6 +1499,7 @@
 				EED9394F1F56B9A000DFF409 /* MKMapView+ZoomLevel.m in Sources */,
 				EEDA8E281F75EE97001103FE /* CHRequestTableViewController.m in Sources */,
 				EED4579D1F6D131500FFAAA3 /* CHDeviceDataViewController.m in Sources */,
+				EED29FF31F78E83000A012B4 /* RecordHUD.m in Sources */,
 				EEF2132B1F6BAEB900E79E9A /* CHHistoryInfo.m in Sources */,
 				EE1D90BC1F6A7E1600885C10 /* CHHistoryTrackViewController.m in Sources */,
 				EE38B4CA1F4FFE5B00C33C1D /* CHLocaViewController.m in Sources */,
@@ -1362,6 +1522,7 @@
 				EEDF90C01F6F645A005AE1FB /* MJRefreshStateHeader.m in Sources */,
 				EEF213371F6BF99D00E79E9A /* CHTrackingAnnotationView.m in Sources */,
 				EEEB8CC01F43D884003AE170 /* SectionsViewController.m in Sources */,
+				EE8F577A1F7A279000E66DD6 /* CHVideoMode.m in Sources */,
 				EEC294221F428D3D0029CA23 /* CHLabel+HQX.m in Sources */,
 				EE21888A1F5A3E0F004ACED1 /* CHDevicePickView.m in Sources */,
 				EE1D90BF1F6A891C00885C10 /* CHTrackCollectionViewCell.m in Sources */,
@@ -1398,6 +1559,7 @@
 				EEC294291F4290E70029CA23 /* CHTextField+HQX.m in Sources */,
 				EEDF90BD1F6F645A005AE1FB /* MJRefreshBackStateFooter.m in Sources */,
 				EEDF90BE1F6F645A005AE1FB /* MJRefreshGifHeader.m in Sources */,
+				EED29FF21F78E83000A012B4 /* Mp3Recorder.m in Sources */,
 				EED9394C1F56967000DFF409 /* CHPointAnnotion.m in Sources */,
 				EE2FCB061F3EDD4300A6457B /* UINavigationController+CHNav.m in Sources */,
 				EEDF90B81F6F645A005AE1FB /* MJRefreshAutoGifFooter.m in Sources */,
@@ -1556,15 +1718,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Children/Children.entitlements;
-				DEVELOPMENT_TEAM = UXHZJEX24R;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = VHVLE5FL92;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = Children/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.Children;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/VIEW/D3RecordBtutton",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/ARMFILECODEC/lib",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/CHarmwapper/lib",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/ARMFILECODEC/arm/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.kids;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58bb54f4-6aef-4949-b914-c68e5b6e86f6";
-				PROVISIONING_PROFILE_SPECIFIER = hu_deve_childern_text;
+				PROVISIONING_PROFILE = "b132c8e0-e243-416b-94dc-f04dc36fc3bd";
+				PROVISIONING_PROFILE_SPECIFIER = hu_deve_kids_text;
 			};
 			name = Debug;
 		};
@@ -1574,15 +1745,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Children/Children.entitlements;
-				DEVELOPMENT_TEAM = UXHZJEX24R;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = VHVLE5FL92;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = Children/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.Children;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/VIEW/D3RecordBtutton",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/ARMFILECODEC/lib",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/CHarmwapper/lib",
+					"$(PROJECT_DIR)/Children/PLANVC/MINVC/MODE/ARMFILECODEC/arm/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.kids;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58bb54f4-6aef-4949-b914-c68e5b6e86f6";
-				PROVISIONING_PROFILE_SPECIFIER = hu_deve_childern_text;
+				PROVISIONING_PROFILE = "60cbdd49-4636-4f81-8ba8-b9d9e3345e79";
+				PROVISIONING_PROFILE_SPECIFIER = hu_dis_kids_text;
 			};
 			name = Release;
 		};

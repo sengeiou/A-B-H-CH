@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CHDeviceView : UIView
-@property (nonatomic, strong) CHUserInfo *user;
+@property (nonatomic, copy) CHUserInfo *user;
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, strong) UILabel *lable;
 + (CHDeviceView *)createView;

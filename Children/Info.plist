@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Kids Watch</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,33 +19,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow this app to access your location or not</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Allow this app to access your location or not</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow this app to access your location or not</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Allow this app to access your camera or not</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow this app to access your album or not</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Allow this app to access your description or not</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -59,5 +37,31 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow this app to access your camera or not</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow this app to access your description or not</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow this app to access your location or not</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Allow this app to access your location or not</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow this app to access your location or not</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow this app to access your microphone or not</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow this app to access your album or not</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

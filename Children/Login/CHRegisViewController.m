@@ -41,14 +41,19 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //    [self.navigationController setBackgroudImage:[UIImage new]];
-    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    //  [self.navigationController setBackgroudImage:[UIImage new]];
+    //  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    //    [self.navigationController setBackgroudImage:[UIImage new]];
-    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    //  [self.navigationController setBackgroudImage:[UIImage new]];
+    //  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [CHAFNWorking shareAFNworking].moreRequest = NO;
 }
 - (void)initializeMethod{
     [CHNotifictionCenter addObserver:self selector:@selector(KeyboardWillChange:) name:UIKeyboardWillShowNotification object:nil];
@@ -86,11 +91,11 @@
     [self.view addSubview:lineLab0];
     
     if (_operationStype == 1 || _operationStype == 3) {
-        countryLab.alpha = 0;
-        codeLab.alpha = 0;
-        indexIma.alpha = 0;
-        lineLab0.alpha = 0;
-        logoIma.alpha = 0;
+        countryLab.hidden = YES;
+        codeLab.hidden = 1;
+        indexIma.hidden = 1;
+        lineLab0.hidden = 1;
+        logoIma.hidden = 1;
     }
     
     CHButton *codeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -106,7 +111,7 @@
         make.top.mas_equalTo(self.view);
         make.left.mas_equalTo(self.view);
         make.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(240 * WIDTHAdaptive);
+        make.height.mas_equalTo([UIImage imageNamed: _operationStype < 2 ? @"pic_zhuce":@"pic_zhaohuimima"].size.height * WIDTHAdaptive);
     }];
     
     [logoIma mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -194,8 +199,8 @@
     }];
     
     UIImageView *phoneIma1 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima"] backColor:nil];
-    passFiled = [CHTextField createWithPlace:CHLocalizedString(@"请输入密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
-    passFiled.secureTextEntry = YES;
+    passFiled = [CHTextField createWithPlace:_operationStype == 3 ? CHLocalizedString(@"请输入用户名", nil):CHLocalizedString(@"请输入密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    
     passFiled.delegate = self;
     CHButton *eyeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
         sender.selected = !sender.selected;
@@ -204,7 +209,10 @@
     [eyeBut setImage:[UIImage imageNamed:@"btu_xianshi"] forState:UIControlStateNormal];
     [eyeBut setImage:[UIImage imageNamed:@"btu_yincang"] forState:UIControlStateSelected];
     eyeBut.frame = CGRectMake(0, 0, 30, 40);
-    passFiled.rightView = eyeBut;
+    if (_operationStype != 3) {
+        passFiled.rightView = eyeBut;
+        passFiled.secureTextEntry = YES;
+    }
     passFiled.rightViewMode = UITextFieldViewModeAlways;
     
     CHLabel *lineLab2 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
@@ -238,6 +246,7 @@
     UIImageView *phoneIma2 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_yanzhengma"] backColor:nil];
     authFiled = [CHTextField createWithPlace:CHLocalizedString(@"请输入验证码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     authFiled.delegate = self;
+
     authBut = [CHButton createWithTit:CHLocalizedString(@"获取验证码", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil,16) backColor:nil touchBlock:^(CHButton *sender) {
         sender.selected = !sender.selected;
         if (!phoneLab.text || [phoneLab.text isEqualToString:@""]) {
@@ -245,14 +254,13 @@
             if (_operationStype == 1 || _operationStype == 3) [MBProgressHUD showError:CHLocalizedString(@"请输入邮箱", nil)];
             return ;
         }
-        
         [self.view endEditing:YES];
         NSMutableDictionary *dic = [[CHAFNWorking shareAFNworking] requestDic];//[NSString stringWithFormat:@"%@%@",[codeLab.text stringByReplacingOccurrencesOfString:@"+" withString:@"00"],phoneLab.text]
-        [dic addEntriesFromDictionary:@{@"LoginName":phoneLab.text}];
+        [dic addEntriesFromDictionary:@{@"LoginName":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text]}];
         
         if (_operationStype == 2) {
             NSMutableDictionary *resignDic = [[CHAFNWorking shareAFNworking] requestDic];
-            [resignDic addEntriesFromDictionary:@{@"Phone":phoneLab.text,@"VildateSence":@"1"}];
+            [resignDic addEntriesFromDictionary:@{@"Phone":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"VildateSence":@"1"}];
             [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendSMS parameters:resignDic Mess:CHLocalizedString(@"正在发送...", nil)  showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -272,15 +280,17 @@
             return;
         }
         
+        [CHAFNWorking shareAFNworking].moreRequest = YES;
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CheckUser parameters:dic Mess:CHLocalizedString(@"正在发送...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([[result objectForKey:@"State"] intValue] == 0 || _operationStype == 2) {
                 NSMutableDictionary *resignDic = [[CHAFNWorking shareAFNworking] requestDic];
-                [resignDic addEntriesFromDictionary:@{@"Phone":phoneLab.text,@"VildateSence":@"1"}];
+                [resignDic addEntriesFromDictionary:@{@"Phone":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"VildateSence":@"1"}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendSMS parameters:resignDic Mess:nil  showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                    [CHAFNWorking shareAFNworking].moreRequest = NO;
                     if ([[result objectForKey:@"State"] intValue] == 0) {
                         [MBProgressHUD hideHUD];
                         authBut.enabled = NO;
@@ -308,10 +318,16 @@
     authBut.titleLabel.font = CHFontNormal(nil, 11);
     authFiled.rightViewMode = UITextFieldViewModeAlways;
     CHLabel *lineLab3 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
-    
+
     [self.view addSubview:phoneIma2];
     [self.view addSubview:authFiled];
     [self.view addSubview:lineLab3];
+    if (_operationStype == 1 || _operationStype == 3) {
+        phoneIma2.hidden = YES;
+        authFiled.hidden = YES;
+        lineLab3.hidden = YES;
+    }
+    
     
     [phoneIma2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lineLab2.mas_bottom).mas_offset(12);
@@ -356,7 +372,7 @@
     
     
     CHButton *protoBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
-        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.smawatch.com/page1000044?plg_nld=1&plg_uin=1&plg_auth=1&plg_nld=1&plg_usr=1&plg_vkey=1&plg_dev=1"]];
     }];
     [self.view addSubview:protoBut];
     
@@ -380,6 +396,9 @@
     if (_operationStype >= 2) {
         resStr = CHLocalizedString(@"确认重置", nil);
     }
+    if (_operationStype == 3) {
+        resStr = CHLocalizedString(@"找回密码", nil);
+    }
     
     resignBut = [CHButton createWithTit:resStr titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self.view endEditing:YES];
@@ -388,9 +407,8 @@
         NSString *mess = @"";
         if (_operationStype == 0) {
             mess = CHLocalizedString(@"正在注册...", nil);
-            
-            [resignDic addEntriesFromDictionary:@{@"LoginName":phoneLab.text,@"Username":phoneLab.text,@"Email":@"",@"Password":passFiled.text,@"SerialNumber":@"",@"Contact":phoneLab.text,@"ContactPhone":phoneLab.text,@"ThirdName":@"",@"ThirdID":@"",@"ThirdType":@"",@"ThirdImg":@"",@"SMSCode":authFiled.text}];
-            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Register parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            [resignDic addEntriesFromDictionary:@{@"LoginName":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"Username":[NSString stringWithFormat:@"%@ %@",codeLab.text,phoneLab.text],@"Email":@"",@"Password":passFiled.text,@"SerialNumber":@"",@"Contact":@"",@"ContactPhone":[NSString stringWithFormat:@"%@ %@",codeLab.text,phoneLab.text],@"ThirdName":@"",@"ThirdID":@"",@"ThirdType":@"",@"ThirdImg":@"",@"SMSCode":authFiled.text}];
+            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_RegisterNeedSMSCode parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 [self resignSuccess:result];
@@ -399,10 +417,23 @@
             }];
         }
         else if(_operationStype == 1){
+            if (![CHCalculatedMode validateEmail:phoneLab.text]) {
+                [MBProgressHUD showError:CHLocalizedString(@"请输入正确邮箱", nil)];
+                return ;
+            }
+            mess = CHLocalizedString(@"正在注册...", nil);
+            [resignDic addEntriesFromDictionary:@{@"LoginName":phoneLab.text,@"Username":phoneLab.text,@"Email":phoneLab.text,@"Password":passFiled.text,@"SerialNumber":@"",@"Contact":@"",@"ContactPhone":@"",@"ThirdName":@"",@"ThirdID":@"",@"ThirdType":@"",@"ThirdImg":@"",@"SMSCode":authFiled.text}];
+            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Register parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                [self resignSuccess:result];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                
+            }];
             
         }else if(_operationStype == 2){
-            mess = CHLocalizedString(@"正在确认重置...", nil);
-            [resignDic addEntriesFromDictionary:@{@"LoginName":phoneLab.text,@"NewPass":passFiled.text,@"SMSCode":authFiled.text}];
+            mess = CHLocalizedString(@"", nil);
+            [resignDic addEntriesFromDictionary:@{@"LoginName":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"NewPass":passFiled.text,@"SMSCode":authFiled.text}];
             [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_ChangePasswordNeedSMSCode parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -416,7 +447,20 @@
                 
             }];
         }else if(_operationStype == 3){
-            
+            [resignDic addEntriesFromDictionary:@{@"Email":phoneLab.text,@"Username":passFiled.text}];
+//            [resignDic removeObjectForKey:@"Token"];
+            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_FindPassword parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+                if ([[result objectForKey:@"State"] intValue] == 0) {
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"找回成功，请留意邮件", nil)];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    });
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+                
+            }];
         }
         
     }];
@@ -526,7 +570,8 @@
     NSLog(@"KeyboardWillChange %f",KeyboardY);
     //获取动画时间
     CGFloat duration = [dict[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-    CGFloat transY = KeyboardY * 1.35 - self.view.frame.size.height;
+//    CGFloat transY = KeyboardY * 1.35 - self.view.frame.size.height;
+    CGFloat transY = -64;
     NSLog(@"%f KeyboardWillChange %f",KeyboardY,transY);
     //动画
     [UIView animateWithDuration:duration animations:^{
@@ -634,6 +679,9 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     if (phoneLab == textField) [passFiled becomeFirstResponder];
     if (passFiled == textField) [authFiled becomeFirstResponder];
+    if ((_operationStype == 1 || _operationStype == 3) && passFiled == textField) {
+        [passFiled resignFirstResponder];
+    }
     return YES;
 }
 
@@ -665,6 +713,9 @@ static bool codeInt;
         }
     }
     if (passInt && accInt && codeInt) {
+        resignBut.enabled = YES;
+    }
+    else if((_operationStype == 1 || _operationStype == 3) && passInt && accInt ){
         resignBut.enabled = YES;
     }
     else{

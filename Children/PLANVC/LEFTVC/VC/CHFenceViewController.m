@@ -48,6 +48,11 @@
                 [self addCircleOlyerWithCenterCoordinate:CLLocationCoordinate2DMake(_fenceInfoMode.Latitude, _fenceInfoMode.Longitude) radius:(int)_fenceInfoMode.Radius animation:YES];
             }
         }
+        else{
+            if (self.user.deviceCoor.longitude > 0 && self.user.deviceCoor.latitude > 0) {
+                [self.mapView setCenterCoordinate:self.user.deviceCoor animated:NO];
+            }
+        }
         self.fenceSlider.value = _fenceInfoMode.Radius/1000;
     }
     else{
@@ -282,7 +287,6 @@ static int oldValue;
 - (void)sliderValueChanged:(id)sender{
     
     int value = [NSString stringWithFormat:@"%.0f",self.fenceSlider.value*1000].intValue;
-    NSLog(@"ferg %d",value)
     self.fenceSlider.popover.textLabel.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     self.fenceSlider.popover.textLabel.text = [NSString stringWithFormat:@"%d米",value/100*100];
     

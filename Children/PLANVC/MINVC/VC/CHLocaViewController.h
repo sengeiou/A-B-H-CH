@@ -11,5 +11,5 @@
 #import "CHLocationInfoView.h"
 
 @interface CHLocaViewController : UIViewController
-
+@property (nonatomic, strong) CHUserInfo *user, *oldUser;
 @end

@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CHLeftViewController.h"
+#import "CHChatTableViewCell.h"
+#import "D3RecordButton.h"
+#import "CHVideoMode.h"
 
-@interface CHBaseViewController : UIViewController
+@interface CHBaseViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,D3RecordDelegate>
 
 @end

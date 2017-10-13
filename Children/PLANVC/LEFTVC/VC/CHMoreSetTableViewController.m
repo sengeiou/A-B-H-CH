@@ -31,7 +31,7 @@
 }
 
 - (void)initializeMethod{
-    _titArr = @[CHLocalizedString(@"上课禁用", nil),CHLocalizedString(@"闹钟提醒", nil),CHLocalizedString(@"声音和震动", nil),CHLocalizedString(@"SOS设置", nil)];
+    _titArr = @[CHLocalizedString(@"上课禁用", nil),CHLocalizedString(@"闹钟提醒", nil),CHLocalizedString(@"声音和震动", nil)/*,CHLocalizedString(@"SOS设置", nil)*/];
 }
 
 - (void)createUI{

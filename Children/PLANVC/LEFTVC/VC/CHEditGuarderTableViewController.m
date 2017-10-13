@@ -11,11 +11,11 @@
 @interface CHEditGuarderTableViewController ()
 {
     NSArray *titArr;
-    updatePopViewBlock block;
 }
 @property (nonatomic, strong) CHButton *transferBut;
 @property (nonatomic, strong) CHButton *deleteBut;
 @property (nonatomic, strong) CHUserInfo *user;
+@property (nonatomic, copy) updatePopViewBlock block;
 @end
 
 @implementation CHEditGuarderTableViewController
@@ -33,9 +33,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    if (block) {
-        block(_itemMode);
-    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +65,7 @@
     if (_itemMode.UserId != _user.userId.intValue && self.isAdmin) {
         self.transferBut = [CHButton createWithTit:CHLocalizedString(@"转让管理权限", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil, 18) backColor:nil Radius:8.0 touchBlock:^(CHButton *sender) {
             NSLog(@"转让管理权限");
-            [selfWeak transferAdmin:selfWeak];
+            [selfWeak transferAdmin];
         }];
         self.transferBut.layer.borderColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0).CGColor;
         self.transferBut.layer.borderWidth = 1.0f;
@@ -90,6 +88,9 @@
                         delegateDevict.deviceId = [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.DeviceId]];
                         [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:delegateDevict];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            if (selfWeak.block) {
+                                selfWeak.block(selfWeak.itemMode,YES);
+                            }
                             [selfWeak.navigationController popViewControllerAnimated:YES];
                         });
                     }
@@ -108,7 +109,7 @@
     self.deleteBut.layer.borderWidth = 1.0f;
 }
 
-- (void)transferAdmin:(UIViewController *)selfWeak{
+- (void)transferAdmin{
     UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:nil message:CHLocalizedString(@"确认转让权限该联系人?", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *canAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -116,6 +117,7 @@
         [dic addEntriesFromDictionary:@{@"UserId":  [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.UserId]],
                                         @"DeviceId": [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.DeviceId]],
                                         @"UserGroupId": [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.UserGroupId]]}];
+        @WeakObj(self)
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_ChangeMasterUser parameters:dic Mess:CHLocalizedString(@"转让中...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -124,8 +126,11 @@
                 CHUserInfo *delegateDevict = [[CHUserInfo alloc] init];
                 delegateDevict.userId = [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.UserId]];
                 delegateDevict.deviceId = [TypeConversionMode strongChangeString:[NSString stringWithFormat:@"%ld",(long)_itemMode.DeviceId]];
-                _itemMode.IsAdmin = YES;
+                selfWeak.itemMode.IsAdmin = YES;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (selfWeak.block) {
+                        selfWeak.block(selfWeak.itemMode,NO);
+                    }
                     [selfWeak.navigationController popViewControllerAnimated:YES];
                 });
             }
@@ -135,7 +140,7 @@
     }];
     [alerVC addAction:canAct];
     [alerVC addAction:confimAct];
-    [selfWeak presentViewController:alerVC animated:YES completion:^{
+    [self presentViewController:alerVC animated:YES completion:^{
         
     }];
 }
@@ -163,7 +168,7 @@
 }
 
 - (void)popViewUpdateUI:(updatePopViewBlock)callBack{
-    block = callBack;
+    self.block = callBack;
 }
 
 #pragma mark - Table view data source

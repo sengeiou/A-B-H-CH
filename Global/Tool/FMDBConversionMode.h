@@ -25,4 +25,10 @@
 - (void)insertDevice:(CHUserInfo *)deviceInfo;
 
 - (NSMutableArray <CHUserInfo *>*)searchDevice:(CHUserInfo *)user;
+
+- (void)insertChatData:(NSMutableArray <CHVideoMode *>*) chatList;
+
+- (CHVideoMode *)selectChatDataWithMode:(CHVideoMode *)mode;
+
+- (void)updateChatDataWithMode:(CHVideoMode *)mode;
 @end

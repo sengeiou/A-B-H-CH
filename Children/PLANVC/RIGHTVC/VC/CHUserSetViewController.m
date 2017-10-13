@@ -34,7 +34,7 @@
 - (NSArray *)setTits{
     if (!_setTits) {
         //        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yhzl"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_sqxx"]]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_xgmm"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_jcgx"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yjfk"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_gywm"]]]]];
-        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage imageNamed:@"icon_yhzl"],[UIImage imageNamed:@"icon_sqxx"]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage imageNamed:@"icon_xgmm"],[UIImage imageNamed:@"icon_jcgx"],[UIImage imageNamed:@"icon_yjfk"],[UIImage imageNamed:@"icon_gywm"]]]];
+        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage imageNamed:@"icon_yhzl"],[UIImage imageNamed:@"icon_sqxx"]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),/*CHLocalizedString(@"意见反馈", nil),*/CHLocalizedString(@"关于我们", nil)],@[[UIImage imageNamed:@"icon_xgmm"],[UIImage imageNamed:@"icon_jcgx"],/*[UIImage imageNamed:@"icon_yjfk"],*/[UIImage imageNamed:@"icon_gywm"]]]];
     }
     return _setTits;
 }
@@ -61,6 +61,9 @@
         UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"确认退出登录？", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [JPUSHService setAlias:@"U1" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                NSLog(@"fiowjiogj iojg3333222222222222222222222 j %ld",(long)iResCode);
+            } seq:0];
             CHUserInfo *user = [[CHUserInfo alloc] init];
             [CHAccountTool saveUser:user];
             [CHDefaultionfos CHremoveValueForKey:CHAPPTOKEN];
@@ -157,18 +160,12 @@
     if (indexPath.section == 1 && indexPath.row == 0) {
         [self.navigationController pushViewController:[[CHChangePassViewController alloc] init] animated:YES];
     }
-    if (indexPath.section == 1 && indexPath.row == 2) {
-        [self.navigationController pushViewController:[[CHFeedbackViewController alloc] init] animated:YES];
-    }
-    if (indexPath.section == 1 && indexPath.row == 3){
-        //        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        //        NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
-        //        NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
-        //        if (![preferredLang isEqualToString:@"zh"]){
-        //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.smawatch.com/?_l=en"]];
-        //        }else{
+//    if (indexPath.section == 1 && indexPath.row == 2) {
+//        [self.navigationController pushViewController:[[CHFeedbackViewController alloc] init] animated:YES];
+//    }
+//    if (indexPath.section == 1 && indexPath.row == 3){
+     if (indexPath.section == 1 && indexPath.row == 2) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.smawatch.com"]];
-        //        }
     }
     
 }

@@ -67,7 +67,7 @@ static int firstLoad;
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(lpgrClick:)];
     [self addGestureRecognizer:lpgr];
-    //    _zoomLevel = 15;
+    self.zoomLevel = 15;
     
     //    self.zoomLevel = 12;
     //    [self setCenterCoordinate:self.centerCoordinate zoomLevel:self.zoomLevel animated:NO];
@@ -182,9 +182,10 @@ static int firstLoad;
 }
 
 - (void)userDidSelectAnnotationView:(CHUserInfo *)selDevice{
+    _selectUser = selDevice;
     for (CHPointAnnotion*annotion in self.mapAnnotations) {
         CHAnnotationView *annoView = (CHAnnotationView *)[self viewForAnnotation:annotion];
-        if ([[CHAccountTool user].deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
+        if ([selDevice.deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
             annoView.annSelect = YES;
         }
         else{
@@ -299,8 +300,9 @@ static int firstLoad;
         if ([view isKindOfClass:NSClassFromString(@"CHAnnotationView")]) {
             CHAnnotationView *annoView = (CHAnnotationView *)view;
             annoView.annSelect = NO;
-            if ([[CHAccountTool user].deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
+            if ([_selectUser.deviceId isEqualToString:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceId]) {
                 annoView.annSelect = YES;
+//                [self setCenterCoordinate:[(CHPointAnnotion *)annoView.annotation annotationUser].deviceCoor animated:YES];
                 NSLog(@"*******************************annoView %@",annoView);
             }
         }

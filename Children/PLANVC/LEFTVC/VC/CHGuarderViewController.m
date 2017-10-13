@@ -11,7 +11,7 @@
 @interface CHGuarderViewController ()
 @property (nonatomic, strong) CHLabel *guarderNumLab;
 @property (nonatomic, strong) CHUserInfo *user;
-@property (nonatomic, strong) NSArray *itemArrs;
+@property (nonatomic, strong) NSMutableArray *itemArrs;
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, assign) CHButton *addBut;
 @property (nonatomic, assign) BOOL isAdmin;
@@ -29,11 +29,13 @@ static NSString *Identifier = @"GUARDERCELL";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self initializeMetod];
     NSLog(@"viewWillAppear");
 }
 
@@ -76,7 +78,7 @@ static NSString *Identifier = @"GUARDERCELL";
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         @StrongObj(self)
-        self.itemArrs = [CHGuarderItemMode mj_objectArrayWithKeyValuesArray:result[@"Items"]];
+        self.itemArrs = [[CHGuarderItemMode mj_objectArrayWithKeyValuesArray:result[@"Items"]] mutableCopy];
         [self setGuarderNum];
         self.addBut.enabled = YES;
         if (self.itemArrs.count >= 20) {
@@ -211,8 +213,12 @@ static NSString *Identifier = @"GUARDERCELL";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (!self.addressBook) {
         CHEditGuarderTableViewController *editVC = [[CHEditGuarderTableViewController alloc] init];
-        [editVC popViewUpdateUI:^(CHGuarderItemMode *itemMode) {
-            [tableView reloadData];
+        @WeakObj(self)
+        [editVC popViewUpdateUI:^(CHGuarderItemMode *itemMode, BOOL deleMode) {
+            if (deleMode) {
+                [selfWeak.itemArrs removeObject:itemMode];
+            }
+             [tableView reloadData];
         }];
         editVC.itemMode = [self.itemArrs objectAtIndex:indexPath.row];
         editVC.isAdmin = self.isAdmin;

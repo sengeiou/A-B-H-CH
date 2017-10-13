@@ -74,7 +74,7 @@
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
-    return self.musicCategories.count;
+    return self.musicCategories.count - 1;
 }
 
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
@@ -101,7 +101,7 @@
 - (void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info {
     NSLog(@"%@",viewController);
     CHGuarderViewController *vc = (CHGuarderViewController *)viewController;
-    [vc initializeMetod];
+//    [vc initializeMetod];
     //    NSLog(@"%@", NSStringFromCGPoint(vc.tableView.contentOffset));
     //    if (vc.tableView.contentOffset.y > kWMHeaderViewHeight) {
     //        return;

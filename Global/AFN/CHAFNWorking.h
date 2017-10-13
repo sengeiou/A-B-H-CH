@@ -11,6 +11,7 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_CheckUser = 1,             //检查是否已注册
     REQUESTURL_SendSMS ,                  //获取验证码
     REQUESTURL_Register ,                 //注册
+    REQUESTURL_RegisterNeedSMSCode ,      //注册
     REQUESTURL_PersonDeviceList ,         //设备列表
     REQUESTURL_Login,                     //登录
     REQUESTURL_ChangePasswordNeedSMSCode, //重置密码
@@ -36,6 +37,11 @@ typedef NS_ENUM(NSInteger, REQUESTURL) {
     REQUESTURL_RequestList,               //绑定申请的消息列表
     REQUESTURL_Process,                   //处理分享请求
     REQUESTURL_ChangePassword,            //修改密码
+    REQUESTURL_VoiceUpload,               //语音聊天提交服务器
+    REQUESTURL_VoiceFileListByTime,       //通过用户获取语音聊天记录
+    REQUESTURL_FindPassword,              //找回密码
+    REQUESTURL_UserInfo,                  //获取用户信息
+    REQUESTURL_GetVoice,                  //获取单个语音信息
 };
 
 @interface CHAFNWorking : NSObject

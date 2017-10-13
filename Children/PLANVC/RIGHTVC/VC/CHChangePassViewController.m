@@ -126,7 +126,7 @@
          [selfWeak.view endEditing:YES];
         CHRegisViewController *findPass = [[CHRegisViewController alloc] init];
         findPass.title = CHLocalizedString(@"找回密码", nil);
-        findPass.operationStype = [CHCalculatedMode isValidateEmail:passFiled2.text] ? 3:2;
+        findPass.operationStype = [CHCalculatedMode validateEmail:selfWeak.user.userPh] ? 3:2;
         [selfWeak.navigationController pushViewController:findPass animated:YES];
     }];
     [ResetBut setAttributedTitle:[[NSAttributedString alloc] initWithString:CHLocalizedString(@"忘记密码?", nil) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14),NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]}] forState:UIControlStateNormal];
@@ -168,7 +168,7 @@
         make.top.mas_equalTo(self.view);
         make.left.mas_equalTo(self.view);
         make.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(240 * WIDTHAdaptive);
+        make.height.mas_equalTo([UIImage imageNamed:@"pic_zhaohuimima"].size.height * WIDTHAdaptive);
     }];
     
     [phoneIma mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -255,7 +255,8 @@
     CGFloat KeyboardY = KeyboardFrame.origin.y;
     //获取动画时间
     CGFloat duration = [dict[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-    CGFloat transY = KeyboardY * 1.35 - self.view.frame.size.height;
+//    CGFloat transY = KeyboardY * 1.35 - self.view.frame.size.height;
+    CGFloat transY = -64;
     //动画
     [UIView animateWithDuration:duration animations:^{
         self.view.transform = CGAffineTransformMakeTranslation(0, transY);

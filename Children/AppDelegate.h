@@ -14,6 +14,16 @@
 #import "CHLeftViewController.h"
 #import "CHBaseViewController.h"
 #import "LeftSliderViewController.h"
+#import "JPUSHService.h"
+#import <AdSupport/AdSupport.h>
+#import "RecordVoice.h"
+//#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+//#endif
+
+static NSString *appKey = @"2509dbedb83951eb9b2dc81b";
+static NSString *channel = @"Publish channel";
+static BOOL isProduction = YES;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

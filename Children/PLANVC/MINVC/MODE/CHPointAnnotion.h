@@ -9,5 +9,5 @@
 #import <MapKit/MapKit.h>
 
 @interface CHPointAnnotion : MKPointAnnotation
-@property (nonatomic, strong) CHUserInfo *annotationUser;
+@property (nonatomic, copy) CHUserInfo *annotationUser;
 @end

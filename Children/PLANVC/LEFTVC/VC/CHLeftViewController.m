@@ -31,7 +31,7 @@
 }
 
 - (void)initializeMethod{
-//    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+    //    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     CHUserInfo *addUser = [[CHUserInfo alloc] init];
     addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -62,10 +62,9 @@
     NSLog(@"viewWillAppear");
 }
 
-
 - (void)createUI{
-//    self.view.backgroundColor = [UIColor greenColor];
-
+    //    self.view.backgroundColor = [UIColor greenColor];
+    
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (kScreenWidth - kMainPageDistance), 190 * WIDTHAdaptive)];
     headView.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:headView];
@@ -74,13 +73,38 @@
     [headView addSubview:self.wheelView];
     self.wheelView.center = CGPointMake(((kScreenWidth - kMainPageDistance))/2, self.wheelView.center.y);
     self.wheelView.images = self.deviceLists;
+    
+    @WeakObj(self)
     self.wheelView.click = ^(CHDeviceView *user){
         if (!user.user.deviceId) {
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"HomePagePush" object:nil userInfo:@{@"pushViewController":[[CHBingViewController alloc] init]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"HomePagePush" object:nil userInfo:@{@"pushViewController":[[CHBingViewController alloc] init]}];
         }
-         NSLog(@"11单击 %@",user);
+        else{
+            CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+            deviceVC.user = user.user;
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"HomePagePush" object:nil userInfo:@{@"pushViewController":deviceVC}];
+//            [selfWeak.navigationController pushViewController:deviceVC animated:YES];
+        }
+        NSLog(@"11单击 %@",user.user.deviceId);
     };
-    
+    self.wheelView.setClick = ^(CHDeviceView *imaGe) {
+        if (imaGe.user.deviceId) {
+            selfWeak.user.deviceId = imaGe.user.deviceId;
+            selfWeak.user.devicePh = imaGe.user.devicePh;
+            selfWeak.user.deviceNa = imaGe.user.deviceNa;
+            selfWeak.user.deviceIm = imaGe.user.deviceIm;
+            selfWeak.user.deviceBi = imaGe.user.deviceBi;
+            selfWeak.user.deviceHe = imaGe.user.deviceHe;
+            selfWeak.user.deviceGe = imaGe.user.deviceGe;
+            selfWeak.user.deviceIMEI = imaGe.user.deviceIMEI;
+            selfWeak.user.deviceTy = imaGe.user.deviceTy;
+            selfWeak.user.deviceMo = imaGe.user.deviceMo;
+            selfWeak.user.deviceBa = imaGe.user.deviceBa;
+            selfWeak.user.relatoin = imaGe.user.relatoin;
+            [CHAccountTool saveUser:selfWeak.user];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEUSER" object:nil userInfo:@{@"UPDATEUSER":selfWeak.user}];
+        }
+    };
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.wheelView.bounds];
     
     CAShapeLayer *makeLayer = [CAShapeLayer layer];
@@ -120,13 +144,13 @@
         make.width.mas_equalTo((kScreenWidth - kMainPageDistance));
     }];
     
-//    if ([leftTab respondsToSelector:@selector(setSeparatorInset:)]) {
-        [leftTab setSeparatorInset:UIEdgeInsetsMake(0,12, 0, 0)];
-//          [leftTab setSeparatorInset: UIEdgeInsetsZero];
-//    }
-//    if ([leftTab respondsToSelector:@selector(setSeparatorColor:)]) {
-        [leftTab setSeparatorColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0)];
-//    }
+    //    if ([leftTab respondsToSelector:@selector(setSeparatorInset:)]) {
+    [leftTab setSeparatorInset:UIEdgeInsetsMake(0,12, 0, 0)];
+    //          [leftTab setSeparatorInset: UIEdgeInsetsZero];
+    //    }
+    //    if ([leftTab respondsToSelector:@selector(setSeparatorColor:)]) {
+    [leftTab setSeparatorColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0)];
+    //    }
 }
 
 - (NSMutableArray *)deviceLists{
@@ -182,14 +206,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSLog(@"fwgg == %@",self.app.leftSliderViewController.mainVC);
-//    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
+    //    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
         [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
-//        return;
+        return;
     }
-
+    
     NSString * postName = @"HomePagePush";
     if (indexPath.row == 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMemberViewController alloc] init]}];
@@ -201,7 +225,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHHistoryTrackViewController alloc] init]}];
     }
     if (indexPath.row ==3) {
-         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHDeviceDataViewController alloc] init]}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHDeviceDataViewController alloc] init]}];
     }
     if (indexPath.row ==4) {
         [[NSNotificationCenter defaultCenter] postNotificationName:postName object:nil userInfo:@{@"pushViewController":[[CHMessViewController alloc] init]}];
@@ -221,7 +245,7 @@
         return [UIImage imageNamed:@"leftbar_dl_1"];
     }
     else if (bat > 60 && bat <= 80){
-       return [UIImage imageNamed:@"leftbar_dl_2"];
+        return [UIImage imageNamed:@"leftbar_dl_2"];
     }
     else if (bat > 40 && bat <= 60){
         return [UIImage imageNamed:@"leftbar_dl_3"];
@@ -238,13 +262,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

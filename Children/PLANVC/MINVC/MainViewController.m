@@ -17,7 +17,8 @@
 @property (nonatomic, strong) NSTimer *searchTimer;
 @property (nonatomic, strong) CHButton *leftBut;
 //@property (nonatomic, strong) UIImageView *leftIma;
-@property (nonatomic, assign)  BOOL foundDevice;;
+@property (nonatomic, assign)  BOOL foundDevice;
+@property (nonatomic, assign)  BOOL uploadRequest;
 @end
 
 @implementation MainViewController
@@ -27,7 +28,7 @@
     // Do any additional setup after loading the view.
     //接收抽屉点击事件的HomePage0Push通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(pushViewControllerFromLeftView:) name:@"HomePagePush" object:nil];
-   
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(updateUser:) name:@"UPDATEUSER" object:nil];
     [self createUI];
 }
 
@@ -36,9 +37,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    self.uploadRequest = YES;
     [super viewWillAppear:animated];
-     [self.navigationController setNavigationBarHidden:YES animated: YES];
-     [self initializeMethod];
+    [self.navigationController setNavigationBarHidden:YES animated: YES];
+    [self initializeMethod];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -53,15 +55,15 @@
 }
 
 - (void)initializeMethod{
-//    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
+    //    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.afnRequest = [CHAFNWorking shareAFNworking];
     //    self.deviceLists = [[FMDBConversionMode sharedCoreBlueTool] searchDevice:self.user];
     self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.app.leftSliderViewController.leftDelegate = self;
     [self updateDeviceListWithRequestTimes:1];
     
-//    [self clearDevice];
-//    [self updateUI];
+    //    [self clearDevice];
+    //    [self updateUI];
 }
 
 //static int request;
@@ -80,7 +82,7 @@
         @StrongObj(self)
         if ([[result objectForKey:@"State"] intValue] == 0) {
             //            [self updateDeviceListWithRequestTimes:30];
-            //            request = 3;
+            //                request = 3;
             if (self.searchTimer) {
                 [self.searchTimer invalidate];
                 self.searchTimer = nil;
@@ -120,17 +122,6 @@
             NSDictionary *itemDit = [[result objectForKey:@"Items"] objectAtIndex:i];
             CHUserInfo *userList = [[CHUserInfo alloc] init];
             
-            if (!self.foundDevice && i == ([[result objectForKey:@"Items"] count] - 1)) {
-                NSDictionary *itemDit0 = [[result objectForKey:@"Items"] objectAtIndex:0];
-                self.user.deviceId = [TypeConversionMode strongChangeString:itemDit0[@"Id"]];
-                self.user.devicePh = [TypeConversionMode strongChangeString:itemDit0[@"Sim"]];
-                self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit0[@"NickName"]];
-                self.user.deviceBa = [TypeConversionMode strongChangeString:itemDit0[@"Battery"]];
-                self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit0[@"Model"]];
-                self.user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit0[@"SerialNumber"]];
-                self.user.deviceCoor = CLLocationCoordinate2DMake([itemDit0[@"Latitude"] floatValue], [itemDit0[@"Longitude"] floatValue]);
-            }
-            
             if ([self.user.deviceId isEqualToString:[TypeConversionMode strongChangeString:itemDit[@"Id"]]]) {
                 userList = self.user;
                 NSLog(@"CLLocationCoordinate2DIsValid(_deviceCoor)  %d",CLLocationCoordinate2DIsValid(_deviceCoor));
@@ -147,6 +138,17 @@
             userList.deviceIMEI = [TypeConversionMode strongChangeString:itemDit[@"SerialNumber"]];
             userList.deviceCoor = CLLocationCoordinate2DMake([itemDit[@"Latitude"] floatValue], [itemDit[@"Longitude"] floatValue]);
             
+            if (!self.foundDevice && i == ([[result objectForKey:@"Items"] count] - 1)) {
+                NSDictionary *itemDit0 = [[result objectForKey:@"Items"] objectAtIndex:0];
+                self.user.deviceId = [TypeConversionMode strongChangeString:itemDit0[@"Id"]];
+                self.user.devicePh = [TypeConversionMode strongChangeString:itemDit0[@"Sim"]];
+                self.user.deviceNa = [TypeConversionMode strongChangeString:itemDit0[@"NickName"]];
+                self.user.deviceBa = [TypeConversionMode strongChangeString:itemDit0[@"Battery"]];
+                self.user.deviceMo = [TypeConversionMode strongChangeString:itemDit0[@"Model"]];
+                self.user.deviceIMEI = [TypeConversionMode strongChangeString:itemDit0[@"SerialNumber"]];
+                self.user.deviceCoor = CLLocationCoordinate2DMake([itemDit0[@"Latitude"] floatValue], [itemDit0[@"Longitude"] floatValue]);
+                self.foundDevice = YES;
+            }
             [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:itemDit[@"Avatar"]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                 
             } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
@@ -156,8 +158,10 @@
                 userList.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
                 if ([self.user.deviceId isEqualToString:[TypeConversionMode strongChangeString:itemDit[@"Id"]]]) {
+                    self.user = userList;
                     [CHAccountTool saveUser:userList];
-                    [self.deviceLists insertObject:userList atIndex:0];
+                    //                    [self.deviceLists insertObject:userList atIndex:0];
+                    [self.deviceLists addObject:userList];
                 }
                 else{
                     [self.deviceLists addObject:userList];
@@ -165,19 +169,26 @@
                 if (self.foundDevice) {
                     if (self.deviceLists.count > 0) {
                         for (CHUserInfo *user in self.deviceLists) {
+                            if ([self.user.deviceId isEqualToString:user.deviceId]) {
+                                NSInteger inter = [self.deviceLists indexOfObject:user];
+                                [self.deviceLists exchangeObjectAtIndex:0 withObjectAtIndex:inter];
+                                break;
+                            }
+                        }
+                        for (CHUserInfo *user in self.deviceLists) {
                             [self getRegoCoding:user];
                         }
                     }
                     else{
-                        [MBProgressHUD hideHUD];
+//                        [MBProgressHUD hideHUD];
                     }
                 }
             }];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-//        [self clearDevice];
-//        [self updateUI];
+        //        [self clearDevice];
+        //        [self updateUI];
         if (error.code != 999) {
             //            request = 0;
             //            for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
@@ -201,7 +212,7 @@
                 user.GeoCoding = geo;
             }
             if (user == [selfWeak.deviceLists lastObject]) {
-                [MBProgressHUD hideHUD];
+//                [MBProgressHUD hideHUD];
                 [selfWeak updateUI];
             }
         }];
@@ -230,7 +241,7 @@
 }
 
 - (void)createUI{
-     [self clearDevice];
+    //     [self clearDevice];
     @WeakObj(self)
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *backImage = [UIImageView itemWithImage:[UIImage imageNamed:@"bk_shouyebeijing"] backColor:nil];
@@ -239,15 +250,15 @@
     UIImage *deviceIma = [UIImage imageNamed:@"pho_morentouxiang"];
     NSLog(@"[CHAccountTool user].userId %@",[CHAccountTool user].userId);
     
-    if (self.user.deviceId) {
-        if (self.user.deviceIm && ![[self.user deviceIm] isEqualToString:@""]) {
-            NSData *imaData = [[NSData alloc] initWithBase64EncodedString:self.user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            deviceIma = [UIImage imageWithData:imaData];
-            if (!deviceIma) {
-                deviceIma = [UIImage imageNamed:@"pho_touxiang"];
-            }
-        }
-    }
+    //    if (self.user.deviceId) {
+    //        if (self.user.deviceIm && ![[self.user deviceIm] isEqualToString:@""]) {
+    //            NSData *imaData = [[NSData alloc] initWithBase64EncodedString:self.user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    //            deviceIma = [UIImage imageWithData:imaData];
+    //            if (!deviceIma) {
+    //                deviceIma = [UIImage imageNamed:@"pho_touxiang"];
+    //            }
+    //        }
+    //    }
     
     self.leftBut = [CHButton createWithImage:deviceIma Radius:25 touchBlock:^(CHButton *sender) {
         [selfWeak.app.leftSliderViewController openLeftView];
@@ -260,6 +271,7 @@
     [backImage addSubview:leftIma];
     
     CHButton *rightBut = [CHButton createWithNorImage:[UIImage imageNamed:@"icon_caidan_n"] lightIma:[UIImage imageNamed:@"icon_caidan_h"] touchBlock:^(CHButton *sender) {
+        selfWeak.uploadRequest = NO;
         [selfWeak.navigationController pushViewController:[[CHUserSetViewController alloc] init] animated:YES];
     }];
     [backImage addSubview:rightBut];
@@ -286,12 +298,17 @@
         //        [nav pushViewController:newVc animated:false];
         //关闭抽屉
         @StrongObj(self)
+        selfWeak.uploadRequest = NO;
         AppDelegate * appDelegate  =(AppDelegate *) [UIApplication sharedApplication].delegate;
-        [appDelegate.leftSliderViewController closeLeftView];
+        //        [appDelegate.leftSliderViewController closeLeftView];
         NSLog(@"appDelegate.leftSliderViewController %@",appDelegate.leftSliderViewController);
+        for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
+            [tasks cancel];
+        }
         self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
-        
-        [self.navigationController pushViewController:[[CHLocaViewController alloc] init] animated:YES];
+        CHLocaViewController *locaVC = [[CHLocaViewController alloc] init];
+        locaVC.user = self.user;
+        [self.navigationController pushViewController:locaVC animated:YES];
     }];
     [backImage addSubview:locaBut];
     
@@ -299,7 +316,15 @@
     [backImage addSubview:locaLab];
     
     CHButton *chatBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_weiliao"] Radius:0 touchBlock:^(CHButton *sender) {
-        
+        if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+            [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
+            return;
+        }
+        for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
+            [tasks cancel];
+        }
+        selfWeak.uploadRequest = NO;
+        [selfWeak.navigationController pushViewController:[[CHBaseViewController alloc] init] animated:YES];
     }];
     [backImage addSubview:chatBut];
     
@@ -379,7 +404,7 @@
 
 - (void)requestDivice{
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
-         [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
+        [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
         return;
     }
     @WeakObj(self)
@@ -406,7 +431,7 @@
             
         } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
             if (!image) {
-                image = [UIImage imageNamed:@"pho_usetouxiang"];
+                image = [UIImage imageNamed:@"pho_touxiang"];
             }
             self.user.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             [[FMDBConversionMode sharedCoreBlueTool] updateDevice:self.user];
@@ -429,6 +454,9 @@
                 deviceIma = [UIImage imageNamed:@"pho_touxiang"];
             }
         }
+        else{
+            deviceIma = [UIImage imageNamed:@"pho_touxiang"];
+        }
     }
     [self.leftBut setBackgroundImage:deviceIma forState:UIControlStateNormal];
     [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
@@ -448,17 +476,19 @@
 
 - (void)leftViewWillDisApplear{
     NSLog(@"leftViewWillDisApplear");
-     [self updateDeviceListWithRequestTimes:1];
+    if (self.uploadRequest) {
+        [self updateDeviceListWithRequestTimes:1];
+    }
 }
 
 - (void)leftViewWillApplear{
-     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
-         [self updateDeviceListWithRequestTimes:1];
-     }else{
-      [self requestDivice];
-     }
-//   [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
-     NSLog(@"leftViewWillApplear");
+    if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+        [self updateDeviceListWithRequestTimes:1];
+    }else{
+        [self requestDivice];
+    }
+    //   [CHNotifictionCenter postNotificationName:@"UPDATELEFTVC" object:nil userInfo:@{@"DEVICELIST":self.deviceLists,@"USER":self.user}];
+    NSLog(@"leftViewWillApplear");
 }
 
 #pragma mark -- 抽屉界面转跳
@@ -475,10 +505,27 @@
         ((CHJBWViewController *)pushViewController).user = self.user;
     }
     [self.navigationController pushViewController:pushViewController animated:YES];
-    
     self.hidesBottomBarWhenPushed = NO;
-    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"HomePagePush" object:nil];
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"HomePagePush" object:nil];
+}
+
+- (void)updateUser:(NSNotification *) notification{
+    self.user = [notification.userInfo objectForKey:@"UPDATEUSER"];
+    UIImage *deviceIma = [UIImage imageNamed:@"pho_morentouxiang"];
+    NSLog(@"[CHAccountTool user].userId %@",[CHAccountTool user].userId);
+    if (self.user.deviceId) {
+        if (self.user.deviceIm && ![[self.user deviceIm] isEqualToString:@""]) {
+            NSData *imaData = [[NSData alloc] initWithBase64EncodedString:self.user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            deviceIma = [UIImage imageWithData:imaData];
+            if (!deviceIma) {
+                deviceIma = [UIImage imageNamed:@"pho_touxiang"];
+            }
+        }
+        else{
+            deviceIma = [UIImage imageNamed:@"pho_touxiang"];
+        }
+    }
+    [self.leftBut setBackgroundImage:deviceIma forState:UIControlStateNormal];
 }
 
 -(void)dealloc{

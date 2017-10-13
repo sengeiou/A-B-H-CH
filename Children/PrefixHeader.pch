@@ -71,11 +71,11 @@
 #define SOUND_SWITCH @"1021"  //静音开关
 #define VIBRATION_SWITCH @"0134"  //震动时长控制
 
-#if DEBUG
-#define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
-#else
-#define NSLog(FORMAT, ...) nil
-#endif
+//#if DEBUG
+//#define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+//#else
+//#define NSLog(FORMAT, ...) nil
+//#endif
 
 #define CHLocalizedString(str,nil) [CHLocalizeableMode CHlocalizedStringDic:str comment:nil] //.HelveticaNeueInterface-Regular SFUIText
 #define CHFontNormal(nil,f) [UIFont fontWithName:nil ? nil:@".HelveticaNeueInterface-Regular" size:f]

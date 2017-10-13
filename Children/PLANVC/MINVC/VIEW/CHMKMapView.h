@@ -20,6 +20,7 @@
 @property (nonatomic, assign) NSUInteger zoomLevel;
 @property (nonatomic, strong) NSMutableArray *polyliones;
 @property (nonatomic, strong) NSMutableArray *mapAnnotations;
+@property (nonatomic, strong) CHUserInfo *selectUser;
 + (CHMKMapView *)createMapView;
 - (void)addAnnotationsWithPoints:(NSMutableArray *)points;
 - (void)addAnnotationsWithTrackPoints:(NSMutableArray *)points;

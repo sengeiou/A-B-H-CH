@@ -103,7 +103,7 @@
         make.top.mas_equalTo(self.view);
         make.left.mas_equalTo(self.view);
         make.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(240 * WIDTHAdaptive);
+        make.height.mas_equalTo([UIImage imageNamed:@"pic_dengluye"].size.height * WIDTHAdaptive);
     }];
     
     [logoIma mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -244,6 +244,7 @@
             NSLog(@"第三方登录： %ld",(long)sender.tag);
         }];
         but.tag = 101 + i;
+        but.hidden = YES;
         [self.view addSubview:but];
         [but mas_makeConstraints:^(MASConstraintMaker *make) {
             
@@ -280,6 +281,9 @@
         make.left.mas_equalTo(thirdLab.mas_right).mas_offset(10);
         make.height.mas_equalTo(2);
     }];
+    thirdLab.hidden = YES;
+    thirdIma0.hidden = YES;
+    thirdIma1.hidden = YES;
     
     NSArray *chLogin = @[_operationStype ? CHLocalizedString(@"手机登录", nil):CHLocalizedString(@"邮箱登录", nil),CHLocalizedString(@"找回密码", nil)];
     for (int j = 0; j < chLogin.count; j ++) {
@@ -318,7 +322,11 @@
                 [self.view endEditing:YES];
                 NSMutableDictionary *requestDic = [[CHAFNWorking shareAFNworking] requestDic];
                 [CHAFNWorking shareAFNworking].moreRequest = YES;
-                [requestDic addEntriesFromDictionary:@{@"Name":phoneLab.text, @"Pass":passFiled.text,@"LoginType":@"0"}];
+                NSString *STR = phoneLab.text;
+                if (codeLab.text && ![codeLab.text isEqualToString:@""] && _operationStype == 0) {
+                    STR = [NSString stringWithFormat:@"%@%@",codeLab.text, phoneLab.text];
+                }
+                [requestDic addEntriesFromDictionary:@{@"Name":STR, @"Pass":passFiled.text,@"LoginType":@"0"}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Login parameters:requestDic Mess:CHLocalizedString(@"正在登录...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -381,7 +389,14 @@
                                                     userList.deviceIm = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                                                 }
                                                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:userList];
-                                                if (i == 0) {
+                                                if (i == 0) { 
+//                                                    NSSet *set = [NSSet setWithObject:[NSString stringWithFormat:@"U%@",user.userId]];
+//                                                    [JPUSHService setTags:set completion:^(NSInteger iResCode, NSSet *iTags, NSInteger seq) {
+//                                                        NSLog(@"tagsAliasCallback11111111 %d",iResCode);
+//                                                    } seq:user.userId.integerValue];
+                                                    [JPUSHService setAlias:[NSString stringWithFormat:@"U%@",user.userId] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+//                                                        NSLog(@"fiowjiogj iojg3333222222222222222222222 j %d",iResCode);
+                                                    } seq:user.userId.integerValue];
                                                     [MBProgressHUD hideHUD];
                                                     [CHAccountTool saveUser:userList];
 //                                                    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
@@ -404,6 +419,13 @@
                                     else{
                                         [MBProgressHUD hideHUD];
                                         [CHAccountTool saveUser:user];
+//                                        NSSet *set = [NSSet setWithObject:[NSString stringWithFormat:@"U%@",user.userId]];
+//                                        [JPUSHService setTags:set completion:^(NSInteger iResCode, NSSet *iTags, NSInteger seq) {
+//                                              NSLog(@"tagsAliasCallback222222 %d",iResCode);
+//                                        } seq:user.userId.integerValue];
+                                        [JPUSHService setAlias:[NSString stringWithFormat:@"U%@",user.userId] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+//                                            NSLog(@"fiowjiogj iojg333333333333333 j %d",iResCode);
+                                        } seq:user.userId.integerValue];
 //                                        CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
 //                                        CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
 //                                        XLSlideMenu *slideMenu = [[XLSlideMenu alloc] initWithRootViewController:nav];
@@ -519,10 +541,11 @@
     NSDictionary *dict = notification.userInfo;
     CGRect KeyboardFrame = [dict[UIKeyboardFrameEndUserInfoKey]CGRectValue];
     CGFloat KeyboardY = KeyboardFrame.origin.y;
-    NSLog(@"KeyboardWillChange %f",KeyboardY);
+    NSLog(@"KeyboardWillChange %f  %f  %f",KeyboardY,self.view.frame.size.height,KeyboardFrame.size.height);
     //获取动画时间
     CGFloat duration = [dict[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-    CGFloat transY = KeyboardY * 1.36 - self.view.frame.size.height;
+//    CGFloat transY =  KeyboardY  - self.view.frame.size.height / 1.5;
+    CGFloat transY = -64;
     NSLog(@"%f KeyboardWillChange %f",KeyboardY,transY);
     //动画
     [UIView animateWithDuration:duration animations:^{

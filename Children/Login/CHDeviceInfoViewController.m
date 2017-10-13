@@ -14,15 +14,17 @@
     CHButton *gailBut;
     CHButton *mainBut;
     UIImagePickerController *picker;
-    CHButton *headBut;
     NSDateFormatter *formatter;
 }
 @property (nonatomic, strong) NSMutableArray *heightArrs;
 @property (nonatomic, strong) NSMutableArray *widthArrs;
+@property (nonatomic, strong) NSMutableDictionary *userInfoDic;
+@property (nonatomic, strong) UITableView *tabView;
+@property (nonatomic, strong) CHButton *headBut;
 @end
 
 @implementation CHDeviceInfoViewController
-@synthesize user;
+@synthesize user,tabView,headBut;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -35,14 +37,46 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSMutableDictionary *)userInfoDic{
+    if (!_userInfoDic) {
+        _userInfoDic = [NSMutableDictionary dictionary];
+    }
+    return _userInfoDic;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
 }
 
+- (void)requestUserInfo{
+    NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+    [dic addEntriesFromDictionary:@{@"UserId":self.user.userId}];
+    @WeakObj(self)
+    [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_UserInfo parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        selfWeak.userInfoDic = [result[@"UserInfo"] mutableCopy];
+        [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:[TypeConversionMode strongChangeString:selfWeak.userInfoDic[@"Avatar"]]]  options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+            
+        } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+            if (!image) {
+                image = [UIImage imageNamed:@"pho_usetouxiang"];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [headBut setImage:[UIImage mergeMainIma:image subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] forState:UIControlStateNormal];
+            });
+        }];
+        [selfWeak.tabView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        
+    }];
+}
+
 - (void)initializeMethod{
     if (_setUser) {
-        titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"手机号码", nil)];
+        titArr = @[CHLocalizedString(@"账号", nil),CHLocalizedString(@"昵称", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"邮箱", nil)];
+        [self requestUserInfo];
         return;
     }
     titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"生日", nil),CHLocalizedString(@"身高", nil),CHLocalizedString(@"体重", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"IMEI", nil)];
@@ -61,7 +95,6 @@
     if (!user.deviceGe) {
         user.deviceGe = @"1";
     }
-    
     if (!user.deviceBi) {
         user.deviceBi = [formatter stringFromDate:norDate];
     }
@@ -69,14 +102,21 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    
     UIView *headView = [UIView new];
     headView.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:headView];
     __block UIImagePickerControllerSourceType sourceType ;
     
     UIImage *headIma = [UIImage imageNamed:@"pho_usetouxiang"];
-    
+   
+    if (!_setUser) {
+        NSData *imaData = [[NSData alloc] initWithBase64EncodedString:[TypeConversionMode strongChangeString:self.user.deviceIm] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        headIma = [UIImage imageWithData:imaData];
+        if (!headIma) {
+            headIma = [UIImage imageNamed:@"pho_usetouxiang"];
+        }
+    }
+//    [headBut setImage:[UIImage mergeMainIma:deviceIma subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] forState:UIControlStateNormal];
     headBut = [CHButton createWithImage:[UIImage mergeMainIma:headIma subIma:[UIImage imageNamed:@"icon_xiangji"] callBackSize:CGSizeMake((CHMainScreen.size.width * WIDTHAdaptive)/3.5, (CHMainScreen.size.width * WIDTHAdaptive)/3.5)] Radius:(CHMainScreen.size.width * WIDTHAdaptive)/7 touchBlock:^(CHButton *sender) {
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         CHPhotoView *photoView = [CHPhotoView initWithNomarSheet];
@@ -180,10 +220,10 @@
             NSMutableDictionary *saveDic = [CHAFNWorking shareAFNworking].requestDic;
             [saveDic addEntriesFromDictionary:@{@"UserId": [TypeConversionMode strongChangeString:user.userId],
                                                 @"Username": [TypeConversionMode strongChangeString:user.userNa],
-                                                @"Email": @"",
+                                                @"Email": [TypeConversionMode strongChangeString:self.userInfoDic[@"Email"]],
                                                 @"Address": @"",
                                                 @"Avatar": [TypeConversionMode strongChangeString:user.userIm],
-                                                @"CellPhone": [TypeConversionMode strongChangeString:user.userPh],
+                                                @"CellPhone": [TypeConversionMode strongChangeString:self.userInfoDic[@"CellPhone"]],
                                                 @"Sim": @"",
                                                 @"Gender": @0,
                                                 @"Birthday": @"",
@@ -257,7 +297,7 @@
     }];
     [self.view addSubview:confimBut];
     
-    UITableView *tabView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    tabView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     if ([tabView respondsToSelector:@selector(setSeparatorColor:)]) {
         tabView.separatorColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     }
@@ -354,18 +394,30 @@
     if (indexPath.row == titArr.count - 1) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         if (!_setUser) {
-//            cell.accessoryType = UITableViewCellAccessoryNone;
+            //            cell.accessoryType = UITableViewCellAccessoryNone;
             cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
         }
     }
-    if (indexPath.row == 0 && _setUser) {
-        cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+    
+    if (_setUser) {
+        if (indexPath.row == 0) {
+            //        cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+            //            view.backgroundColor = [UIColor greenColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryView = view;
+        }
+        else{
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
+        }
     }
     cell.textLabel.text = [titArr objectAtIndex:indexPath.row];
-    if (indexPath.row == 0) cell.detailTextLabel.text = _setUser ? user.userNa : user.deviceNa;
-    if (indexPath.row == 1) cell.detailTextLabel.text = _setUser ? user.userPh : user.deviceBi;
-    if (indexPath.row == 2) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"厘米", nil)];
-    if (indexPath.row == 3) cell.detailTextLabel.text = [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"公斤", nil)];
+    if (indexPath.row == 0) cell.detailTextLabel.text = _setUser ? user.userPh : user.deviceNa;
+    if (indexPath.row == 1) cell.detailTextLabel.text = _setUser ? user.userNa : user.deviceBi;
+    if (indexPath.row == 2) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"CellPhone"]] : [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"厘米", nil)];
+    if (indexPath.row == 3) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"Email"]] : [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"公斤", nil)];
     if (indexPath.row == 4) cell.detailTextLabel.text = user.devicePh ? user.devicePh:CHLocalizedString(@"", nil);
     if (indexPath.row == 5) cell.detailTextLabel.text = user.deviceIMEI ? user.deviceIMEI:CHLocalizedString(@"", nil);
     return cell;
@@ -379,74 +431,117 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (indexPath.row == 0) {
-        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            
-        }];
-        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UITextField *nickField = (UITextField *)aler.textFields[0];
-            if (_setUser) {
-                user.userNa = nickField.text;
-            }else{
-                user.deviceNa = nickField.text;
+    
+    if (_setUser) {
+        if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
+            NSString *alerTit = CHLocalizedString(@"昵称", nil);
+            if (indexPath.row == 2) {
+                alerTit = CHLocalizedString(@"手机号码", nil);
             }
-            cell.detailTextLabel.text = nickField.text;
-        }];
-        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [aler addAction:cancelAct];
-        [aler addAction:conFimAct];
-        [self presentViewController:aler animated:YES completion:^{
-            
-        }];
-    }
-    if (indexPath.row == 1 && !_setUser) {
-        CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-        NSDate *date = [formatter dateFromString:user.deviceBi];
-        [PickView createBirthdayUIWithOriginDate:date DidSelectConfirm:^(CHButton *sender, NSString *date) {
-            user.deviceBi = date;
-            cell.detailTextLabel.text = date;
-        }];
-        [app.window addSubview:PickView];
-    }
-    if (indexPath.row == 2){
-        CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-        [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"厘米", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
-            user.deviceHe = date;
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"厘米", nil)];
-        }];
-        [app.window addSubview:PickView];
-    }
-    if (indexPath.row == 3){
-        CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-        [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"公斤", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
-            user.deviceWi = date;
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"公斤", nil)];
-        }];
-        [app.window addSubview:PickView];
-    }
-    if(indexPath.row == 4){
-        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"手机号码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UITextField *nickField = (UITextField *)aler.textFields[0];
-            user.devicePh = nickField.text;
-            
-            cell.detailTextLabel.text = nickField.text;
-        }];
-        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [aler addAction:cancelAct];
-        [aler addAction:conFimAct];
-        [self presentViewController:aler animated:YES completion:^{
-            
-        }];
-        
+            if (indexPath.row == 3) {
+                alerTit = CHLocalizedString(@"邮箱", nil);
+            }
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                textField.keyboardType = UIKeyboardTypeDefault;
+                if (indexPath.row == 2) {
+                    textField.keyboardType = UIKeyboardTypeNumberPad;
+                }
+                if (indexPath.row == 3) {
+                    textField.keyboardType = UIKeyboardTypeEmailAddress;
+                }
+            }];
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UITextField *nickField = (UITextField *)aler.textFields[0];
+                
+                if (indexPath.row == 1) {
+                    user.userNa = nickField.text;
+                }
+                if (indexPath.row == 2) {
+                    [self.userInfoDic setValue:nickField.text forKey:@"CellPhone"];
+                }
+                if (indexPath.row == 3) {
+                    if (![CHCalculatedMode validateEmail:nickField.text]) {
+                        [MBProgressHUD showError:CHLocalizedString(@"请输入正确邮箱", nil)];
+                        return ;
+                    }
+                    [self.userInfoDic setValue:nickField.text forKey:@"Email"];
+                }
+                cell.detailTextLabel.text = nickField.text;
+            }];
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [aler addAction:cancelAct];
+            [aler addAction:conFimAct];
+            [self presentViewController:aler animated:YES completion:^{
+                
+            }];
+        }
+    }else{
+        if (indexPath.row == 0 ) {
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                
+            }];
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UITextField *nickField = (UITextField *)aler.textFields[0];
+                user.deviceNa = nickField.text;
+                cell.detailTextLabel.text = nickField.text;
+            }];
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [aler addAction:cancelAct];
+            [aler addAction:conFimAct];
+            [self presentViewController:aler animated:YES completion:^{
+                
+            }];
+        }
+        if (indexPath.row == 1) {
+            CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
+            NSDate *date = [formatter dateFromString:user.deviceBi];
+            [PickView createBirthdayUIWithOriginDate:date DidSelectConfirm:^(CHButton *sender, NSString *date) {
+                user.deviceBi = date;
+                cell.detailTextLabel.text = date;
+            }];
+            [app.window addSubview:PickView];
+        }
+        if (indexPath.row == 2){
+            CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
+            [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"厘米", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
+                user.deviceHe = date;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"厘米", nil)];
+            }];
+            [app.window addSubview:PickView];
+        }
+        if (indexPath.row == 3){
+            CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
+            [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"公斤", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
+                user.deviceWi = date;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"公斤", nil)];
+            }];
+            [app.window addSubview:PickView];
+        }
+        if(indexPath.row == 4){
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"手机号码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                textField.keyboardType = UIKeyboardTypeNumberPad;
+            }];
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UITextField *nickField = (UITextField *)aler.textFields[0];
+                user.devicePh = nickField.text;
+                cell.detailTextLabel.text = nickField.text;
+            }];
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [aler addAction:cancelAct];
+            [aler addAction:conFimAct];
+            [self presentViewController:aler animated:YES completion:^{
+                
+            }];
+        }
     }
 }
 

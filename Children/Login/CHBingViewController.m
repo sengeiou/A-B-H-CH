@@ -49,12 +49,28 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(CHMainScreen.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
 }
 
+- (void)didClickBackBarButtonItem:(id)sender{
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+    CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+    app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+    [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
+}
+
 - (void)createUI{
     self.view.backgroundColor = CHUIColorFromRGB(0x000000, 1.0);
     self.title = CHLocalizedString(@"绑定手表", nil);
     
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem backItemWithIma:[UIImage imageNamed:@"btu_fanhui_w"] target:self action:@selector(didClickBackBarButtonItem:)];
+    
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem CHItemWithTit:CHLocalizedString(@"跳过", nil) textColor:nil textFont:CHFontNormal(nil, 14) touchCallBack:^(UIBarButtonItem *item) {
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         
+        CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+        CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
+        app.leftSliderViewController = [[LeftSliderViewController alloc] initWithLeftView:leftVC andMainView:nav];
+        
+        [UIApplication sharedApplication].keyWindow.rootViewController = app.leftSliderViewController;
     }];
     [self.navigationItem.rightBarButtonItem.customView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_greaterThanOrEqualTo(40);
@@ -250,8 +266,10 @@
                 CHPutInViewController *putInVC = [[CHPutInViewController alloc] init];
                 putInVC.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
                 putInVC.user = user;
+                [CHAFNWorking shareAFNworking].moreRequest = NO;
                 [self.navigationController pushViewController:putInVC animated:YES];
             }else{
+                [CHAFNWorking shareAFNworking].moreRequest = NO;
                 [MBProgressHUD showError:[result objectForKey:@"Message"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                      [self.navigationController popViewControllerAnimated:YES];

@@ -37,6 +37,18 @@
     self.title = CHLocalizedString(@"申请消息", nil);
     self.tableView.tableFooterView = [UIView new];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, CHMainScreen.size.width, 0, 0)];
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width, CHMainScreen.size.height - 64)];
+    self.tableView.backgroundView = backView;
+    
+    UIImageView *image = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_kxx"] backColor:nil];
+    image.frame = CGRectMake(0, 0, 71, 109);
+    image.center = CGPointMake(CHMainScreen.size.width/2, CHMainScreen.size.height/2 - 106);
+    [backView addSubview:image];
+    
+    CHLabel *titLab = [CHLabel createWithTit:CHLocalizedString(@"暂时没有新消息", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
+    titLab.frame = CGRectMake(30, CGRectGetMaxY(image.frame) + 10, CHMainScreen.size.width - 60, 60);
+    [backView addSubview:titLab];
 }
 
 - (void)initializeMethod{

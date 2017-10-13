@@ -7,4 +7,5 @@ pod 'AFNetworking'
 pod 'MBProgressHUD'
 pod 'SDWebImage'
 pod 'MJExtension'
+pod 'JPush'
 end

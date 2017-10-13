@@ -51,6 +51,7 @@ static id _instace;
         [queue inDatabase:^(FMDatabase *db) {
             BOOL result;
             result = [db executeUpdate:@"create table if not exists tb_deviceList (userId varchar(50),deviceId varchar(50),devicePh archar(50),deviceNa varchar(50),deviceIm varchar(50),deviceBi varchar(50),deviceHe varchar(50),deviceWi varchar(50),deviceGe varchar(50),deviceIMEI varchar(50),relatoin varchar(50),deviceTy varchar(50),deviceMo varchar(50))"];
+            result = [db executeUpdate:@"create table if not exists tb_chatData (chat_id varchar(50) primary key, user_id integer, chatData TEXT, avatarBase text, avatarUrl text, createdDate datetime, longTime integer, isRead integer)"];
             NSLog(@"创表 %d",result);
         }];
     }
@@ -124,5 +125,40 @@ static id _instace;
         }
     }];
     return diveceList;
+}
+
+- (void)insertChatData:(NSMutableArray <CHVideoMode *>*) chatList{
+    [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        BOOL result;
+        for (int i = 0; i < chatList.count; i ++) {
+            CHVideoMode *mode = chatList[i];
+            result = [db executeUpdate:@"delete from tb_chatData where user_id=? and chat_id=?",[NSString stringWithFormat:@"%ld",(long)mode.UserId],mode.Content];
+            
+            result = [db executeUpdate:@"insert into tb_chatData (chat_id,user_id,chatData,avatarBase,avatarUrl,createdDate,longTime,isRead) values(?,?,?,?,?,?,?,?)",mode.Content,[NSString stringWithFormat:@"%ld",(long)mode.UserId],mode.FileBase,mode.AvatarBase,mode.Avatar,mode.Created,[NSString stringWithFormat:@"%ld",(long)mode.Long],[NSString stringWithFormat:@"%d",mode.IsRead]];
+            NSLog(@"插入语音数据 %d",result);
+        }
+    }];
+}
+
+- (CHVideoMode *)selectChatDataWithMode:(CHVideoMode *)mode{
+    CHVideoMode *selMode = [[CHVideoMode alloc] init];
+    [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *sql = [NSString stringWithFormat:@"select *from tb_chatData where user_id = \'%@\' and chat_id = \'%@\'",[NSString stringWithFormat:@"%ld",(long)mode.UserId],mode.Content];
+        FMResultSet *rs = [db executeQuery:sql];
+        while (rs.next) {
+            NSLog(@" %@",[rs stringForColumn:@"isRead"]);
+            selMode.FileBase = [rs stringForColumn:@"chatData"];
+            selMode.IsRead = [rs intForColumn:@"isRead"];
+        }
+    }];
+    return selMode;
+}
+
+- (void)updateChatDataWithMode:(CHVideoMode *)mode{
+    [self.queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        BOOL result;
+        result = [db executeUpdate:@"update tb_chatData set isRead=? where user_id = ? and chat_id = ?",[NSString stringWithFormat:@"%d",mode.IsRead],[NSString stringWithFormat:@"%ld",(long)mode.UserId],mode.Content];
+        NSLog(@"更新指定语音数据 %d  %@",result,[NSString stringWithFormat:@"%d",mode.IsRead]);
+    }];
 }
 @end

@@ -85,8 +85,8 @@
     self.shakeBut = [CHButton createWithNorImage:[UIImage imageNamed:@"icon_kaung_n"] selectIma:[UIImage imageNamed:@"icom_xz"] touchBlock:^(CHButton *sender) {
         sender.selected = !sender.selected;
         mess = @"";
-        [selfWeak setCmdWithParams:sender.selected ? @"0":@"5" code:VIBRATION_SWITCH finish:^(BOOL success){
-            selfWeak.vibrationMode.CmdValue = sender.selected ? @"0":@"5";
+        [selfWeak setCmdWithParams:sender.selected ? @"5":@"0" code:VIBRATION_SWITCH finish:^(BOOL success){
+            selfWeak.vibrationMode.CmdValue = sender.selected ? @"5":@"0";
         }];
     }];
     [self.view addSubview:self.shakeBut];

@@ -16,7 +16,7 @@
 #import "CHDeviceView.h"
 
 typedef void (^click) (CHDeviceView *imaGe);
-
+typedef void (^didSetFrame) (CHDeviceView *imaGe);
 @interface MNWheelView : UIView
 // imageNames 和images 二选一
 //图片名数组
@@ -25,6 +25,7 @@ typedef void (^click) (CHDeviceView *imaGe);
 @property(nonatomic,weak)NSArray *images;
 //回调单击方法
 @property(nonatomic,strong)click click;
+@property(nonatomic,strong)didSetFrame setClick;
 - (void)selectImageWithTag:(int)tag;
 @end
 
