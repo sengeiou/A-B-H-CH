@@ -59,11 +59,11 @@
 
 - (void)createUI{
     self.view.backgroundColor = CHUIColorFromRGB(0x000000, 1.0);
-    self.title = CHLocalizedString(@"绑定手表", nil);
+    self.title = CHLocalizedString(@"device_bind", nil);
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem backItemWithIma:[UIImage imageNamed:@"btu_fanhui_w"] target:self action:@selector(didClickBackBarButtonItem:)];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem CHItemWithTit:CHLocalizedString(@"跳过", nil) textColor:nil textFont:CHFontNormal(nil, 14) touchCallBack:^(UIBarButtonItem *item) {
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem CHItemWithTit:CHLocalizedString(@"device_bind_skip", nil) textColor:nil textFont:CHFontNormal(nil, 14) touchCallBack:^(UIBarButtonItem *item) {
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         
         CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
@@ -77,10 +77,10 @@
         make.height.mas_equalTo(40);
     }];
     
-    CHLabel *titLAab = [CHLabel createWithTit:CHLocalizedString(@"扫描二维码", nil) font:CHFontNormal(nil, 18) textColor:nil backColor:nil textAlignment:NSTextAlignmentCenter];
+    CHLabel *titLAab = [CHLabel createWithTit:CHLocalizedString(@"device_bind_searchO", nil) font:CHFontNormal(nil, 18) textColor:nil backColor:nil textAlignment:NSTextAlignmentCenter];
     [self.view addSubview:titLAab];
     
-    CHLabel *titLAab1 = [CHLabel createWithTit:CHLocalizedString(@"二维码在说明书上，或已绑定手表的爱保护APP宝贝手表选项", nil) font:CHFontNormal(nil, 12) textColor:nil backColor:nil textAlignment:NSTextAlignmentCenter];
+    CHLabel *titLAab1 = [CHLabel createWithTit:CHLocalizedString(@"deivce_bind_searchT", nil) font:CHFontNormal(nil, 12) textColor:nil backColor:nil textAlignment:NSTextAlignmentCenter];
     titLAab1.numberOfLines = 0;
     [self.view addSubview:titLAab1];
     
@@ -97,7 +97,7 @@
     activityIndicatorView.hidesWhenStopped = YES;
     [searchView addSubview:activityIndicatorView];
     
-    CHButton *inputBut = [CHButton createWithTit:CHLocalizedString(@"手动输入", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *inputBut = [CHButton createWithTit:CHLocalizedString(@"device_input", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self.navigationController pushViewController:[[CHInputViewController alloc] init] animated:YES];
     }];
     [self.view addSubview:inputBut];
@@ -145,8 +145,8 @@
     //设置设备输入输出
     AVCaptureDeviceInput *input = [[AVCaptureDeviceInput alloc] initWithDevice:device error:&error];
     if (error) {
-        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"摄像头不可用", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"device_phoneErro", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
         [aler addAction:confimAct];
@@ -225,7 +225,7 @@
             if ([[result objectForKey:@"State"] intValue] == 0) {
                 
                 NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
-                [dic addEntriesFromDictionary:@{@"DeviceId":user.deviceId,@"UserId": user.userId,@"RelationPhone":user.userPh,@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
+                [dic addEntriesFromDictionary:@{@"DeviceId":user.deviceId,@"UserId": user.userId,@"RelationPhone":[TypeConversionMode strongChangeString:user.userPh],@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {

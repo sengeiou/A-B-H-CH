@@ -35,7 +35,6 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
     [self.deviceCollView registerClass:[CHDeiceCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.deviceCollView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.deviceCollView];
-//    self.backgroundColor = [UIColor yellowColor];
     
     UIView *locaView = [UIView new];
     locaView.backgroundColor = [UIColor whiteColor];
@@ -45,28 +44,32 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
     self.locaLab.numberOfLines = 0;
     [locaView addSubview:self.locaLab];
     
-    updateBut = [CHButton createWithTit:CHLocalizedString(@"刷新", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 9) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:22 touchBlock:^(CHButton *sender) {
+    updateBut = [CHButton createWithTit:CHLocalizedString(@"location_update", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 9) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:22 touchBlock:^(CHButton *sender) {
         butBlock(sender);
     }];
     [updateBut setImage:[UIImage imageNamed:@"icon_shuaxin"] forState:UIControlStateNormal];
     
     [self addSubview:updateBut];
     
+    UIView *iphoneX = [UIView new];
+    iphoneX.backgroundColor = [UIColor whiteColor];
+     [self addSubview:iphoneX];
+    
     [self.deviceCollView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(0);
+        make.bottom.mas_equalTo(iphoneX.mas_top);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.5);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(iPhoneX ? 0.4:0.5);
     }];
     
     [locaView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.deviceCollView.mas_top).mas_offset(-2);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.5).mas_offset(-16);
+        make.top.mas_equalTo(22);
+//        make.height.mas_equalTo(self.mas_height).multipliedBy(iPhoneX ? 0.4:0.5).mas_offset(-16);
     }];
     
-  
     [updateBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.right.mas_equalTo(-12);
@@ -80,6 +83,13 @@ static NSString * const reuseIdentifier = @"DEVICECELL";
         make.top.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
         make.right.mas_equalTo(updateBut.mas_left).mas_offset(-8);
+    }];
+    
+    [iphoneX mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(HOME_INDICATOR_HEIGHT);
     }];
 }
 

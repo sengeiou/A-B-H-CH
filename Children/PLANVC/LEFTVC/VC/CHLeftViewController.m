@@ -35,7 +35,7 @@
     self.app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     CHUserInfo *addUser = [[CHUserInfo alloc] init];
     addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    addUser.deviceNa = CHLocalizedString(@"添加设备", nil);
+    addUser.deviceNa = CHLocalizedString(@"device_add", nil);
     [self.deviceLists addObject:addUser];
     
     NSUInteger deInte = 0;
@@ -46,7 +46,7 @@
     }
     NSInteger mid = self.deviceLists.count/2;
     [self.deviceLists exchangeObjectAtIndex:mid withObjectAtIndex:deInte];
-    self.leftArrs = @[@[[UIImage imageNamed:@"leftbar_jtcy"],CHLocalizedString(@"家庭成员", nil)],@[[UIImage imageNamed:@"leftbar_aqwl"],CHLocalizedString(@"安全围栏", nil)],@[[UIImage imageNamed:@"leftbar_lsgj"],CHLocalizedString(@"历史轨迹", nil)],@[[UIImage imageNamed:@"leftbar_bbsb"],CHLocalizedString(@"宝贝手表", nil)],@[[UIImage imageNamed:@"leftbar_xxzx"],CHLocalizedString(@"消息中心", nil)],@[[UIImage imageNamed:@"leftbar_sz"],CHLocalizedString(@"更多设置", nil)]];
+    self.leftArrs = @[@[[UIImage imageNamed:@"leftbar_jtcy"],CHLocalizedString(@"device_family", nil)],@[[UIImage imageNamed:@"leftbar_aqwl"],CHLocalizedString(@"device_fence", nil)],@[[UIImage imageNamed:@"leftbar_lsgj"],CHLocalizedString(@"device_history", nil)],@[[UIImage imageNamed:@"leftbar_bbsb"],CHLocalizedString(@"device_device", nil)],@[[UIImage imageNamed:@"leftbar_xxzx"],CHLocalizedString(@"device_mess", nil)],@[[UIImage imageNamed:@"leftbar_sz"],CHLocalizedString(@"user_moreSet", nil)]];
     [CHNotifictionCenter addObserver:self selector:@selector(updateUI:) name:@"UPDATELEFTVC" object:nil];
 }
 
@@ -65,11 +65,11 @@
 - (void)createUI{
     //    self.view.backgroundColor = [UIColor greenColor];
     
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (kScreenWidth - kMainPageDistance), 190 * WIDTHAdaptive)];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (kScreenWidth - kMainPageDistance), 190 * WIDTHAdaptive + (iPhoneX ? 24:0))];
     headView.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:headView];
     
-    self.wheelView = [[MNWheelView alloc] initWithFrame:CGRectMake(0, 20, (kScreenWidth - kMainPageDistance) - 30, 140 * WIDTHAdaptive)];
+    self.wheelView = [[MNWheelView alloc] initWithFrame:CGRectMake(0, 20 + (iPhoneX ? 24:0), (kScreenWidth - kMainPageDistance) - 30, 140 * WIDTHAdaptive)];
     [headView addSubview:self.wheelView];
     self.wheelView.center = CGPointMake(((kScreenWidth - kMainPageDistance))/2, self.wheelView.center.y);
     self.wheelView.images = self.deviceLists;
@@ -167,7 +167,7 @@
     self.deviceLists = [deviceDic[@"DEVICELIST"] mutableCopy];
     CHUserInfo *addUser = [[CHUserInfo alloc] init];
     addUser.deviceIm = [UIImageJPEGRepresentation([UIImage imageNamed:@"leftbar_tjsb"], 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    addUser.deviceNa = CHLocalizedString(@"添加设备", nil);
+    addUser.deviceNa = CHLocalizedString(@"device_add", nil);
     [self.deviceLists addObject:addUser];
     NSUInteger deInte = 0;
     for (CHUserInfo *deUse in self.deviceLists) {
@@ -210,7 +210,7 @@
     NSLog(@"fwgg == %@",self.app.leftSliderViewController.mainVC);
     //    [(CHKLTViewController *)self.app.leftSliderViewController.mainVC pushViewController:[[CHBaseViewController alloc] init] animated:YES];
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
-        [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
+        [MBProgressHUD showError:CHLocalizedString(@"device_bindDevi", nil)];
         return;
     }
     

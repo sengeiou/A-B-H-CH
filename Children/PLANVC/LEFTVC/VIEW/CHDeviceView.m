@@ -29,7 +29,7 @@
     _image.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - ((self.frame.size.height - self.image.frame.size.height) * proportion)/2);
     _lable.frame = CGRectMake(0, CGRectGetMaxY(self.image.frame) + 2, self.frame.size.width, (self.frame.size.height - self.image.frame.size.height - 2) * proportion);
     _lable.center = CGPointMake(self.frame.size.width/2, _lable.center.y);
-  
+    _lable.adjustsFontSizeToFitWidth = YES;
 //    self.image.backgroundColor = [UIColor orangeColor];
 //    self.lable.backgroundColor = [UIColor lightGrayColor];
 }

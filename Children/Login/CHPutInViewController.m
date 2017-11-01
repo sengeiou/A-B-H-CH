@@ -38,8 +38,8 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"成员监护申请", nil);
-    CHLabel *redLab = [CHLabel createWithTit:CHLocalizedString(@"该手表已被绑定，您需要向管理员申请才能添加成为监护人", nil) font:CHFontNormal(nil, 12) textColor:[UIColor redColor] backColor:nil textAlignment:0];
+    self.title = CHLocalizedString(@"device_bind_request", nil);
+    CHLabel *redLab = [CHLabel createWithTit:CHLocalizedString(@"device_bind_requestMes", nil) font:CHFontNormal(nil, 12) textColor:[UIColor redColor] backColor:nil textAlignment:0];
     redLab.numberOfLines = 0;
     [self.view addSubview:redLab];
     
@@ -64,14 +64,14 @@
     lineLab1.numberOfLines = 0;
     [self.view addSubview:lineLab1];
     
-    confimBut = [CHButton createWithTit:CHLocalizedString(@"发送申请", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    confimBut = [CHButton createWithTit:CHLocalizedString(@"device_bind_send", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
         [dic addEntriesFromDictionary:@{@"DeviceId":_deviceId,@"UserId": self.user.userId,@"RelationPhone":self.user.userPh,@"RelationName":@"",@"Info":putTextView.text,@"DeviceType":@6}];
-        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:CHLocalizedString(@"请求中...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:CHLocalizedString(@"aler_requesting", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if([result[@"State"] intValue] == 1500 || [result[@"State"] intValue] == 1501){
-                [MBProgressHUD showSuccess:CHLocalizedString(@"请求成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_requestSucc", nil)];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
                     

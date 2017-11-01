@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CHLocalizeableMode : NSObject
++ (instancetype)shareLocalizable;
 + (NSString *)CHlocalizedStringDic:(NSString *)translation_key comment:(NSString *)comment;
+- (NSString *)CHlocalizedStringKey:(NSString *)translation_key comment:(NSString *)comment;
 @end

@@ -41,6 +41,7 @@
 		EE421B621F67B2B900B078AA /* CHFenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B611F67B2B900B078AA /* CHFenceTableViewCell.m */; };
 		EE421B651F67CE4200B078AA /* CHFenceInfoMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B641F67CE4200B078AA /* CHFenceInfoMode.m */; };
 		EE421B681F67EB7300B078AA /* CHFenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE421B671F67EB7300B078AA /* CHFenceViewController.m */; };
+		EE4DC9A01FA96507005132CB /* CHPhoneBookMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4DC99F1FA96507005132CB /* CHPhoneBookMode.m */; };
 		EE5A847C1F74D8E700B5DE86 /* CHSOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A847B1F74D8E700B5DE86 /* CHSOSViewController.m */; };
 		EE5A84831F74F25400B5DE86 /* CHUserSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A84821F74F25400B5DE86 /* CHUserSetViewController.m */; };
 		EE5A84861F75028100B5DE86 /* CHSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A84851F75028100B5DE86 /* CHSetTableViewCell.m */; };
@@ -244,6 +245,8 @@
 		EE421B641F67CE4200B078AA /* CHFenceInfoMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHFenceInfoMode.m; sourceTree = "<group>"; };
 		EE421B661F67EB7300B078AA /* CHFenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHFenceViewController.h; sourceTree = "<group>"; };
 		EE421B671F67EB7300B078AA /* CHFenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHFenceViewController.m; sourceTree = "<group>"; };
+		EE4DC99E1FA96507005132CB /* CHPhoneBookMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHPhoneBookMode.h; sourceTree = "<group>"; };
+		EE4DC99F1FA96507005132CB /* CHPhoneBookMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHPhoneBookMode.m; sourceTree = "<group>"; };
 		EE5A847A1F74D8E700B5DE86 /* CHSOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHSOSViewController.h; sourceTree = "<group>"; };
 		EE5A847B1F74D8E700B5DE86 /* CHSOSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHSOSViewController.m; sourceTree = "<group>"; };
 		EE5A84811F74F25400B5DE86 /* CHUserSetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHUserSetViewController.h; sourceTree = "<group>"; };
@@ -967,6 +970,8 @@
 				EE64EB5C1F72030800BDA753 /* CHCmdClassDemo.m */,
 				EEF4D4C81F73A045006AE540 /* CHAdressMode.h */,
 				EEF4D4C91F73A045006AE540 /* CHAdressMode.m */,
+				EE4DC99E1FA96507005132CB /* CHPhoneBookMode.h */,
+				EE4DC99F1FA96507005132CB /* CHPhoneBookMode.m */,
 			);
 			path = MODE;
 			sourceTree = "<group>";
@@ -1431,6 +1436,7 @@
 				EEA2CDA31F553F01005A3A97 /* CHGeoCodingMode.m in Sources */,
 				EEDF90C31F6F645A005AE1FB /* NSBundle+MJRefresh.m in Sources */,
 				EE148CC11F3D96E50089C5D2 /* ViewController.m in Sources */,
+				EE4DC9A01FA96507005132CB /* CHPhoneBookMode.m in Sources */,
 				EED29FE91F78E83000A012B4 /* D3RecordButton.m in Sources */,
 				EE64EB541F71FBF400BDA753 /* CHCommandMode.m in Sources */,
 				EEB2C1C21F57E4C700787EA0 /* UIView+viewController.m in Sources */,

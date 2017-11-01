@@ -44,11 +44,11 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"声音和震动", nil);
+    self.title = CHLocalizedString(@"device_set_volume", nil);
     UIImageView *volumeIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_sbyl"] backColor:nil];
     [self.view addSubview:volumeIma];
     
-    CHLabel *volumeLab = [CHLabel createWithTit:CHLocalizedString(@"手表音量", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *volumeLab = [CHLabel createWithTit:CHLocalizedString(@"device_volume", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:volumeLab];
     
     UIImageView *volumeIma1 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_zd"] backColor:nil];
@@ -72,13 +72,13 @@
     UIImageView *patternIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_ms"] backColor:nil];
     [self.view addSubview:patternIma];
     
-    CHLabel *patternLab = [CHLabel createWithTit:CHLocalizedString(@"模式", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *patternLab = [CHLabel createWithTit:CHLocalizedString(@"device_volume_mode", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:patternLab];
     
     UIImageView *shakeIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_zd"] backColor:nil];
     [self.view addSubview:shakeIma];
     
-    CHLabel *shakeLab = [CHLabel createWithTit:CHLocalizedString(@"振动", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *shakeLab = [CHLabel createWithTit:CHLocalizedString(@"device_volume_shake", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     //    shakeLab.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:shakeLab];
     @WeakObj(self)
@@ -94,7 +94,7 @@
     UIImageView *ringIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_sy"] backColor:nil];
     [self.view addSubview:ringIma];
     
-    CHLabel *ringLab = [CHLabel createWithTit:CHLocalizedString(@"铃声", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *ringLab = [CHLabel createWithTit:CHLocalizedString(@"device_volume_ring", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     //    ringLab.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:ringLab];
     
@@ -344,7 +344,7 @@
                     [MBProgressHUD hideHUD];
                     if (success) {
                         selfWeak.vibrationMode.CmdValue = @"5";
-                        [MBProgressHUD showSuccess:CHLocalizedString(@"设置成功", nil)];
+                        [MBProgressHUD showSuccess:CHLocalizedString(@"aler_setSuss", nil)];
                     }
                     [CHAFNWorking shareAFNworking].moreRequest = NO;
                     [selfWeak updateUI:YES];
@@ -359,7 +359,7 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUD];
                 if (success) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"设置成功", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_setSuss", nil)];
                     selfWeak.volumeMode.CmdValue = params;
                 }
                 [CHAFNWorking shareAFNworking].moreRequest = NO;
@@ -383,7 +383,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
             if (mess) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"设置成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_setSuss", nil)];
             }
         }
         callBack(YES);

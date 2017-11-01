@@ -39,7 +39,7 @@
 
 - (NSArray *)musicCategories {
     if (!_musicCategories) {
-        _musicCategories = @[CHLocalizedString(@"监护人", nil),CHLocalizedString(@"电话本", nil)];
+        _musicCategories = @[CHLocalizedString(@"device_fam_guardian", nil),CHLocalizedString(@"device_fam_phoneBook", nil)];
     }
     return _musicCategories;
 }
@@ -70,11 +70,11 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"家庭成员", nil);
+    self.title = CHLocalizedString(@"device_family", nil);
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
-    return self.musicCategories.count - 1;
+    return self.musicCategories.count ;
 }
 
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
@@ -89,7 +89,7 @@
 //    vc.watchBucket = [watchInfos objectAtIndex:index];
     CHGuarderViewController *vc = [[CHGuarderViewController alloc] init];
     if (index == 1) {
-//        vc.addressBook = YES;
+        vc.addressBook = YES;
     }
     return vc;
 }

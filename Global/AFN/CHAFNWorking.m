@@ -53,7 +53,7 @@ static id _instace;
 - (void)initilize{
     _sessionMgr = [AFHTTPSessionManager manager];
     _sessionMgr.requestSerializer = [AFJSONRequestSerializer serializer];
-    _sessionMgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects: @"application/json",@"text/json", nil];
+    _sessionMgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects: @"application/json",@"text/json",@"text/html", nil];
     [_sessionMgr.requestSerializer setValue:@"EF3F9B98-E528-47B2-B0D0-B849D6A3209A" forHTTPHeaderField:@"key"];
     [_sessionMgr.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
     [_sessionMgr.requestSerializer setTimeoutInterval:60.0];

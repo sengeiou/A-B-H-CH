@@ -33,7 +33,7 @@
 -(void)startRecord{
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         if (!granted) {
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:CHLocalizedString(@"请在iPhone\"设置-隐私-麦克风\"中，允许手机访问你的麦克风", nil) delegate:self cancelButtonTitle:CHLocalizedString(@"确定", nil) otherButtonTitles:nil, nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:CHLocalizedString(@"aler_recordMes", nil) delegate:self cancelButtonTitle:CHLocalizedString(@"aler_confirm", nil) otherButtonTitles:nil, nil];
             [alert show];
             return ;
         }
@@ -56,7 +56,7 @@
         [mp3 cancelRecord];
         [RecordHUD dismiss];
         [RecordHUD setImage:[NSString stringWithFormat:@"icon_lytd"]];
-        [RecordHUD setTitle:CHLocalizedString(@"录音时间太短", nil)];
+        [RecordHUD setTitle:CHLocalizedString(@"chat_record_timeShort", nil)];
         return;
     }
     [mp3 stopRecord];
@@ -67,7 +67,7 @@
 -(void)cancelRecord{
     [mp3 cancelRecord];
     [RecordHUD dismiss];
-    [RecordHUD setTitle:CHLocalizedString(@"已取消录音", nil)];
+    [RecordHUD setTitle:CHLocalizedString(@"chat_cancel", nil)];
     if ([_delegate respondsToSelector:@selector(endRecord)]) {
         [_delegate endRecord];
     }
@@ -75,7 +75,7 @@
 
 //离开按钮范围
 - (void)RemindDragExit:(UIButton *)button{
-    [RecordHUD setTitle:CHLocalizedString(@"松开手指，取消发送", nil)];
+    [RecordHUD setTitle:CHLocalizedString(@"chat_cancelSend", nil)];
     dismantle = YES;
     [RecordHUD setImage:[NSString stringWithFormat:@"icon_cexiao"]];
     if ([_delegate respondsToSelector:@selector(dragExit)]) {
@@ -97,7 +97,7 @@
         [RecordHUD setTitle:title];
     }
     else{
-        [RecordHUD setTitle:CHLocalizedString(@"手指上滑，取消发送", nil)];
+        [RecordHUD setTitle:CHLocalizedString(@"chat_drawCancel", nil)];
     }
 }
 
@@ -114,7 +114,7 @@
 
 //回调录音资料
 - (void)endConvertWithData:(NSData *)voiceData{
-    [RecordHUD setTitle:CHLocalizedString(@"录音成功", nil)];
+    [RecordHUD setTitle:CHLocalizedString(@"chat_recordSus", nil)];
     if ([_delegate respondsToSelector:@selector(endRecord:)]) {
         [_delegate endRecord:voiceData];
     }

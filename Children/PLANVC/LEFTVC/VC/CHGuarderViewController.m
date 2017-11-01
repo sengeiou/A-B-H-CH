@@ -24,6 +24,7 @@ static NSString *Identifier = @"GUARDERCELL";
     [super viewDidLoad];
 //    [self initializeMetod];
     _user = [CHAccountTool user];
+
     [self createUI];
 }
 
@@ -49,6 +50,7 @@ static NSString *Identifier = @"GUARDERCELL";
 - (void)initializeMetod{
     self.isAdmin = NO;
     CHAFNWorking *afn = [CHAFNWorking shareAFNworking];
+     self.addBut.enabled = NO;
     if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
         return;
     }
@@ -56,19 +58,26 @@ static NSString *Identifier = @"GUARDERCELL";
         NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
         [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId}];
         @WeakObj(self)
+       
         [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CommandList parameters:dic Mess:nil showError:NO progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+             @StrongObj(self)
             for (NSDictionary *dic in result[@"Items"]) {
                 if ([dic[@"Code"] intValue] == [PHONE_BOOK intValue]) {
                     NSLog(@"fwgoijgo == %@",dic);
-//                    [selfWeak BreakUpAarmValue:dic];
+                    [selfWeak.adressArrs removeAllObjects];
+                    [selfWeak BreakPhoneBookValue:dic];
                     break;
                 }
             }
-//            [selfWeak createUI];
+            self.addBut.enabled = YES;
+            if (self.itemArrs.count >= 20) {
+                self.addBut.enabled = NO;
+            }
+             [self.table reloadData];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-//            [selfWeak createUI];
+             [self.table reloadData];
         }];
     }
     NSMutableDictionary *dic = afn.requestDic;
@@ -102,11 +111,11 @@ static NSString *Identifier = @"GUARDERCELL";
     [self setGuarderNum];
     [self.view addSubview:self.guarderNumLab];
     @WeakObj(self)
-    self.addBut = [CHButton createWithTit:CHLocalizedString(@"添加新成员", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    self.addBut = [CHButton createWithTit:CHLocalizedString(@"device_guar_add", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         CHSAddGuarderViewController *addVc = [[CHSAddGuarderViewController alloc] init];
         addVc.isAddress = selfWeak.addressBook;
         CHAdressMode *mode = [selfWeak setNewMode];
-        [selfWeak.adressArrs addObject:mode];
+//        [selfWeak.adressArrs addObject:mode];
         addVc.mode = mode;
         addVc.cmdList = selfWeak.adressArrs;
         addVc.itemArrs = selfWeak.itemArrs;
@@ -118,7 +127,7 @@ static NSString *Identifier = @"GUARDERCELL";
         self.addBut.hidden = YES;
     }
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width, 40)];
-    CHLabel *headLab = [CHLabel createWithTit:self.addressBook ? CHLocalizedString(@"电话本（帮手表存储电话号码）", nil):CHLocalizedString(@"亲情号（手机可与手表相互拔通）", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x646464, 1.0) backColor:nil textAlignment:0];
+    CHLabel *headLab = [CHLabel createWithTit:self.addressBook ? CHLocalizedString(@"device_guar_phoneBook", nil):CHLocalizedString(@"device_guar_kinship", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x646464, 1.0) backColor:nil textAlignment:0];
     [headView addSubview:headLab];
     
     CHLabel *lineLab = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
@@ -148,7 +157,7 @@ static NSString *Identifier = @"GUARDERCELL";
     [self.view addSubview: self.table];
     
     [self.guarderNumLab mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-4);
+        make.bottom.mas_equalTo(-4 - HOME_INDICATOR_HEIGHT);
         make.centerX.mas_equalTo(self.view);
     }];
     
@@ -169,12 +178,28 @@ static NSString *Identifier = @"GUARDERCELL";
     }];
 }
 
+- (void)BreakPhoneBookValue:(NSDictionary *)dic{
+    if (dic) {
+        NSMutableArray *cmdValues = [[dic[@"CmdValue"] componentsSeparatedByString:@","] mutableCopy];
+        if (cmdValues.count <= 0) return;
+        NSInteger count = (cmdValues.count)/4;
+        for (int i = 0; i < count; i ++) {
+            CHAdressMode *model = [[CHAdressMode alloc] init];
+            model.name = [TypeConversionMode strongChangeString:cmdValues[0 + i * 4]];
+            model.relation = [TypeConversionMode strongChangeString:cmdValues[1 + i * 4]];
+            model.adressLogo = [TypeConversionMode strongChangeString:cmdValues[2 + i * 4]];
+            model.phoneNum = [TypeConversionMode strongChangeString:cmdValues[3 + i * 4]];
+            [self.adressArrs addObject:model];
+        }
+    }
+}
+
 - (void)setGuarderNum{
     NSString *str1 = [NSString stringWithFormat:@"%lu",20 - self.itemArrs.count];
-     NSString *str = CHLocalizedString(@"监护人还可以添加%@个", str1);
+     NSString *str = CHLocalizedString(@"device_guar_guardian", str1);
     if (self.addressBook) {
         str1 = [NSString stringWithFormat:@"%lu",20 - self.adressArrs.count];
-        str = CHLocalizedString(@"电话本还可以添加%@个", str1);
+        str = CHLocalizedString(@"device_guar_phoneNum", str1);
     }
    
     NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
@@ -194,6 +219,11 @@ static NSString *Identifier = @"GUARDERCELL";
         if (guarder.IsAdmin && guarder.UserId == self.user.userId.intValue) {
             self.isAdmin = YES;
         }
+    }else{
+        CHAdressMode *adress = [self.adressArrs objectAtIndex:indexPath.row];
+        cell.titLab.text = adress.name;
+        cell.phoneLab.text = adress.phoneNum;
+        cell.headView.image = [UIImage imageNamed:@"pho_touxing"];
     }
     return cell;
 }
@@ -223,7 +253,77 @@ static NSString *Identifier = @"GUARDERCELL";
         editVC.itemMode = [self.itemArrs objectAtIndex:indexPath.row];
         editVC.isAdmin = self.isAdmin;
         [self.navigationController pushViewController:editVC animated:YES];
+    }else{
+        CHEditGuarderTableViewController *editVC = [[CHEditGuarderTableViewController alloc] init];
+        @WeakObj(self)
+        [editVC popViewUpdateUI:^(CHAdressMode *itemMode, BOOL deleMode) {
+            if (deleMode) {
+                [selfWeak.adressArrs removeObject:itemMode];
+            }
+            [tableView reloadData];
+        }];
+        editVC.adressMode = [self.adressArrs objectAtIndex:indexPath.row];
+        editVC.adressArrs = self.adressArrs;
+//        editVC.isAdmin = self.isAdmin;
+        [self.navigationController pushViewController:editVC animated:YES];
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.addressBook) {
+         return YES;
+    }
+    return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return CHLocalizedString(@"device_jbw_delete", nil);
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView setEditing:NO animated:YES];
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        CHAdressMode *mode = self.adressArrs[indexPath.row];
+        [self delegateAdressWithModel:mode cell:indexPath];
+    }
+}
+
+- (void)delegateAdressWithModel:(CHAdressMode *)model cell:(NSIndexPath *)cellIndex{
+    NSMutableArray <CHAdressMode *>* temporaryList = [self.adressArrs mutableCopy];
+    [temporaryList removeObject:model];
+    NSString *alarmListStr = @"";
+    for (int i = 0; i < temporaryList.count; i ++) {
+        alarmListStr = [alarmListStr stringByAppendingString:[NSString stringWithFormat:@"%@,%@,%@,%@",temporaryList[i].name,temporaryList[i].relation,temporaryList[i].adressLogo,temporaryList[i].phoneNum]];
+    }
+    NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+    NSString *params = alarmListStr;
+    [dic addEntriesFromDictionary:@{@"DeviceId":[CHAccountTool user].deviceId,
+                                    @"DeviceModel": [CHAccountTool user].deviceMo,
+                                    @"CmdCode": PHONE_BOOK,
+                                    @"Params": params,
+                                    @"UserId": [CHAccountTool user].userId}];
+    @WeakObj(self)
+    [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        if ([result[@"State"] intValue] == 0) {
+            [MBProgressHUD showSuccess:CHLocalizedString(@"device_guar_deleSus", nil)];
+            [selfWeak.adressArrs removeObject:model];
+            [selfWeak.table deleteRowsAtIndexPaths:@[cellIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [selfWeak setGuarderNum];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        
+    }];
 }
 
 - (void)dealloc{

@@ -128,10 +128,10 @@
         if ([userInfo[@"DataType"] intValue] == 3) {
             NSDictionary *apsDic = userInfo[@"aps"];
             UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"同意", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_agree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self dealRequestNotic:YES requestId:userInfo[@"RequestID"]];
             }];
-            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"拒绝", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_disagree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self dealRequestNotic:NO requestId:userInfo[@"RequestID"]];
             }];
             [aler addAction:cancelAct];
@@ -173,10 +173,10 @@
         if ([userInfo[@"DataType"] intValue] == 3) {
             NSDictionary *apsDic = userInfo[@"aps"];
             UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"同意", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_agree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self dealRequestNotic:YES requestId:userInfo[@"RequestID"]];
             }];
-            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"拒绝", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_disagree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self dealRequestNotic:NO requestId:userInfo[@"RequestID"]];
             }];
             [aler addAction:cancelAct];
@@ -207,10 +207,10 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
-            [MBProgressHUD showSuccess:CHLocalizedString(@"已处理", nil)];
+            [MBProgressHUD showSuccess:CHLocalizedString(@"aler_processed", nil)];
         }
         else{
-            [MBProgressHUD showSuccess:CHLocalizedString(@"处理失败", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"aler_dealFailure", nil)];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         

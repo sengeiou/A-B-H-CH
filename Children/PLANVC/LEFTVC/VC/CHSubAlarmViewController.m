@@ -45,7 +45,7 @@
 - (void)createUI{
     @WeakObj(self)
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"闹钟", nil);
+    self.title = CHLocalizedString(@"device_alarm_alarm", nil);
     _datePickView = [[CHDatePickView alloc] initWithAnimation:NO];
     _datePickView.confimView.hidden = YES;
     _datePickView.hourInt = [[[self.cmdDemo.starTime componentsSeparatedByString:@":"] firstObject] intValue];
@@ -62,7 +62,7 @@
     baseView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:baseView];
     
-    CHLabel *weekLab = [CHLabel createWithTit:CHLocalizedString(@"重复", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *weekLab = [CHLabel createWithTit:CHLocalizedString(@"device_alarm_repetition", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [baseView addSubview:weekLab];
     
     CGFloat widthFloat = (CHMainScreen.size.width - 8 * 6 - 40)/7;
@@ -70,7 +70,7 @@
     UIImage *norRainIma = [UIImage drawWithSize:CGSizeMake(widthFloat, widthFloat) Radius:4 image:norIma];
     UIImage *lightIma = [UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(widthFloat, widthFloat)];
     UIImage *lightRainIma = [UIImage drawWithSize:CGSizeMake(widthFloat, widthFloat) Radius:4 image:lightIma];
-    NSArray *weekTits = @[CHLocalizedString(@"一", nil),CHLocalizedString(@"二", nil),CHLocalizedString(@"三", nil),CHLocalizedString(@"四", nil),CHLocalizedString(@"五", nil),CHLocalizedString(@"六", nil),CHLocalizedString(@"日", nil)];
+    NSArray *weekTits = @[CHLocalizedString(@"device_class_mon", nil),CHLocalizedString(@"device_class_tue", nil),CHLocalizedString(@"device_class_wed", nil),CHLocalizedString(@"device_class_thu", nil),CHLocalizedString(@"device_class_fri", nil),CHLocalizedString(@"device_class_sat", nil),CHLocalizedString(@"device_class_sun", nil)];
     NSMutableArray *weekArr = [self weekSelectWithMode:self.cmdDemo];
     for (int i = 0; i < 7; i ++) {
         CHButton *weekBut = [CHButton createWithNorImage:norRainIma selectIma:lightRainIma touchBlock:^(CHButton *sender) {
@@ -105,7 +105,7 @@
     CHLabel *line2 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(0xb3e5fc, 1.0) textAlignment:0];
     [self.view addSubview:line2];
     
-    CHLabel *openLab = [CHLabel createWithTit:CHLocalizedString(@"开关", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *openLab = [CHLabel createWithTit:CHLocalizedString(@"device_class_switch", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [baseView addSubview:openLab];
     
     self.openSwitch = [UISwitch new];
@@ -113,7 +113,7 @@
     self.openSwitch.onTintColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [baseView addSubview:self.openSwitch];
     
-   CHButton *_addBut = [CHButton createWithTit:CHLocalizedString(@"保存", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+   CHButton *_addBut = [CHButton createWithTit:CHLocalizedString(@"device_guar_save", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
        [selfWeak addAlarm];
     }];
     [baseView addSubview:_addBut];
@@ -171,7 +171,7 @@
     }];
     
     [_addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -231,7 +231,7 @@
 
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
-         [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+         [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (selfWeak.delegate && [selfWeak.delegate respondsToSelector:@selector(viewWillPop)]) {
                     [selfWeak.delegate viewWillPop];

@@ -164,10 +164,10 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"上课禁用", nil);
+    self.title = CHLocalizedString(@"device_set_class", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     
-    CHLabel *switchLab = [CHLabel createWithTit:CHLocalizedString(@"开关", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *switchLab = [CHLabel createWithTit:CHLocalizedString(@"device_class_switch", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:switchLab];
     
     self.openSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -177,7 +177,7 @@
     
     CHLabel *line0 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line0];
-    CHLabel *mornLab = [CHLabel createWithTit:CHLocalizedString(@"上午", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *mornLab = [CHLabel createWithTit:CHLocalizedString(@"device_class_mor", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:mornLab];
     mornLab.numberOfLines = 0;
     @WeakObj(self)
@@ -196,7 +196,7 @@
     CHLabel *line1 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line1];
     
-    CHLabel *afterLab = [CHLabel createWithTit:CHLocalizedString(@"下午", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *afterLab = [CHLabel createWithTit:CHLocalizedString(@"device_class_afr", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     afterLab.numberOfLines = 0;
     [self.view addSubview:afterLab];
     _aftEndBut = [CHButton createWithTit:self.aftMode.stopTime titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil, 24) backColor:nil Radius:8.0f touchBlock:^(CHButton *sender) {
@@ -214,7 +214,7 @@
     CHLabel *line2 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line2];
     
-    CHLabel *weekLab = [CHLabel createWithTit:CHLocalizedString(@"星期", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *weekLab = [CHLabel createWithTit:CHLocalizedString(@"device_alarm_weak", nil) font:CHFontNormal(nil, 18) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:weekLab];
     
     CGFloat widthFloat = (CHMainScreen.size.width - 8 * 6 - 40)/7;
@@ -222,7 +222,7 @@
     UIImage *norRainIma = [UIImage drawWithSize:CGSizeMake(widthFloat, widthFloat) Radius:4 image:norIma];
     UIImage *lightIma = [UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(widthFloat, widthFloat)];
     UIImage *lightRainIma = [UIImage drawWithSize:CGSizeMake(widthFloat, widthFloat) Radius:4 image:lightIma];
-    NSArray *weekTits = @[CHLocalizedString(@"一", nil),CHLocalizedString(@"二", nil),CHLocalizedString(@"三", nil),CHLocalizedString(@"四", nil),CHLocalizedString(@"五", nil),CHLocalizedString(@"六", nil),CHLocalizedString(@"日", nil)];
+    NSArray *weekTits = @[CHLocalizedString(@"device_class_mon", nil),CHLocalizedString(@"device_class_tue", nil),CHLocalizedString(@"device_class_wed", nil),CHLocalizedString(@"device_class_thu", nil),CHLocalizedString(@"device_class_fri", nil),CHLocalizedString(@"device_class_sat", nil),CHLocalizedString(@"device_class_sun", nil)];
     NSMutableArray *weekArr = [self weekSelectWithMode:self.morMode];
     for (int i = 0; i < 7; i ++) {
         CHButton *weekBut = [CHButton createWithNorImage:norRainIma selectIma:lightRainIma touchBlock:^(CHButton *sender) {
@@ -254,7 +254,7 @@
     CHLabel *line3 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line3];
     
-    CHButton *saveBut = [CHButton createWithTit:CHLocalizedString(@"保存", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
+    CHButton *saveBut = [CHButton createWithTit:CHLocalizedString(@"device_guar_save", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
         [selfWeak saveClass];
     }];
     [self.view addSubview:saveBut];
@@ -347,7 +347,7 @@
     }];
     
     [saveBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -364,7 +364,7 @@
             NSDate *StarDate = [self.dateFormatter dateFromString:dateStr];
             NSTimeInterval interval = [EndDate timeIntervalSinceDate:StarDate];
             if (interval <= 0) {
-                [MBProgressHUD showError:CHLocalizedString(@"开始时间必须小于结束时间", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"device_class_time", nil)];
                 return ;
             }
             else{
@@ -377,7 +377,7 @@
             NSDate *EndDate = [self.dateFormatter dateFromString:dateStr];
             NSTimeInterval interval = [EndDate timeIntervalSinceDate:StarDate];
             if (interval <= 0) {
-                [MBProgressHUD showError:CHLocalizedString(@"开始时间必须小于结束时间", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"device_class_time", nil)];
                 return ;
             }
             else{
@@ -390,7 +390,7 @@
             NSDate *StarDate = [self.dateFormatter dateFromString:dateStr];
             NSTimeInterval interval = [EndDate timeIntervalSinceDate:StarDate];
             if (interval <= 0) {
-                [MBProgressHUD showError:CHLocalizedString(@"开始时间必须小于结束时间", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"device_class_time", nil)];
                 return ;
             }
             else{
@@ -403,7 +403,7 @@
             NSDate *EndDate = [self.dateFormatter dateFromString:dateStr];
             NSTimeInterval interval = [EndDate timeIntervalSinceDate:StarDate];
             if (interval <= 0) {
-                [MBProgressHUD showError:CHLocalizedString(@"开始时间必须小于结束时间", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"device_class_time", nil)];
                 return ;
             }
             else{
@@ -444,7 +444,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
-            [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+            [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [selfWeak.navigationController popViewControllerAnimated:YES];
             });

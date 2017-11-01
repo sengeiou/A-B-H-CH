@@ -107,12 +107,12 @@ static int firstLoad;
         point.coordinate = CLLocationCoordinate2DMake(location.Lat, location.Lng);
         if (i == 0) {
             point.annoTionImage = [UIImage imageNamed:@"icon_dinwei_qd"];
-            point.textStr = CHLocalizedString(@"起点", nil);
+            point.textStr = CHLocalizedString(@"location_origin", nil);
             point.headColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
         }
         if (i == points.count - 1) {
             point.annoTionImage = [UIImage imageNamed:@"icon_dinwei_zd"];
-            point.textStr = CHLocalizedString(@"终点", nil);
+            point.textStr = CHLocalizedString(@"location_destination", nil);
             point.headColor = CHUIColorFromRGB(0xff0000, 1.0);
         }
         [_mapAnnotations addObject:point];

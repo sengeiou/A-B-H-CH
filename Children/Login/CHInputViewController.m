@@ -35,8 +35,8 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"手动输入", nil);
-    CHLabel *inputTit = [CHLabel createWithTit:CHLocalizedString(@"输入IMEI码", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:NSTextAlignmentLeft];
+    self.title = CHLocalizedString(@"device_input", nil);
+    CHLabel *inputTit = [CHLabel createWithTit:CHLocalizedString(@"device_inputIMEI", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:NSTextAlignmentLeft];
     [self.view addSubview:inputTit];
     [inputTit mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(43);
@@ -44,13 +44,13 @@
         
     }];
     
-    _imeiField = [CHTextField createWithPlace:CHLocalizedString(@"15位数", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    _imeiField = [CHTextField createWithPlace:CHLocalizedString(@"device_inputNum", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     _imeiField.delegate = self;
     [self.view addSubview:_imeiField];
     [_imeiField mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(inputTit.mas_bottom).mas_offset(10);
-        make.left.mas_equalTo(43);
-        make.right.mas_equalTo(-43);
+        make.left.mas_equalTo(40);
+        make.right.mas_equalTo(-40);
         make.height.mas_equalTo(44);
     }];
     
@@ -66,7 +66,7 @@
     @WeakObj(self)
 //    @WeakObj(_imeiField)
     @WeakObject(_imeiField);
-    confimBut = [CHButton createWithTit:CHLocalizedString(@"确定", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    confimBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         @StrongObj(self)
         @StrongObject(_imeiField)
          CHUserInfo *user = [CHAccountTool user];
@@ -86,6 +86,7 @@
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                     if ([result[@"State"] intValue] == 0) {
                         CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+//                        user.deviceIMEI = [(CHTextField *)strongOjb text];
                         deviceVC.user = user;
                         [self.navigationController pushViewController:deviceVC animated:YES];
                     }
@@ -98,6 +99,7 @@
             }else if ([[result objectForKey:@"State"] intValue] == 1107) {
                 CHPutInViewController *putInVC = [[CHPutInViewController alloc] init];
                 putInVC.deviceId = [TypeConversionMode strongChangeString:[result objectForKey:@"DeviceId"]];
+                putInVC.user = user;
                 [self.navigationController pushViewController:putInVC animated:YES];
             }else{
                  [MBProgressHUD showError:[result objectForKey:@"Message"]];

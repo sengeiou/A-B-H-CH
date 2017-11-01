@@ -69,20 +69,20 @@ typedef void(^didTouchUpInBlock)(BOOL Agree);
     _titLab = [CHLabel createWithTit:@"abc" font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
     [self.contentView addSubview:_titLab];
     
-    CGRect consentRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"同意", nil) size:CGSizeMake(1000, 24 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14)}];
-    CGRect refuseRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"拒绝", nil) size:CGSizeMake(1000, 24 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14)}];
+    CGRect consentRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"aler_agree", nil) size:CGSizeMake(1000, 24 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14)}];
+    CGRect refuseRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"aler_disagree", nil) size:CGSizeMake(1000, 24 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14)}];
     
     float maxWidth = MAX(consentRect.size.width, refuseRect.size.width) + 16;
     maxWidth = MAX(maxWidth, 80);
     @WeakObj(self)
-    _consentBut = [CHButton createWithTit:CHLocalizedString(@"同意", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 14) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:6.0 touchBlock:^(CHButton *sender) {
+    _consentBut = [CHButton createWithTit:CHLocalizedString(@"aler_agree", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 14) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:6.0 touchBlock:^(CHButton *sender) {
         if (selfWeak.callBack) {
             selfWeak.callBack(YES);
         }
     }];
     [self.contentView addSubview:_consentBut];
     
-    _refuseBut = [CHButton createWithTit:CHLocalizedString(@"拒绝", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 14) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:6.0 touchBlock:^(CHButton *sender) {
+    _refuseBut = [CHButton createWithTit:CHLocalizedString(@"aler_disagree", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 14) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:6.0 touchBlock:^(CHButton *sender) {
         if (selfWeak.callBack) {
             selfWeak.callBack(NO);
         }
@@ -170,7 +170,7 @@ typedef void(^didTouchUpInBlock)(BOOL Agree);
             titStr = [dateFormatter1 stringFromDate:lastDate];
         }else{
             dateFormatter1.dateFormat = @"HH:mm";
-          titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter1 stringFromDate:lastDate]];
+          titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"user_lastData", nil),[dateFormatter1 stringFromDate:lastDate]];
         }
     }
     else{
@@ -179,7 +179,7 @@ typedef void(^didTouchUpInBlock)(BOOL Agree);
     }
     _titLab.text = titStr;
     _headLab.text = infoMode.Nickname;
-    _messLab.text = [NSString stringWithFormat:@"%@%@",[TypeConversionMode strongChangeString:infoMode.UserName],CHLocalizedString(@"申请成为%@的监护人", [TypeConversionMode strongChangeString:infoMode.Nickname])];
+    _messLab.text = [NSString stringWithFormat:@"%@%@",[TypeConversionMode strongChangeString:infoMode.UserName],CHLocalizedString(@"user_requestAler", [TypeConversionMode strongChangeString:infoMode.Nickname])];
     _consentBut.hidden = YES;
     _refuseBut.hidden = YES;
     [_consentBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -192,10 +192,10 @@ typedef void(^didTouchUpInBlock)(BOOL Agree);
         [_consentBut setBackgroundColor:[UIColor clearColor]];
         [_consentBut setTitleColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) forState:UIControlStateNormal];
         if (infoMode.Status == 1) {
-            [_consentBut setTitle:CHLocalizedString(@"已同意", nil) forState:UIControlStateNormal];
+            [_consentBut setTitle:CHLocalizedString(@"user_agree", nil) forState:UIControlStateNormal];
         }
         else{
-            [_consentBut setTitle:CHLocalizedString(@"已拒绝", nil) forState:UIControlStateNormal];
+            [_consentBut setTitle:CHLocalizedString(@"user_disagree", nil) forState:UIControlStateNormal];
         }
     }
 }

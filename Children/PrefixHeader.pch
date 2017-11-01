@@ -63,13 +63,25 @@
 #define SET_WATCH_PHONE @"2807"  //设置手表号码
 #define SHIELD_DEVICE @"2814"  //小普夹子开关
 #define QUERY_TELEHONE_CHARGE @"2804"  //查询话费 cmdValue:app用户手机号码,目标号码,短信内容
-#define PHONE_BOOK  @"2801"  //批量设置电话本
+#define PHONE_BOOK  @"0113"         // 白名单
 #define PHONE_BOOK_SINGLE @"2802"  //单条设置电话本
 #define LESSONS_TIME @"0117"  //上课禁用
 #define ALARM_CLOCK @"0116"  //闹钟提醒
 #define DEVICE_LISTEN @"0024"  //一键监听
 #define SOUND_SWITCH @"1021"  //静音开关
 #define VIBRATION_SWITCH @"0134"  //震动时长控制
+#define SOS_PHONE @"0001"  //sos
+
+// 判断是否是iPhone X
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+// 状态栏高度
+#define STATUS_BAR_HEIGHT (iPhoneX ? 44.f : 20.f)
+// 导航栏高度
+#define NAVIGATION_BAR_HEIGHT (iPhoneX ? 88.f : 64.f)
+// tabBar高度
+#define TAB_BAR_HEIGHT (iPhoneX ? (49.f+34.f) : 49.f)
+// home indicator
+#define HOME_INDICATOR_HEIGHT (iPhoneX ? 34.f : 0.f)
 
 //#if DEBUG
 //#define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -77,7 +89,8 @@
 //#define NSLog(FORMAT, ...) nil
 //#endif
 
-#define CHLocalizedString(str,nil) [CHLocalizeableMode CHlocalizedStringDic:str comment:nil] //.HelveticaNeueInterface-Regular SFUIText
+//#define CHLocalizedString(strKey,nil) [[CHLocalizeableMode shareLocalizable] CHlocalizedStringKey:strKey comment:nil] //.HelveticaNeueInterface-Regular SFUIText
+#define CHLocalizedString(strKey,nil) [CHLocalizeableMode  CHlocalizedStringDic:strKey comment:nil] //.HelveticaNeueInterface-Regular SFUIText
 #define CHFontNormal(nil,f) [UIFont fontWithName:nil ? nil:@".HelveticaNeueInterface-Regular" size:f]
 #define CHFontBold(nil,f) [UIFont fontWithName:nil ? nil:@".SFUIDisplay-Semibold" size:f * WIDTHAdaptive]
 

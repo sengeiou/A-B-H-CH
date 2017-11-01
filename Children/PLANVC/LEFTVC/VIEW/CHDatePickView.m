@@ -89,7 +89,7 @@ typedef void(^selConfimBlock)(NSString *selDate);
     [self addSubview:self.confimView];
     
     @WeakObj(self);
-    CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"确定", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backColor:nil touchBlock:^(CHButton *sender) {
+    CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backColor:nil touchBlock:^(CHButton *sender) {
         if (self.conBlock) {
             self.conBlock([NSString stringWithFormat:@"%@:%@",self.hourArr[_hourInt],self.minArr[_minInt]]);
         }

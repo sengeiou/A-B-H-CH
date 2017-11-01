@@ -57,13 +57,13 @@
 - (void)createUI{
     @WeakObj(self)
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"修改密码", nil);
+    self.title = CHLocalizedString(@"user_changePas", nil);
     UIImageView * headView = [UIImageView new];
     headView.image = [UIImage imageNamed:@"pic_zhaohuimima"];
     [self.view addSubview:headView];
     
     UIImageView *phoneIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima"] backColor:nil];
-    passFiled = [CHTextField createWithPlace:CHLocalizedString(@"请输入原始密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    passFiled = [CHTextField createWithPlace:CHLocalizedString(@"user_inputOldPs", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     passFiled.secureTextEntry = YES;
     passFiled.delegate = self;
     CHButton *eyeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -83,7 +83,7 @@
     [self.view addSubview:lineLab];
     
     UIImageView *phoneIma1 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima_bl"] backColor:nil];
-    passFiled1 = [CHTextField createWithPlace:CHLocalizedString(@"请输入新的密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    passFiled1 = [CHTextField createWithPlace:CHLocalizedString(@"user_inputNewPs", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     passFiled1.secureTextEntry = YES;
     passFiled1.delegate = self;
     CHButton *eyeBut1 = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -103,7 +103,7 @@
     [self.view addSubview:lineLab1];
     
     UIImageView *phoneIma2 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima_bl"] backColor:nil];
-    passFiled2 = [CHTextField createWithPlace:CHLocalizedString(@"请再次输入新的密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    passFiled2 = [CHTextField createWithPlace:CHLocalizedString(@"user_againNewPs", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     passFiled2.secureTextEntry = YES;
     passFiled2.delegate = self;
     CHButton *eyeBut2 = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -122,24 +122,24 @@
     [self.view addSubview:passFiled2];
     [self.view addSubview:lineLab2];
     
-    CHButton *ResetBut = [CHButton createWithTit:CHLocalizedString(@"忘记密码", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil, 14) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *ResetBut = [CHButton createWithTit:CHLocalizedString(@"", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil, 14) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0) Radius:8.0 touchBlock:^(CHButton *sender) {
          [selfWeak.view endEditing:YES];
         CHRegisViewController *findPass = [[CHRegisViewController alloc] init];
-        findPass.title = CHLocalizedString(@"找回密码", nil);
+        findPass.title = CHLocalizedString(@"user_retrievePs", nil);
         findPass.operationStype = [CHCalculatedMode validateEmail:selfWeak.user.userPh] ? 3:2;
         [selfWeak.navigationController pushViewController:findPass animated:YES];
     }];
-    [ResetBut setAttributedTitle:[[NSAttributedString alloc] initWithString:CHLocalizedString(@"忘记密码?", nil) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14),NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]}] forState:UIControlStateNormal];
+    [ResetBut setAttributedTitle:[[NSAttributedString alloc] initWithString:CHLocalizedString(@"user_forgetPs", nil) attributes:@{NSFontAttributeName:CHFontNormal(nil, 14),NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]}] forState:UIControlStateNormal];
     [self.view addSubview:ResetBut];
     
-    self.changeBut = [CHButton createWithTit:CHLocalizedString(@"确认修改", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    self.changeBut = [CHButton createWithTit:CHLocalizedString(@"user_confimCh", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
           [selfWeak.view endEditing:YES];
         if (![selfWeak.passFiled.text isEqualToString:selfWeak.user.userPs]) {
-            [MBProgressHUD showError:CHLocalizedString(@"旧密码不正确", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"user_oldPsErro", nil)];
             return ;
         }
         if (![selfWeak.passFiled1.text isEqualToString:selfWeak.passFiled2.text]) {
-            [MBProgressHUD showError:CHLocalizedString(@"两次密码不一致", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"user_passErro", nil)];
             return ;
         }
         NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
@@ -152,7 +152,7 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
              if ([result[@"State"] intValue] == 0) {
-                 [MBProgressHUD showSuccess:CHLocalizedString(@"修改成功", nil)];
+                 [MBProgressHUD showSuccess:CHLocalizedString(@"user_chanSuccess", nil)];
                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                      [selfWeak.navigationController popViewControllerAnimated:YES];
                  });
@@ -235,7 +235,7 @@
     }];
     
     [ResetBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-30 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(24);

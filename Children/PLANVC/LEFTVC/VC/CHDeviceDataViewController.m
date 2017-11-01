@@ -38,7 +38,7 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"宝贝手表", nil);
+    self.title = CHLocalizedString(@"device_device", nil);
     self.view.backgroundColor = CHUIColorFromRGB(0xb3e5fc, 1.0);
     UIView *baseView0 = [[UIView alloc] init];
     baseView0.backgroundColor = [UIColor whiteColor];
@@ -47,7 +47,7 @@
     UIImageView *encodeImage = [[UIImageView alloc] init];
     [baseView0 addSubview:encodeImage];
     
-    CHLabel *remindLab = [CHLabel createWithTit:CHLocalizedString(@"扫描二维码，绑定宝宝手表", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x717171, 1.0) backColor:nil textAlignment:1];
+    CHLabel *remindLab = [CHLabel createWithTit:CHLocalizedString(@"device_bind_search", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0x717171, 1.0) backColor:nil textAlignment:1];
     [baseView0 addSubview:remindLab];
     
     UIView *baseView1 = [[UIView alloc] init];
@@ -64,10 +64,10 @@
     [baseView1 addSubview:tab];
     
     @WeakObj(self)
-    CHButton *unBindBut = [CHButton createWithTit:CHLocalizedString(@"解除绑定", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"确认解除当前绑定的手表?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *canAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    CHButton *unBindBut = [CHButton createWithTit:CHLocalizedString(@"device_bind_unbind", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"device_bind_undindMas", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *canAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [selfWeak RemoveShare];
         }];
         [alerVC addAction:canAct];
@@ -108,7 +108,7 @@
     }];
     
     [unBindBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -160,7 +160,7 @@
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([result[@"State"] intValue] == 0) {
                 [MBProgressHUD hideHUD];
-                [MBProgressHUD showSuccess:CHLocalizedString(@"解绑成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"device_bind_succ", nil)];
                 [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:selfWeak.user];
                 [selfWeak clearDevice];
                 [CHAFNWorking shareAFNworking].moreRequest = NO;
@@ -181,13 +181,13 @@
 
 - (void)clearDevice{
     CHUserInfo *device = [[CHUserInfo alloc] init];
-    device.userId = self.user.userId;
-    device.userPh = self.user.userPh;
-    device.userPs = self.user.userPs;
-    device.userNa = self.user.userNa;
-    device.userIm = self.user.userIm;
-    device.userTo = self.user.userTo;
-    self.user = device;
+    device.userId = [self.user.userId copy];
+    device.userPh = [self.user.userPh copy];
+    device.userPs = [self.user.userPs copy];
+    device.userNa = [self.user.userNa copy];
+    device.userIm = [self.user.userIm copy];
+    device.userTo = [self.user.userTo copy];
+    self.user = [device copy];
     [CHAccountTool saveUser:self.user];
 }
 
@@ -293,7 +293,7 @@
     cell.detailTextLabel.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
     cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.row == 0) {
-        cell.textLabel.text = CHLocalizedString(@"宝贝资料", nil);
+        cell.textLabel.text = CHLocalizedString(@"device_bind_data", nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     if (indexPath.row == 1) {

@@ -39,7 +39,7 @@
     _titLab = [CHLabel createWithTit:nil font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:1];
     [self.contentView addSubview:_titLab];
     
-    _adminLab = [CHLabel createWithTit:CHLocalizedString(@"管理员", nil) font:CHFontNormal(nil, 10) textColor:CHUIColorFromRGB(0x0288d1, 1.0) backColor:nil textAlignment:1];
+    _adminLab = [CHLabel createWithTit:CHLocalizedString(@"device_admin", nil) font:CHFontNormal(nil, 10) textColor:CHUIColorFromRGB(0x0288d1, 1.0) backColor:nil textAlignment:1];
     CGRect titRect= [CHCalculatedMode CHCalculatedWithStr:_adminLab.text size:CGSizeMake(100, 200) attributes:@{NSFontAttributeName:CHFontNormal(nil, 10)}];
     _adminLab.layer.masksToBounds = YES;
     _adminLab.layer.cornerRadius = 6;

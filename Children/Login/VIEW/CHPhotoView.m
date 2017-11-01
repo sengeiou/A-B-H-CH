@@ -48,19 +48,19 @@
     shapeLayer.path = path.CGPath;
     [backView.layer addSublayer:shapeLayer];
     
-    CHButton *photoBut = [CHButton createWithTit:CHLocalizedString(@"拍照", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *photoBut = [CHButton createWithTit:CHLocalizedString(@"aler_photo", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         photo(sender);
         [self tapAction];
     }];
     [backView addSubview:photoBut];
     
-    CHButton *albumBut = [CHButton createWithTit:CHLocalizedString(@"从相册中选择", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *albumBut = [CHButton createWithTit:CHLocalizedString(@"aler_album", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         alum(sender);
         [self tapAction];
     }];
     [backView addSubview:albumBut];
     
-    CHButton *cancelBut = [CHButton createWithTit:CHLocalizedString(@"取消", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *cancelBut = [CHButton createWithTit:CHLocalizedString(@"aler_cnacel", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self tapAction];
     }];
     [backView addSubview:cancelBut];
@@ -117,12 +117,12 @@
     shapeLayer.path = path.CGPath;
     [backView.layer addSublayer:shapeLayer];
     
-    CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"取消", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"aler_cnacel", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self tapAction];
     }];
     [backView addSubview:canBut];
     
-    CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         confirm(sender,[NSString stringWithFormat:@"%@-%@-%@",self.yearString, self.monthString,self.dayString]);
         [self tapAction];
     }];
@@ -185,12 +185,12 @@
     shapeLayer.path = path.CGPath;
     [backView.layer addSublayer:shapeLayer];
     
-    CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"取消", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *canBut = [CHButton createWithTit:CHLocalizedString(@"aler_cnacel", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x757575, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [self tapAction];
     }];
     [backView addSubview:canBut];
     
-    CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    CHButton *confirmBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backColor:CHUIColorFromRGB(0x03a9f4, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         confirm(sender,self.selectData);
         [self tapAction];
     }];

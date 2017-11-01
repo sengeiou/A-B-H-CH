@@ -28,9 +28,9 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"意见反馈", nil);
+    self.title = CHLocalizedString(@"user_faceBack", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    CHLabel *problemLab = [CHLabel createWithTit:CHLocalizedString(@"问题详情", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *problemLab = [CHLabel createWithTit:CHLocalizedString(@"user_proMes", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:problemLab];
     
     CHLabel *line0 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0.8) textAlignment:0];
@@ -39,7 +39,7 @@
     self.problemText = [[UITextView alloc] init];
     self.problemText.delegate = self;
     self.problemText.textColor = CHUIColorFromRGB(0xbdbdbd, 1.0);
-    self.problemText.text = CHLocalizedString(@"请详细描述您遇到的问题，我们会仔细聆听", nil);
+    self.problemText.text = CHLocalizedString(@"user_rpoDetailMes", nil);
     [self.view addSubview:self.problemText];
     
     _wordsNum = [CHLabel createWithTit:@"500/500" font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:2];
@@ -51,20 +51,20 @@
     CHLabel *line2 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0.8) textAlignment:0];
     [self.view addSubview:line2];
     
-    CHLabel *contactLab = [CHLabel createWithTit:CHLocalizedString(@"联系方式", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *contactLab = [CHLabel createWithTit:CHLocalizedString(@"user_relation", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:contactLab];
     
     CHLabel *line3 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0.8) textAlignment:0];
     [self.view addSubview:line3];
     
-    self.contactField = [CHTextField createWithPlace:CHLocalizedString(@"请留下电话或邮箱,方便我们联系您 ", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 14)];
+    self.contactField = [CHTextField createWithPlace:CHLocalizedString(@"user_rpoDetailMes", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 14)];
     self.contactField.delegate = self;
     [self.view addSubview:self.contactField];
     
     CHLabel *line4 = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 0.8) textAlignment:0];
     [self.view addSubview:line4];
     
-    self.feedbackBut = [CHButton createWithTit:CHLocalizedString(@"提交", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    self.feedbackBut = [CHButton createWithTit:CHLocalizedString(@"user_sub", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         
     }];
     _feedbackBut.enabled = NO;
@@ -187,7 +187,7 @@
     if (selectedRange&&pos) {
         return YES;
     }
-    if (realTextViewText.length > 0 && _problemText.text.length > 0 && ![_problemText.text isEqualToString:CHLocalizedString(@"请详细描述您遇到的问题，我们会仔细聆听", nil)] && ![realTextViewText isEqualToString:@"\n"]) {
+    if (realTextViewText.length > 0 && _problemText.text.length > 0 && ![_problemText.text isEqualToString:CHLocalizedString(@"user_rpoDetailMes", nil)] && ![realTextViewText isEqualToString:@"\n"]) {
         _feedbackBut.enabled = YES;
     }
     else{
@@ -209,7 +209,7 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    if ([textView.text isEqualToString:CHLocalizedString(@"请详细描述您遇到的问题，我们会仔细聆听", nil)]) {
+    if ([textView.text isEqualToString:CHLocalizedString(@"user_rpoDetailMes", nil)]) {
         textView.text = @"";
         textView.textColor = CHUIColorFromRGB(CHMediumBlackColor, 1.0);
     }
@@ -217,7 +217,7 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if (textView.text.length < 1) {
-        textView.text = CHLocalizedString(@"请详细描述您遇到的问题，我们会仔细聆听", nil);
+        textView.text = CHLocalizedString(@"user_rpoDetailMes", nil);
         textView.textColor = CHUIColorFromRGB(0xbdbdbd, 1.0);
     }
 }

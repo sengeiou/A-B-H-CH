@@ -163,7 +163,7 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"聊天", nil);
+    self.title = CHLocalizedString(@"chat_chat", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *backIma = [UIImageView itemWithImage:[UIImage imageNamed:@"bk_liaotian"] backColor:nil];
     backIma.userInteractionEnabled = YES;
@@ -173,8 +173,8 @@
     _soundBut.layer.masksToBounds = YES;
     _soundBut.layer.cornerRadius = 8.0;
     [_soundBut setBackgroundColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0)];
-    [_soundBut setTitle:CHLocalizedString(@"按住说话", nil) forState:UIControlStateNormal];
-    [_soundBut initRecord:self maxtime:14 title:CHLocalizedString(@"手指上滑，取消发送", nil)];
+    [_soundBut setTitle:CHLocalizedString(@"chat_touch", nil) forState:UIControlStateNormal];
+    [_soundBut initRecord:self maxtime:14 title:CHLocalizedString(@"chat_drawCancel", nil)];
     [self.view addSubview:_soundBut];
     
     _chatTab = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -194,7 +194,7 @@
     }];
     
     [_soundBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-30 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -216,9 +216,9 @@
  //[selfWeak.messTabView.mj_header beginRefreshing];
         [selfWeak initializeMethod];
     }];
-    [footer setTitle:CHLocalizedString(@"下拉可以刷新", nil) forState:MJRefreshStateIdle];
-    [footer setTitle:CHLocalizedString(@"刷新中...", nil) forState:MJRefreshStateRefreshing];
-    [footer setTitle:CHLocalizedString(@"无更多数据", nil) forState:MJRefreshStateNoMoreData];
+    [footer setTitle:CHLocalizedString(@"chat_update", nil) forState:MJRefreshStateIdle];
+    [footer setTitle:CHLocalizedString(@"device_mess_updateing", nil) forState:MJRefreshStateRefreshing];
+    [footer setTitle:CHLocalizedString(@"device_mess_updatenone", nil) forState:MJRefreshStateNoMoreData];
     // 设置字体
     footer.stateLabel.font = CHFontNormal(nil, 14);
     // 设置颜色
@@ -307,7 +307,7 @@
 
 -(void)endRecord:(NSData *)voiceData{
     [self videoDataConversion:voiceData];
-    [_soundBut setTitle:CHLocalizedString(@"按住说话", nil) forState:UIControlStateNormal];
+    [_soundBut setTitle:CHLocalizedString(@"chat_touch", nil) forState:UIControlStateNormal];
     [_soundBut setBackgroundColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0)];
 }
 
@@ -338,8 +338,12 @@
     mode.AvatarBase = self.user.userIm;
     mode.Long = wavplay.duration;
     mode.IsRead = NO;
-    mode.Created = [self.dateFormatter stringFromDate:[NSDate date]];
+    NSDate *date = [NSDate date];
+    NSString *str = [self.dateFormatter stringFromDate:date];
+    
+    mode.Created = str;
     mode.IsUpload = YES;
+    mode.IdentityID = [NSString stringWithFormat:@"%.0f",[date timeIntervalSince1970] * 1000];
     [self.videoList addObject:mode];
     [self.chatTab reloadData];
     [self tableViewScrollCurrentIndexPath];
@@ -350,24 +354,24 @@
 
 //不改btn的话这些就不要了
 -(void)dragExit{
-    [_soundBut setTitle:CHLocalizedString(@"松开手指，取消发送", nil) forState:UIControlStateNormal];
+    [_soundBut setTitle:CHLocalizedString(@"chat_cancelSend", nil) forState:UIControlStateNormal];
     [_soundBut setBackgroundColor:CHUIColorFromRGB(0x757575, 1.0)];
 }
 
 - (void)startRecord{
     NSLog(@"startRecord");
-    [_soundBut setTitle:CHLocalizedString(@"松开结束", nil) forState:UIControlStateNormal];
+    [_soundBut setTitle:CHLocalizedString(@"chat_recordEnd", nil) forState:UIControlStateNormal];
     [_soundBut setBackgroundColor:CHUIColorFromRGB(0x757575, 1.0)];
 }
 
 - (void)endRecord{
     NSLog(@"endRecord");
-    [_soundBut setTitle:CHLocalizedString(@"按住说话", nil) forState:UIControlStateNormal];
+    [_soundBut setTitle:CHLocalizedString(@"chat_touch", nil) forState:UIControlStateNormal];
     [_soundBut setBackgroundColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0)];
 }
 
 -(void)dragEnter{
-    [_soundBut setTitle:CHLocalizedString(@"松开结束", nil) forState:UIControlStateNormal];
+    [_soundBut setTitle:CHLocalizedString(@"chat_recordEnd", nil) forState:UIControlStateNormal];
     [_soundBut setBackgroundColor:CHUIColorFromRGB(0x757575, 1.0)];
 }
 

@@ -104,7 +104,7 @@ static int request;
                                        @"UserId": _user.userId}];
     _afnRequest.moreRequest = YES;
     @WeakObj(self)
-    [_afnRequest CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:comDic Mess:CHLocalizedString(@"正在加载中，请稍后", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+    [_afnRequest CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:comDic Mess:CHLocalizedString(@"location_reload", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         @StrongObj(self)
@@ -145,7 +145,7 @@ static int request;
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"定位", nil);
+    self.title = CHLocalizedString(@"firstLun_loca", nil);
     self.mapView = [CHMKMapView createMapView];
     self.mapView.showsUserLocation = YES;
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(39.9163854444,116.3971424103) animated:NO];
@@ -159,7 +159,7 @@ static int request;
 //        [CHAccountTool saveUser:self.user];
         self.infoView.selectDevice = self.user;
         [self.infoView setDevices:self.devices];
-        self.infoView.locaLab.text = (self.user.GeoCoding.FormattedAddress && ![self.user.GeoCoding.FormattedAddress isEqualToString:@""]) ? self.user.GeoCoding.FormattedAddress:CHLocalizedString(@"暂无定位信息", nil);
+        self.infoView.locaLab.text = (self.user.GeoCoding.FormattedAddress && ![self.user.GeoCoding.FormattedAddress isEqualToString:@""]) ? self.user.GeoCoding.FormattedAddress:CHLocalizedString(@"location_none", nil);
     }];
     [self.view addSubview:self.mapView];
    
@@ -215,11 +215,11 @@ static int request;
         make.top.mas_equalTo(self.view.mas_bottom);
         make.right.mas_equalTo(0);
         make.left.mas_equalTo(0);
-        make.height.mas_equalTo(160 * WIDTHAdaptive);
+        make.height.mas_equalTo(160 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
     }];
 
     [reduBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12);
+        make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12 - HOME_INDICATOR_HEIGHT);
         make.right.mas_equalTo(-16);
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
@@ -233,14 +233,14 @@ static int request;
     }];
 
     [useLocaBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12);
+        make.bottom.mas_equalTo(self.infoView.mas_top).mas_offset(-12 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(16);
         make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
     
     UIImageView *ima = [[UIImageView alloc] initWithFrame:CGRectMake(20, 30, 30, 40)];
-    ima.image = [UIImage drawDeviceImageWithSize:ima.size title:@"宝贝"];
+    ima.image = [UIImage drawDeviceImageWithSize:ima.size title:CHLocalizedString(@"chat_baby", nil)];
 //    ima.backgroundColor = [UIColor greenColor];
 //    [self.view addSubview:ima];
 }
@@ -427,15 +427,15 @@ static int request;
 - (void)updateUI{
     [UIView animateWithDuration:1 animations:^{
         [self.infoView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.view.mas_bottom).mas_offset(-160 * WIDTHAdaptive);
+            make.top.mas_equalTo(self.view.mas_bottom).mas_offset(-160 * WIDTHAdaptive - HOME_INDICATOR_HEIGHT);
             make.right.mas_equalTo(0);
             make.left.mas_equalTo(0);
-            make.height.mas_equalTo(160 * WIDTHAdaptive);
+            make.height.mas_equalTo(160 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
         }];
          [self.view layoutIfNeeded];
     }];
     
-    self.infoView.locaLab.text = (_user.GeoCoding.FormattedAddress && ![_user.GeoCoding.FormattedAddress isEqualToString:@""]) ? _user.GeoCoding.FormattedAddress:CHLocalizedString(@"暂无定位信息", nil);
+    self.infoView.locaLab.text = (_user.GeoCoding.FormattedAddress && ![_user.GeoCoding.FormattedAddress isEqualToString:@""]) ? _user.GeoCoding.FormattedAddress:CHLocalizedString(@"location_none", nil);
     self.infoView.selectDevice = _user;
     [self.infoView setDevices:_devices];
     @WeakObj(self)
@@ -445,7 +445,7 @@ static int request;
             return ;
         }
         self.user = selDevice;
-        self.infoView.locaLab.text = (self.user.GeoCoding.FormattedAddress && ![self.user.GeoCoding.FormattedAddress isEqualToString:@""]) ? self.user.GeoCoding.FormattedAddress:CHLocalizedString(@"暂无定位信息", nil);
+        self.infoView.locaLab.text = (self.user.GeoCoding.FormattedAddress && ![self.user.GeoCoding.FormattedAddress isEqualToString:@""]) ? self.user.GeoCoding.FormattedAddress:CHLocalizedString(@"location_none", nil);
 //        [CHAccountTool saveUser:self.user];
         [self.mapView userDidSelectAnnotationView:self.user];
         [self.mapView setCenterCoordinate:self.user.deviceCoor animated:NO];
@@ -469,7 +469,7 @@ static int request;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
 //            if (mess) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"监听已开启，请留意来电", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"location_monitor", nil)];
 //            }
         }
 //        callBack(YES);

@@ -34,10 +34,9 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"申请消息", nil);
+    self.title = CHLocalizedString(@"user_requestMes", nil);
     self.tableView.tableFooterView = [UIView new];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, CHMainScreen.size.width, 0, 0)];
-    
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width, CHMainScreen.size.height - 64)];
     self.tableView.backgroundView = backView;
     
@@ -46,7 +45,7 @@
     image.center = CGPointMake(CHMainScreen.size.width/2, CHMainScreen.size.height/2 - 106);
     [backView addSubview:image];
     
-    CHLabel *titLab = [CHLabel createWithTit:CHLocalizedString(@"暂时没有新消息", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
+    CHLabel *titLab = [CHLabel createWithTit:CHLocalizedString(@"user_notRequestMs", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
     titLab.frame = CGRectMake(30, CGRectGetMaxY(image.frame) + 10, CHMainScreen.size.width - 60, 60);
     [backView addSubview:titLab];
 }
@@ -60,6 +59,9 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         selfWeak.requestArr = [CHRequestInfoMode mj_objectArrayWithKeyValuesArray:result[@"Items"]];
         [selfWeak.tableView reloadData];
+        if (selfWeak.requestArr.count > 0) {
+            selfWeak.tableView.backgroundView = [UIView new];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
     }];
@@ -98,10 +100,10 @@
             if ([result[@"State"] intValue] == 0) {
                 mode.Status = agree ? 1:2;
                 cell.infoMode = mode;
-                [MBProgressHUD showSuccess:CHLocalizedString(@"已处理", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_processed", nil)];
             }
             else{
-                 [MBProgressHUD showSuccess:CHLocalizedString(@"处理失败", nil)];
+                 [MBProgressHUD showError:CHLocalizedString(@"aler_dealFailure", nil)];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
             

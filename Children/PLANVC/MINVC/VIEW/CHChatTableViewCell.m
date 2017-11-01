@@ -42,7 +42,7 @@ typedef void(^playCellBloc)(CHVideoMode *mode);
 - (void)createUI{
     self.backgroundColor = [UIColor clearColor];
   self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    _dateLab = [CHLabel createWithTit:CHLocalizedString(@"宝贝", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
+    _dateLab = [CHLabel createWithTit:CHLocalizedString(@"chat_baby", nil) font:CHFontNormal(nil, 12) textColor:CHUIColorFromRGB(0xffffff, 1.0) backColor:nil textAlignment:1];
     [self.contentView addSubview:_dateLab];
     
     _leftHeadIma = [UIImageView itemWithImage:[UIImage imageNamed:@"pho_touxiang_1"] backColor:nil Radius:25];
@@ -306,7 +306,7 @@ typedef void(^playCellBloc)(CHVideoMode *mode);
         selfWeak.userInfoDic = [result[@"UserInfo"] mutableCopy];
         selfWeak.leftHeadLab.text = [TypeConversionMode strongChangeString:selfWeak.userInfoDic[@"Username"]];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-        selfWeak.leftHeadLab.text = CHLocalizedString(@"家庭成员", nil);
+        selfWeak.leftHeadLab.text = CHLocalizedString(@"device_family", nil);
     }];
 }
 
@@ -320,7 +320,7 @@ typedef void(^playCellBloc)(CHVideoMode *mode);
      [self.rightActivity startAnimating];
     @WeakObj(self)
     NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
-    [dic addEntriesFromDictionary:@{@"SerialNumber":self.user.deviceIMEI,@"Long":[NSString stringWithFormat:@"%ld",(long)mode.Long],@"VoiceTime":mode.Created,@"Command":mode.FileBase,@"IdentityID":@"",@"UserId":self.user.userId,@"ChatType":@"2",@"FileType":@"video"}];
+    [dic addEntriesFromDictionary:@{@"SerialNumber":self.user.deviceIMEI,@"Long":[NSString stringWithFormat:@"%ld",(long)mode.Long],@"VoiceTime":mode.Created,@"Command":mode.FileBase,@"IdentityID":mode.IdentityID,@"UserId":self.user.userId,@"ChatType":@"2",@"FileType":@"video"}];
     [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_VoiceUpload parameters:dic Mess:nil showError:NO progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -363,7 +363,7 @@ typedef void(^playCellBloc)(CHVideoMode *mode);
             titStr = [dateFormatter stringFromDate:lastDate];
         }else{
             dateFormatter.dateFormat = @"HH:mm";
-            titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter stringFromDate:lastDate]];
+            titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"user_lastData", nil),[dateFormatter stringFromDate:lastDate]];
         }
     }
     else{

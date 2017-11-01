@@ -7,6 +7,8 @@
 //
 
 #import "CHSOSViewController.h"
+#import "CHPhotoView.h"
+#import "CHPhoneBookMode.h"
 
 @interface CHSOSViewController ()
 {
@@ -19,12 +21,15 @@
 @property (nonatomic, strong) CHTextField *phoneField2;
 @property (nonatomic, strong) CHTextField *selectField;
 @property (nonatomic, strong) CHButton *confimBut;
+@property (nonatomic, strong) CHUserInfo *user;
+@property (nonatomic, strong) NSMutableArray <CHPhoneBookMode *>* sosList;
 @end
 
 @implementation CHSOSViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initializeMethod];
     [self createUI];
 }
 
@@ -33,20 +38,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSMutableArray <CHPhoneBookMode *>*)sosList{
+    if (!_sosList) {
+        _sosList = [NSMutableArray array];
+    }
+    return _sosList;
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"SOS设置", nil);
+    self.title = CHLocalizedString(@"device_set_sos", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    CHLabel *phoneTit = [CHLabel createWithTit:CHLocalizedString(@"紧急号码一", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
+    CHLabel *phoneTit = [CHLabel createWithTit:CHLocalizedString(@"device_set_phoneO", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:phoneTit];
     
     CHLabel *line2 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line2];
     
-    self.phoneField = [CHTextField createWithPlace:CHLocalizedString(@"请输入电话号码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    self.phoneField = [CHTextField createWithPlace:CHLocalizedString(@"login_inputPhone", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.phoneField.delegate = self;
     self.phoneField.keyboardType = UIKeyboardTypePhonePad;
     [self.view addSubview:self.phoneField];
@@ -62,13 +74,13 @@
     CHLabel *line3 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line3];
     
-    CHLabel *phoneTit1 = [CHLabel createWithTit:CHLocalizedString(@"紧急号码二", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
+    CHLabel *phoneTit1 = [CHLabel createWithTit:CHLocalizedString(@"device_set_phoneT", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:phoneTit1];
     
     CHLabel *line2_1 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line2_1];
     
-    self.phoneField1 = [CHTextField createWithPlace:CHLocalizedString(@"请输入电话号码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    self.phoneField1 = [CHTextField createWithPlace:CHLocalizedString(@"login_inputPhone", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.phoneField1.delegate = self;
     self.phoneField1.keyboardType = UIKeyboardTypePhonePad;
     [self.view addSubview:self.phoneField1];
@@ -83,13 +95,13 @@
     CHLabel *line3_2 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line3_2];
     
-    CHLabel *phoneTit2 = [CHLabel createWithTit:CHLocalizedString(@"紧急号码三", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
+    CHLabel *phoneTit2 = [CHLabel createWithTit:CHLocalizedString(@"device_set_phoneTr", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:phoneTit2];
     
     CHLabel *line2_2 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line2_2];
     
-    self.phoneField2 = [CHTextField createWithPlace:CHLocalizedString(@"请输入电话号码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    self.phoneField2 = [CHTextField createWithPlace:CHLocalizedString(@"login_inputPhone", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.phoneField2.delegate = self;
     self.phoneField2.keyboardType = UIKeyboardTypePhonePad;
     [self.view addSubview:self.phoneField2];
@@ -109,12 +121,12 @@
     textView.selectable = NO;
     textView.textColor = CHUIColorFromRGB(0x757575, 1.0);
     textView.font = CHFontNormal(nil, 12);
-    textView.text = CHLocalizedString(@"提示：\n 1.建议您保存和宝贝关系最亲密的三个号码 \n2.长按SOS按键超过5秒，触发报警求助，并按次序拨打第一，二，三联系人电话（第一接听人30秒不接，拨打第二联系人，第二接听人30秒不接，拨打第三联系人，依次循环，有人接听时不再拨打） ", nil);
+    textView.text = CHLocalizedString(@"device_set_sosMes", nil);
     [self.view addSubview:textView];
         
     
-    _confimBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-//        [selfWeak addGuarder];
+    _confimBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        [selfWeak addSosPhone];
     }];
     _confimBut.enabled = NO;
     [self.view addSubview:_confimBut];
@@ -220,7 +232,7 @@
     }];
     
     [_confimBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-30 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(40);
         make.right.mas_equalTo(-40);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -231,6 +243,71 @@
         make.left.mas_equalTo(25);
         make.right.mas_equalTo(-25);
         make.bottom.mas_equalTo(_confimBut.mas_top).mas_offset(-8);
+    }];
+}
+
+- (void)updateUI{
+    NSArray *array = @[self.phoneField,self.phoneField1,self.phoneField2];
+    for (int i = 0; i < self.sosList.count; i ++) {
+        CHPhoneBookMode *model = self.sosList[i];
+        if (i < 3) {
+            UITextField *field = [array objectAtIndex:i];
+            field.text = model.phone;
+            if (_phoneField == field) {
+                if (field.text.length > 0) {
+                    passInt1 = YES;
+                }
+                else{
+                    passInt1 = NO;
+                }
+            }
+            if (_phoneField1 == field) {
+                if (field.text.length > 0) {
+                    passInt2 = YES;
+                }
+                else{
+                    passInt2 = NO;
+                }
+            }
+            if (_phoneField2 == field) {
+                if (field.text.length > 0) {
+                    passInt3 = YES;
+                }
+                else{
+                    passInt3 = NO;
+                }
+            }
+        }
+    }
+    if (passInt1 && passInt2 && passInt3) {
+        self.confimBut.enabled = YES;
+    }
+    else{
+        self.confimBut.enabled = NO;
+    }
+}
+
+- (void)initializeMethod{
+    _user = [CHAccountTool user];
+    NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+    [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId}];
+    @WeakObj(self)
+    
+    [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CommandList parameters:dic Mess:nil showError:NO progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        @StrongObj(self)
+        for (NSDictionary *dic in result[@"Items"]) {
+            if ([dic[@"Code"] intValue] == [SOS_PHONE intValue]) {
+                NSLog(@"fwgoijgo == %@",dic);
+                [self.sosList removeAllObjects];
+                [self BreakSosPhoneValue:dic];
+                break;
+            }
+        }
+        [self updateUI];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        [self updateUI];
     }];
 }
 
@@ -336,6 +413,43 @@
             _confimBut.enabled = NO;
         }
         NSLog(@"联系人：%@, 电话：%@",text1,contactNStr);
+    }];
+}
+
+- (void)BreakSosPhoneValue:(NSDictionary *)dic{
+    if (dic) {
+        NSMutableArray *cmdValues = [[dic[@"CmdValue"] componentsSeparatedByString:@","] mutableCopy];
+        if (cmdValues.count <= 0) return;
+        NSInteger count = (cmdValues.count)/2;
+        for (int i = 0; i < count; i ++) {
+            CHPhoneBookMode *model = [[CHPhoneBookMode alloc] init];
+            model.name = [TypeConversionMode strongChangeString:cmdValues[0 + i * 2]];
+            model.phone = [TypeConversionMode strongChangeString:cmdValues[1 + i * 2]];
+            [self.sosList addObject:model];
+        }
+    }
+}
+
+- (void)addSosPhone{
+    @WeakObj(self)
+    NSString *params = [NSString stringWithFormat:@"sos_1,%@,sos_2,%@,sos_3,%@",_phoneField.text,_phoneField1.text,_phoneField2.text];
+    NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+    [dic addEntriesFromDictionary:@{@"DeviceId":[CHAccountTool user].deviceId,
+                                    @"DeviceModel": [CHAccountTool user].deviceMo,
+                                    @"CmdCode": SOS_PHONE,
+                                    @"Params": params,
+                                    @"UserId": [CHAccountTool user].userId}];
+    [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+        if ([result[@"State"] intValue] == 0) {
+            [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [selfWeak.navigationController popViewControllerAnimated:YES];
+            });
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        
     }];
 }
 

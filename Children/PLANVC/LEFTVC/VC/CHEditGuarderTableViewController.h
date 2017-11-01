@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CHAdressMode.h"
 
-typedef void(^updatePopViewBlock)(CHGuarderItemMode *itemMode, BOOL deleMode);
+typedef void(^updatePopViewBlock)(id itemMode, BOOL deleMode);
 
-@interface CHEditGuarderTableViewController : UITableViewController
+@interface CHEditGuarderTableViewController : UITableViewController<UITextFieldDelegate>
 @property (nonatomic, strong) CHGuarderItemMode *itemMode;
+@property (nonatomic, strong) CHAdressMode *adressMode;
+@property (nonatomic, strong) NSMutableArray *adressArrs;
 @property (nonatomic, assign) BOOL isAdmin;
 
 - (void)popViewUpdateUI:(updatePopViewBlock)callBack;

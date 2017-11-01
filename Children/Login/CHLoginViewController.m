@@ -63,7 +63,7 @@
     [self.view addSubview:logoIma];
     
     countryLab = [UILabel new];
-    [countryLab setText:CHLocalizedString(@"中国大陆", nil)];
+    [countryLab setText:CHLocalizedString(@"login_country", nil)];
     countryLab.font = CHFontNormal(nil, 16);
     [countryLab setTextColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0)];
     [self.view addSubview:countryLab];
@@ -82,14 +82,6 @@
     lineLab0.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:lineLab0];
     
-    if (_operationStype == 1) {
-        countryLab.alpha = 0;
-        codeLab.alpha = 0;
-        indexIma.alpha = 0;
-        lineLab0.alpha = 0;
-        logoIma.alpha = 0;
-    }
-    
     CHButton *codeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
         SectionsViewController* country = [[SectionsViewController alloc] init];
         country.delegate = self;
@@ -97,6 +89,14 @@
             
         }];
     }];
+    if (_operationStype == 1) {
+        countryLab.alpha = 0;
+        codeLab.alpha = 0;
+        indexIma.alpha = 0;
+        lineLab0.alpha = 0;
+        logoIma.alpha = 0;
+        codeBut.alpha = 0;
+    }
     [self.view addSubview:codeBut];
     
     [headView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -154,8 +154,8 @@
     
     UIImageView *phoneIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_haoma"] backColor:nil];
     NSString *accountStr = @"";
-    if (_operationStype == 0) accountStr = CHLocalizedString(@"请输入手机号", nil);
-    if (_operationStype == 1) accountStr = CHLocalizedString(@"请输入邮箱", nil);
+    if (_operationStype == 0) accountStr = CHLocalizedString(@"login_inputPhone", nil);
+    if (_operationStype == 1) accountStr = CHLocalizedString(@"login_inputEmail", nil);
     
     phoneLab = [CHTextField createWithPlace:accountStr text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     
@@ -190,7 +190,7 @@
     }];
     
     UIImageView *phoneIma1 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima"] backColor:nil];
-    passFiled = [CHTextField createWithPlace:CHLocalizedString(@"请输入密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    passFiled = [CHTextField createWithPlace:CHLocalizedString(@"login_inputPass", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     passFiled.secureTextEntry = YES;
     passFiled.delegate = self;
     CHButton *eyeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -255,7 +255,7 @@
         }];
     }
     
-    CHLabel *thirdLab = [CHLabel createWithTit:CHLocalizedString(@"社交账号登录", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:NSTextAlignmentCenter];
+    CHLabel *thirdLab = [CHLabel createWithTit:CHLocalizedString(@"login_thirdLogin", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:NSTextAlignmentCenter];
     thirdLab.numberOfLines = 0;
     [self.view addSubview:thirdLab];
     [thirdLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -285,7 +285,7 @@
     thirdIma0.hidden = YES;
     thirdIma1.hidden = YES;
     
-    NSArray *chLogin = @[_operationStype ? CHLocalizedString(@"手机登录", nil):CHLocalizedString(@"邮箱登录", nil),CHLocalizedString(@"找回密码", nil)];
+    NSArray *chLogin = @[_operationStype ? CHLocalizedString(@"login_phoneLog", nil):CHLocalizedString(@"login_emailLog", nil),CHLocalizedString(@"user_retrievePs", nil)];
     for (int j = 0; j < chLogin.count; j ++) {
         CHButton *but = [CHButton createAttributedString:chLogin[j] attributedDic:@{NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle],NSUnderlineColorAttributeName:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0),NSForegroundColorAttributeName:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0),NSFontAttributeName:CHFontNormal(nil, 14)} touchBlock:^(CHButton *sender) {
             NSLog(@"登录： %ld",(long)sender.tag);
@@ -302,7 +302,7 @@
                 self.navigationController.backImage = [UIImage imageNamed:@"btu_fanhui_w"];
                 CHRegisViewController *findPass = [[CHRegisViewController alloc] init];
                 findPass.operationStype = _operationStype ? 3:2;
-                findPass.title = CHLocalizedString(@"找回密码", nil);
+                findPass.title = CHLocalizedString(@"user_retrievePs", nil);
                 [self.navigationController pushViewController:findPass animated:YES];
             }
         }];
@@ -318,7 +318,7 @@
         }];
         
         if (j == 1) {
-            loginBut = [CHButton createWithTit:CHLocalizedString(@"登录", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+            loginBut = [CHButton createWithTit:CHLocalizedString(@"login_login", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
                 [self.view endEditing:YES];
                 NSMutableDictionary *requestDic = [[CHAFNWorking shareAFNworking] requestDic];
                 [CHAFNWorking shareAFNworking].moreRequest = YES;
@@ -327,13 +327,13 @@
                     STR = [NSString stringWithFormat:@"%@%@",codeLab.text, phoneLab.text];
                 }
                 [requestDic addEntriesFromDictionary:@{@"Name":STR, @"Pass":passFiled.text,@"LoginType":@"0"}];
-                [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Login parameters:requestDic Mess:CHLocalizedString(@"正在登录...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+                [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Login parameters:requestDic Mess:CHLocalizedString(@"aler_loging", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                     
                     if ([[result objectForKey:@"State"] intValue] == 1000) {
                         [MBProgressHUD hideHUD];
-                        [MBProgressHUD showError:CHLocalizedString(@"账号或密码不正确", nil)];
+                        [MBProgressHUD showError:CHLocalizedString(@"aler_loginFail", nil)];
                     }
                     if ([[result objectForKey:@"State"] intValue] == 0) {
                         CHUserInfo *user = [[CHUserInfo alloc] init];

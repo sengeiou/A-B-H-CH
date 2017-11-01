@@ -90,7 +90,7 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"闹钟提醒", nil);
+    self.title = CHLocalizedString(@"device_set_alarm", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     _alarmTitLab = [CHLabel new];
     [self setAlarmNum];
@@ -99,7 +99,7 @@
     CHLabel *line = [CHLabel createWithTit:nil font:nil textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line];
     @WeakObj(self);
-    _addBut = [CHButton createWithTit:CHLocalizedString(@"添加新闹钟", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    _addBut = [CHButton createWithTit:CHLocalizedString(@"device_alarm_add", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         CHSubAlarmViewController *alarmSubVC = [[CHSubAlarmViewController alloc] init];
         CHCmdClassDemo *demo = [selfWeak cmdDemo];
         [selfWeak.commandList addObject:demo];
@@ -129,7 +129,7 @@
     }];
     
     [_addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -145,7 +145,7 @@
 
 - (void)setAlarmNum{
     NSString *str1 = [NSString stringWithFormat:@"%lu",6 - self.commandList.count];
-    NSString *str = CHLocalizedString(@"还可以添加%@个闹钟", str1);
+    NSString *str = CHLocalizedString(@"device_alarm_num", str1);
     NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
     [attrDescribeStr addAttribute:NSForegroundColorAttributeName  value:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) range:[str rangeOfString:str1]];
     self.alarmTitLab .attributedText = attrDescribeStr;
@@ -201,7 +201,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return CHLocalizedString(@"删除", nil);
+    return CHLocalizedString(@"device_jbw_delete", nil);
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -246,13 +246,13 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
             if (isdelete) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"删除成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"device_guar_deleSus", nil)];
                 [selfWeak.commandList removeObject:mode];
                 [selfWeak.alarmTab deleteRowsAtIndexPaths:@[cellIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
                 [selfWeak setAlarmNum];
             }
             else{
-                [MBProgressHUD showSuccess:CHLocalizedString(@"修改成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"user_chanSuccess", nil)];
             }
         }
         else{

@@ -51,7 +51,7 @@ typedef void(^didSelectSwitchBlock)(UISwitch *oSwitch);
     [_openSwitch addTarget:self action:@selector(didSelectSwitch:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_openSwitch];
     
-    _weekTitkLab = [CHLabel createWithTit:CHLocalizedString(@"星期", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    _weekTitkLab = [CHLabel createWithTit:CHLocalizedString(@"device_alarm_weak", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     _weekTitkLab.numberOfLines = 2;
     [self.contentView addSubview:_weekTitkLab];
     
@@ -108,7 +108,7 @@ typedef void(^didSelectSwitchBlock)(UISwitch *oSwitch);
 }
 
 - (NSMutableArray *)weekSelectWithMode:(CHCmdClassDemo *)mode{
-    NSArray *weekTits = @[CHLocalizedString(@"周一", nil),CHLocalizedString(@"周二", nil),CHLocalizedString(@"周三", nil),CHLocalizedString(@"周四", nil),CHLocalizedString(@"周五", nil),CHLocalizedString(@"周六", nil),CHLocalizedString(@"周日", nil)];
+    NSArray *weekTits = @[CHLocalizedString(@"device_class_mon", nil),CHLocalizedString(@"device_class_tue", nil),CHLocalizedString(@"device_class_wed", nil),CHLocalizedString(@"device_class_thu", nil),CHLocalizedString(@"device_class_fri", nil),CHLocalizedString(@"device_class_sat", nil),CHLocalizedString(@"device_class_sun", nil)];
     NSMutableArray *arr = [NSMutableArray array];
     NSString *weekStr = mode.week;
     if ([weekStr containsString:@"1"]) {

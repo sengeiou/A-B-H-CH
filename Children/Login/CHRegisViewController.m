@@ -71,7 +71,7 @@
     [self.view addSubview:logoIma];
     
     countryLab = [UILabel new];
-    [countryLab setText:CHLocalizedString(@"中国大陆", nil)];
+    [countryLab setText:CHLocalizedString(@"login_country", nil)];
     countryLab.font = CHFontNormal(nil, 16);
     [countryLab setTextColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0)];
     [self.view addSubview:countryLab];
@@ -90,13 +90,7 @@
     lineLab0.backgroundColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
     [self.view addSubview:lineLab0];
     
-    if (_operationStype == 1 || _operationStype == 3) {
-        countryLab.hidden = YES;
-        codeLab.hidden = 1;
-        indexIma.hidden = 1;
-        lineLab0.hidden = 1;
-        logoIma.hidden = 1;
-    }
+
     
     CHButton *codeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
         SectionsViewController* country = [[SectionsViewController alloc] init];
@@ -106,6 +100,14 @@
         }];
     }];
     [self.view addSubview:codeBut];
+    if (_operationStype == 1 || _operationStype == 3) {
+        countryLab.hidden = YES;
+        codeLab.hidden = 1;
+        indexIma.hidden = 1;
+        lineLab0.hidden = 1;
+        logoIma.hidden = 1;
+        codeBut.hidden = 1;
+    }
     
     [headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view);
@@ -163,8 +165,8 @@
     
     UIImageView *phoneIma = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_haoma"] backColor:nil];
     NSString *accountStr = @"";
-    if (_operationStype == 0 || _operationStype == 2) accountStr = CHLocalizedString(@"请输入手机号", nil);
-    if (_operationStype == 1 || _operationStype == 3) accountStr = CHLocalizedString(@"请输入邮箱", nil);
+    if (_operationStype == 0 || _operationStype == 2) accountStr = CHLocalizedString(@"login_inputPhone", nil);
+    if (_operationStype == 1 || _operationStype == 3) accountStr = CHLocalizedString(@"login_inputEmail", nil);
     
     phoneLab = [CHTextField createWithPlace:accountStr text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     
@@ -199,7 +201,7 @@
     }];
     
     UIImageView *phoneIma1 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_mima"] backColor:nil];
-    passFiled = [CHTextField createWithPlace:_operationStype == 3 ? CHLocalizedString(@"请输入用户名", nil):CHLocalizedString(@"请输入密码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    passFiled = [CHTextField createWithPlace:_operationStype == 3 ? CHLocalizedString(@"login_inputAcc", nil):CHLocalizedString(@"login_inputPass", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     
     passFiled.delegate = self;
     CHButton *eyeBut = [CHButton createWithTit:nil titColor:nil textFont:nil backColor:nil touchBlock:^(CHButton *sender) {
@@ -244,14 +246,14 @@
     }];
     
     UIImageView *phoneIma2 = [UIImageView itemWithImage:[UIImage imageNamed:@"icon_yanzhengma"] backColor:nil];
-    authFiled = [CHTextField createWithPlace:CHLocalizedString(@"请输入验证码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
+    authFiled = [CHTextField createWithPlace:CHLocalizedString(@"login_inputAuth", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor,1.0) font:CHFontNormal(nil,16)];
     authFiled.delegate = self;
 
-    authBut = [CHButton createWithTit:CHLocalizedString(@"获取验证码", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil,16) backColor:nil touchBlock:^(CHButton *sender) {
+    authBut = [CHButton createWithTit:CHLocalizedString(@"login_getAuth", nil) titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil,16) backColor:nil touchBlock:^(CHButton *sender) {
         sender.selected = !sender.selected;
         if (!phoneLab.text || [phoneLab.text isEqualToString:@""]) {
-            if (_operationStype == 0 || _operationStype == 2) [MBProgressHUD showError:CHLocalizedString(@"请输入手机号", nil)];
-            if (_operationStype == 1 || _operationStype == 3) [MBProgressHUD showError:CHLocalizedString(@"请输入邮箱", nil)];
+            if (_operationStype == 0 || _operationStype == 2) [MBProgressHUD showError:CHLocalizedString(@"login_inputPhone", nil)];
+            if (_operationStype == 1 || _operationStype == 3) [MBProgressHUD showError:CHLocalizedString(@"login_inputEmail", nil)];
             return ;
         }
         [self.view endEditing:YES];
@@ -261,12 +263,12 @@
         if (_operationStype == 2) {
             NSMutableDictionary *resignDic = [[CHAFNWorking shareAFNworking] requestDic];
             [resignDic addEntriesFromDictionary:@{@"Phone":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"VildateSence":@"1"}];
-            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendSMS parameters:resignDic Mess:CHLocalizedString(@"正在发送...", nil)  showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendSMS parameters:resignDic Mess:CHLocalizedString(@"login_sending", nil)  showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 if ([[result objectForKey:@"State"] intValue] == 0) {
                     authBut.enabled = NO;
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"发送成功!", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_sendSus", nil)];
                     [sender setTitle:@"60S" forState:UIControlStateNormal];
                     if (timer) {
                         [timer invalidate];
@@ -281,7 +283,7 @@
         }
         
         [CHAFNWorking shareAFNworking].moreRequest = YES;
-        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CheckUser parameters:dic Mess:CHLocalizedString(@"正在发送...", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_CheckUser parameters:dic Mess:CHLocalizedString(@"login_sending", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([[result objectForKey:@"State"] intValue] == 0 || _operationStype == 2) {
@@ -294,7 +296,7 @@
                     if ([[result objectForKey:@"State"] intValue] == 0) {
                         [MBProgressHUD hideHUD];
                         authBut.enabled = NO;
-                        [MBProgressHUD showSuccess:CHLocalizedString(@"发送成功!", nil)];
+                        [MBProgressHUD showSuccess:CHLocalizedString(@"aler_sendSus", nil)];
                         [sender setTitle:@"60S" forState:UIControlStateNormal];
                         if (timer) {
                             [timer invalidate];
@@ -351,8 +353,8 @@
     }];
     
     NSString *mailStr = @"";
-    if (_operationStype == 0) mailStr = CHLocalizedString(@"邮箱注册", nil);
-    if (_operationStype == 1) mailStr = CHLocalizedString(@"手机号注册", nil);
+    if (_operationStype == 0) mailStr = CHLocalizedString(@"login_email", nil);
+    if (_operationStype == 1) mailStr = CHLocalizedString(@"login_phone", nil);
     CHButton *mailBut = [CHButton createWithTit:mailStr titColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textFont:CHFontNormal(nil, 16) backColor:nil touchBlock:^(CHButton *sender) {
         if (_operationStype == 0) {
             CHRegisViewController *emailResignVC = [[CHRegisViewController alloc] init];
@@ -379,8 +381,8 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:0];
     [paragraphStyle setAlignment:NSTextAlignmentCenter];//,NSParagraphStyleAttributeName:paragraphStyle
-    NSAttributedString *str1 = [[NSAttributedString alloc] initWithString:CHLocalizedString(@"点击注册即表示您同意", nil) attributes:@{NSForegroundColorAttributeName:[UIColor darkGrayColor],NSFontAttributeName:CHFontNormal(nil, 12)}];
-    NSAttributedString *str2 = [[NSAttributedString alloc] initWithString:CHLocalizedString(@"用户服务协议", nil) attributes:@{NSForegroundColorAttributeName:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0),NSFontAttributeName:CHFontNormal(nil, 12),NSUnderlineStyleAttributeName:@1}];
+    NSAttributedString *str1 = [[NSAttributedString alloc] initWithString:CHLocalizedString(@"login_proto", nil) attributes:@{NSForegroundColorAttributeName:[UIColor darkGrayColor],NSFontAttributeName:CHFontNormal(nil, 12)}];
+    NSAttributedString *str2 = [[NSAttributedString alloc] initWithString:CHLocalizedString(@"login_protoT", nil) attributes:@{NSForegroundColorAttributeName:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0),NSFontAttributeName:CHFontNormal(nil, 12),NSUnderlineStyleAttributeName:@1}];
     NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] init];
     
     [attributed appendAttributedString:str1];
@@ -392,12 +394,12 @@
         protoBut.hidden = YES;
     }
     
-    NSString *resStr = CHLocalizedString(@"注册", nil);
+    NSString *resStr = CHLocalizedString(@"login_regis", nil);
     if (_operationStype >= 2) {
-        resStr = CHLocalizedString(@"确认重置", nil);
+        resStr = CHLocalizedString(@"regin_resetting", nil);
     }
     if (_operationStype == 3) {
-        resStr = CHLocalizedString(@"找回密码", nil);
+        resStr = CHLocalizedString(@"user_retrievePs", nil);
     }
     
     resignBut = [CHButton createWithTit:resStr titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
@@ -406,7 +408,7 @@
         NSMutableDictionary *resignDic = [CHAFNWorking shareAFNworking].requestDic;
         NSString *mess = @"";
         if (_operationStype == 0) {
-            mess = CHLocalizedString(@"正在注册...", nil);
+            mess = CHLocalizedString(@"aler_resigning", nil);
             [resignDic addEntriesFromDictionary:@{@"LoginName":[NSString stringWithFormat:@"%@%@",codeLab.text,phoneLab.text],@"Username":[NSString stringWithFormat:@"%@ %@",codeLab.text,phoneLab.text],@"Email":@"",@"Password":passFiled.text,@"SerialNumber":@"",@"Contact":@"",@"ContactPhone":[NSString stringWithFormat:@"%@ %@",codeLab.text,phoneLab.text],@"ThirdName":@"",@"ThirdID":@"",@"ThirdType":@"",@"ThirdImg":@"",@"SMSCode":authFiled.text}];
             [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_RegisterNeedSMSCode parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
@@ -418,10 +420,10 @@
         }
         else if(_operationStype == 1){
             if (![CHCalculatedMode validateEmail:phoneLab.text]) {
-                [MBProgressHUD showError:CHLocalizedString(@"请输入正确邮箱", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"aler_inputEmail", nil)];
                 return ;
             }
-            mess = CHLocalizedString(@"正在注册...", nil);
+            mess = CHLocalizedString(@"aler_resigning", nil);
             [resignDic addEntriesFromDictionary:@{@"LoginName":phoneLab.text,@"Username":phoneLab.text,@"Email":phoneLab.text,@"Password":passFiled.text,@"SerialNumber":@"",@"Contact":@"",@"ContactPhone":@"",@"ThirdName":@"",@"ThirdID":@"",@"ThirdType":@"",@"ThirdImg":@"",@"SMSCode":authFiled.text}];
             [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_Register parameters:resignDic Mess:mess showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                 
@@ -438,7 +440,7 @@
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 if ([[result objectForKey:@"State"] intValue] == 0) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"修改成功!", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"user_chanSuccess", nil)];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
@@ -453,7 +455,7 @@
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 if ([[result objectForKey:@"State"] intValue] == 0) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"找回成功，请留意邮件", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_findSus", nil)];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
@@ -589,7 +591,7 @@
 - (void)timeOut{
     [authBut setTitle:[NSString stringWithFormat:@"%dS",[authBut.titleLabel.text stringByReplacingOccurrencesOfString:@"S" withString:@""].intValue - 1] forState:UIControlStateNormal];
     if ([authBut.titleLabel.text stringByReplacingOccurrencesOfString:@"S" withString:@""].intValue == 0) {
-        [authBut setTitle:CHLocalizedString(@"获取验证码", nil) forState:UIControlStateNormal];
+        [authBut setTitle:CHLocalizedString(@"login_getAuth", nil) forState:UIControlStateNormal];
         authBut.enabled = YES;
         if (timer) {
             [timer invalidate];
@@ -678,10 +680,10 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     if (phoneLab == textField) [passFiled becomeFirstResponder];
-    if (passFiled == textField) [authFiled becomeFirstResponder];
+    
     if ((_operationStype == 1 || _operationStype == 3) && passFiled == textField) {
         [passFiled resignFirstResponder];
-    }
+    }else if (passFiled == textField) {[authFiled becomeFirstResponder];}
     return YES;
 }
 

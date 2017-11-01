@@ -76,7 +76,7 @@
                                        @"UserId": self.user.userId}];
     _afnRequest.moreRequest = YES;
     @WeakObj(self)
-    [_afnRequest CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:comDic Mess:CHLocalizedString(@"正在加载中，请稍后", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+    [_afnRequest CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:comDic Mess:CHLocalizedString(@"location_reload", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         @StrongObj(self)
@@ -278,6 +278,10 @@
     
     CHButton *phoneBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_dianhua"] Radius:0 touchBlock:^(CHButton *sender) {
         @StrongObj(self)
+        if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
+            [MBProgressHUD showError:CHLocalizedString(@"device_bindDevi", nil)];
+            return;
+        }
         CHPhoneCellView *cellView = [[CHPhoneCellView alloc] initWithDevices:self.deviceLists callBackBlock:^(CHUserInfo *device) {
             NSLog(@"device %@",device.devicePh);
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",device.devicePh]];
@@ -289,7 +293,7 @@
     }];
     [backImage addSubview:phoneBut];
     
-    CHLabel *phoneLab = [CHLabel createWithTit:CHLocalizedString(@"电话", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:0];
+    CHLabel *phoneLab = [CHLabel createWithTit:CHLocalizedString(@"home_phone", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:1];
     [backImage addSubview:phoneLab];
     
     
@@ -312,12 +316,13 @@
     }];
     [backImage addSubview:locaBut];
     
-    CHLabel *locaLab = [CHLabel createWithTit:CHLocalizedString(@"定位", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:0];
+    CHLabel *locaLab = [CHLabel createWithTit:CHLocalizedString(@"firstLun_loca", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:0];
     [backImage addSubview:locaLab];
-    
+    locaLab.numberOfLines = 2;
+//    locaLab.adjustsFontSizeToFitWidth = YES;
     CHButton *chatBut = [CHButton createWithImage:[UIImage imageNamed:@"icon_weiliao"] Radius:0 touchBlock:^(CHButton *sender) {
         if (!self.user.deviceId || [self.user.deviceId isEqualToString:@""]) {
-            [MBProgressHUD showError:CHLocalizedString(@"请先绑定设备", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"device_bindDevi", nil)];
             return;
         }
         for (NSURLSessionDataTask *tasks in self.afnRequest.sessionMgr.tasks) {
@@ -328,9 +333,10 @@
     }];
     [backImage addSubview:chatBut];
     
-    CHLabel *chatLab = [CHLabel createWithTit:CHLocalizedString(@"微聊", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:0];
+    CHLabel *chatLab = [CHLabel createWithTit:CHLocalizedString(@"firstLun_group", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x010101, 1.0) backColor:nil textAlignment:0];
     [backImage addSubview:chatLab];
-    
+    chatLab.numberOfLines = 2;
+//    chatLab.adjustsFontSizeToFitWidth = YES;
     [backImage mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.left.mas_equalTo(0);
@@ -339,7 +345,7 @@
     }];
     
     [self.leftBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(28);
+        make.top.mas_equalTo(28 + (iPhoneX ? 20:0));
         make.left.mas_equalTo(18);
         //        make.center.mas_equalTo(backImage);
         make.height.mas_equalTo(50);
@@ -361,16 +367,19 @@
     }];
     
     [phoneBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(rightBut.mas_bottom).mas_offset(36);
+        make.top.mas_equalTo(rightBut.mas_bottom).mas_offset(40);
         make.centerX.mas_equalTo(backImage);
         make.width.mas_equalTo(107);
         make.height.mas_equalTo(115);
     }];
     
     [phoneBut sizeToFit];
+    phoneLab.numberOfLines = 2;
+//    phoneLab.adjustsFontSizeToFitWidth = YES;
     [phoneLab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(phoneBut.mas_top).mas_offset(-1);
         make.centerX.mas_equalTo(phoneBut.mas_centerX).mas_offset(-phoneBut.frame.size.width/5);
+        make.width.mas_lessThanOrEqualTo(phoneBut.frame.size.width * 2.5);
     }];
     
     [locaBut mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -381,9 +390,10 @@
     }];
     
     [locaBut sizeToFit];
+    
     [locaLab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(locaBut.mas_top).mas_offset(-1);
-        make.centerX.mas_equalTo(locaBut.mas_centerX).mas_offset(locaLab.frame.size.width/5);
+        make.centerX.mas_equalTo(locaBut.mas_centerX).mas_offset(locaLab.frame.size.width/5 - 10);
         make.width.mas_lessThanOrEqualTo(locaBut.frame.size.width);
     }];
     
@@ -399,6 +409,7 @@
         make.bottom.mas_equalTo(chatBut.mas_top).mas_offset(-1);
         make.centerX.mas_equalTo(chatBut.mas_centerX).mas_offset(chatBut.frame.size.width/5);
         make.width.mas_lessThanOrEqualTo(chatBut.frame.size.width);
+//        make.height.mas_greaterThanOrEqualTo(20);
     }];
 }
 

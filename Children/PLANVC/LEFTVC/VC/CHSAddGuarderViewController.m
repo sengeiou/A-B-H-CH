@@ -42,27 +42,27 @@
 
 - (void)createUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = CHLocalizedString(@"添加新成员", nil);
-    CHLabel *relatioTit = [CHLabel createWithTit:CHLocalizedString(@"关系", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    self.title = CHLocalizedString(@"device_guar_add", nil);
+    CHLabel *relatioTit = [CHLabel createWithTit:CHLocalizedString(@"device_guar_relation", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:relatioTit];
     
     CHLabel *line0 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line0];
     
-    self.relationField = [CHTextField createWithPlace:CHLocalizedString(@"与宝贝关系", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    self.relationField = [CHTextField createWithPlace:CHLocalizedString(@"device_guar_deviRati", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.relationField.delegate = self;
     [self.view addSubview:self.relationField];
     
     CHLabel *line1 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line1];
     
-    CHLabel *phoneTit = [CHLabel createWithTit:CHLocalizedString(@"手机号码", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
+    CHLabel *phoneTit = [CHLabel createWithTit:CHLocalizedString(@"device_guar_phone", nil) font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:nil textAlignment:0];
     [self.view addSubview:phoneTit];
     
     CHLabel *line2 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line2];
     
-    self.phoneField = [CHTextField createWithPlace:CHLocalizedString(@"请输入电话号码", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
+    self.phoneField = [CHTextField createWithPlace:CHLocalizedString(@"login_inputPhone", nil) text:nil textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 16)];
     self.phoneField.delegate = self;
     self.phoneField.keyboardType = UIKeyboardTypePhonePad;
     [self.view addSubview:self.phoneField];
@@ -77,7 +77,7 @@
     CHLabel *line3 = [CHLabel createWithTit:nil font:CHFontNormal(nil, 14) textColor:nil backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) textAlignment:0];
     [self.view addSubview:line3];
     
-    _confimBut = [CHButton createWithTit:CHLocalizedString(@"确认", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    _confimBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         [selfWeak addGuarder];
     }];
     _confimBut.enabled = NO;
@@ -164,7 +164,7 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([result[@"State"] intValue] == 0) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [selfWeak.navigationController popViewControllerAnimated:YES];
                 });
@@ -184,7 +184,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
-            [MBProgressHUD showSuccess:CHLocalizedString(@"邀请成功", nil)];
+            [MBProgressHUD showSuccess:CHLocalizedString(@"device_guar_inviteSus", nil)];
         }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [selfWeak.navigationController popViewControllerAnimated:YES];
@@ -199,20 +199,20 @@
     self.mode.relation = self.relationField.text;
     self.mode.phoneNum = self.phoneField.text;
     NSMutableString *adressLogo = [[NSMutableString alloc] initWithString:@"000"];
-    for (CHGuarderItemMode *guarder in self.itemArrs) {
-        if ([self.phoneField.text containsString:guarder.RelationPhone]) {
-            [adressLogo replaceCharactersInRange:NSMakeRange(1, 1) withString:@"1"];
-        }
-        if (guarder.IsAdmin && [self.phoneField.text containsString:guarder.RelationPhone]) {
-            [adressLogo replaceCharactersInRange:NSMakeRange(0, 1) withString:@"1"];
-        }
-    }
+//    for (CHGuarderItemMode *guarder in self.itemArrs) {
+//        if ([self.phoneField.text containsString:guarder.RelationPhone]) {
+//            [adressLogo replaceCharactersInRange:NSMakeRange(1, 1) withString:@"1"];
+//        }
+//        if (guarder.IsAdmin && [self.phoneField.text containsString:guarder.RelationPhone]) {
+//            [adressLogo replaceCharactersInRange:NSMakeRange(0, 1) withString:@"1"];
+//        }
+//    }
     self.mode.adressLogo = adressLogo;
-    
+    [self.cmdList addObject:self.mode];
     NSMutableArray <CHAdressMode *>* cmdList = self.cmdList;
     NSString *alarmListStr = @"";
     for (int i = 0; i < cmdList.count; i ++) {
-        alarmListStr = [alarmListStr stringByAppendingString:[NSString stringWithFormat:@"%@%@,%@,%@,%@",i != 0 ? @",":@"",cmdList[i].name,cmdList[i].relation,cmdList[i].adressLogo,cmdList[i].phoneNum]];
+        alarmListStr = [alarmListStr stringByAppendingString:[NSString stringWithFormat:@"%@%@,%@,%@,%@",i == 0 ? @"":@",", cmdList[i].name,cmdList[i].relation,cmdList[i].adressLogo,cmdList[i].phoneNum]];
     }
     return alarmListStr;
 }
@@ -401,6 +401,9 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString *aString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([string isEqualToString:@","]) {
+        return NO;
+    }
     if (_phoneField == textField) {
         if (aString.length > 0) {
             passInt1 = YES;

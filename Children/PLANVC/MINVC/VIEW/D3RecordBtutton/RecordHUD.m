@@ -55,7 +55,7 @@
         titleLabel.backgroundColor = [UIColor clearColor];
     }
     titleLabel.center = CGPointMake(imgView.center.x, titleLabel.center.y);
-    titleLabel.text = CHLocalizedString(@"手指上滑，取消发送", nil);
+    titleLabel.text = CHLocalizedString(@"chat_drawCancel", nil);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = CHFontNormal(nil, 14);
     titleLabel.numberOfLines = 2;

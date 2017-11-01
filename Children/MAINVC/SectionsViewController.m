@@ -70,15 +70,18 @@
     {
         statusBarHeight=20;
     }
+    if (iPhoneX) {
+        statusBarHeight = 44;
+    }
     //改变电池栏颜色
-    UIView *statusBarView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    UIView *statusBarView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, CHMainScreen.size.width, STATUS_BAR_HEIGHT)];
     
     statusBarView.backgroundColor=[UIColor colorWithRed:193/255.0 green:129/255.0 blue:253/255.0 alpha:1];
     [self.view addSubview:statusBarView];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
-    UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0+statusBarHeight, self.view.frame.size.width, 44)];
-    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:CHLocalizedString(@"选择 国家/地区", nil)];
+    UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0+STATUS_BAR_HEIGHT, self.view.frame.size.width, 44)];
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:CHLocalizedString(@"login_selectCountry", nil)];
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys: CHFontNormal(nil, 20),NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
      [navigationBar setBackgroundImage:[UIImage CHimageWithColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) size:CGSizeMake(self.view.frame.size.width, 44)] forBarMetrics:UIBarMetricsDefault];
     navigationBar.titleTextAttributes = dic;

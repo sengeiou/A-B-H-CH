@@ -31,11 +31,11 @@
 }
 
 - (void)initializeMethod{
-    _titArr = @[CHLocalizedString(@"上课禁用", nil),CHLocalizedString(@"闹钟提醒", nil),CHLocalizedString(@"声音和震动", nil)/*,CHLocalizedString(@"SOS设置", nil)*/];
+    _titArr = @[CHLocalizedString(@"device_set_class", nil),CHLocalizedString(@"device_set_alarm", nil),CHLocalizedString(@"device_set_volume", nil),CHLocalizedString(@"device_set_sos", nil)];
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"更多设置", nil);
+    self.title = CHLocalizedString(@"user_moreSet", nil);
     self.tableView.tableFooterView = [UIView new];
     self.tableView.scrollEnabled = NO;
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];

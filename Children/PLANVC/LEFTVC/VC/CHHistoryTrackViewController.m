@@ -127,9 +127,10 @@
     [self.tracking clear];
     [self.mapView removeOverlayView];
     [self.mapView removeAnnotionsView];
-    [self updateFootAdress:CHLocalizedString(@"暂无轨迹", nil) time:@""];
+    [self updateFootAdress:CHLocalizedString(@"device_track_none", nil) time:@""];
     if (!mode.haveDate) {
         _playBut.enabled = NO;
+        [MBProgressHUD hideHUD];
         return;
     }
      _playBut.enabled = YES;
@@ -182,11 +183,11 @@
     [self createTracking];
 }
 
-- (void)selectLocationAdress:(CHHistoryInfo *)info callBack:(void(^)())callBack{
+- (void)selectLocationAdress:(CHHistoryInfo *)info callBack:(void(^)(void))callBack{
     @WeakObj(self);
     [[SMALocatiuonManager sharedCoreBlueTool] regeoCoding:CLLocationCoordinate2DMake(info.Lat, info.Lng) callBack:^(CHGeoCodingMode *geo) {
         if (!geo) {
-            [selfWeak updateFootAdress:CHLocalizedString(@"暂无轨迹", nil) time:@""];
+            [selfWeak updateFootAdress:CHLocalizedString(@"device_track_none", nil) time:@""];
         }
         else{
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -196,7 +197,7 @@
             NSDate *nowDate = [NSDate getNowDateFromatAnDate:[dateFormatter dateFromString:info.Time]];
             dateFormatter.dateFormat = @"HH:mm";
             NSString *str = [dateFormatter stringFromDate:nowDate];
-            [selfWeak updateFootAdress:geo.FormattedAddress time:[NSString stringWithFormat:@"%@ %@",str,CHLocalizedString(@"手表精准定位", nil)]];
+            [selfWeak updateFootAdress:geo.FormattedAddress time:[NSString stringWithFormat:@"%@ %@",str,CHLocalizedString(@"device_track_watchGps", nil)]];
         }
         callBack();
     }];
@@ -256,7 +257,7 @@ static NSString *trackIndex = @"TRACKCELL";
     [self.view addSubview:backView];
     
     @WeakObj(self)
-    _playBut = [CHButton createWithTit:CHLocalizedString(@"播放轨迹", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:20 * WIDTHAdaptive touchBlock:^(CHButton *sender) {
+    _playBut = [CHButton createWithTit:CHLocalizedString(@"device_tarck_play", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:20 * WIDTHAdaptive touchBlock:^(CHButton *sender) {
         [selfWeak.tracking execute];
     }];
     _playBut.titleLabel.numberOfLines = 0;
@@ -267,7 +268,7 @@ static NSString *trackIndex = @"TRACKCELL";
         make.bottom.mas_equalTo(0);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.height.mas_equalTo(100 * WIDTHAdaptive);
+        make.height.mas_equalTo(100 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
     }];
     
     _adressLab = [CHLabel createWithTit:nil font:CHFontNormal(nil, 20) textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) backColor:CHUIColorFromRGB(0xffffff, 1.0) textAlignment:0];
@@ -289,7 +290,7 @@ static NSString *trackIndex = @"TRACKCELL";
     }];
     [self.view addSubview:reduBut];
     
-    CGRect butRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"播放轨迹", nil) size:CGSizeMake(100, 22 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 16)}];
+    CGRect butRect = [CHCalculatedMode CHCalculatedWithStr:CHLocalizedString(@"device_tarck_play", nil) size:CGSizeMake(100, 22 * WIDTHAdaptive) attributes:@{NSFontAttributeName:CHFontNormal(nil, 16)}];
     [_playBut mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-12);
         make.centerY.mas_equalTo(0);
@@ -326,7 +327,7 @@ static NSString *trackIndex = @"TRACKCELL";
     }];
     _playBut.enabled = NO;
     backView.backgroundColor = [UIColor whiteColor];
-    [selfWeak updateFootAdress:CHLocalizedString(@"暂无轨迹", nil) time:@""];
+    [selfWeak updateFootAdress:CHLocalizedString(@"device_track_none", nil) time:@""];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{

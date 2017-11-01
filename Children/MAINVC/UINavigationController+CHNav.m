@@ -37,7 +37,8 @@ static char const *const backImageKey = "backImage";
 }
 
 - (void)setStatusbarBackgroundColor:(UIColor *)color{
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, CHMainScreen.size.width, 20)];
+    NSLog(@"STATUS_BAR_HEIGHT %f",STATUS_BAR_HEIGHT);
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0,-STATUS_BAR_HEIGHT, CHMainScreen.size.width, STATUS_BAR_HEIGHT)];
     statusBarView.backgroundColor = color;
     [self.navigationBar addSubview:statusBarView];
 }

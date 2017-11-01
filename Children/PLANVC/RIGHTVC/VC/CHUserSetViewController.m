@@ -34,20 +34,20 @@
 - (NSArray *)setTits{
     if (!_setTits) {
         //        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yhzl"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_sqxx"]]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),CHLocalizedString(@"意见反馈", nil),CHLocalizedString(@"关于我们", nil)],@[[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_xgmm"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_jcgx"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_yjfk"]],[UIImage drawWithSize:CGSizeMake(20 * WIDTHAdaptive, 20 * WIDTHAdaptive) Radius:0 image:[UIImage imageNamed:@"icon_gywm"]]]]];
-        _setTits = @[@[@[CHLocalizedString(@"用户资料", nil),CHLocalizedString(@"申请消息", nil)],@[[UIImage imageNamed:@"icon_yhzl"],[UIImage imageNamed:@"icon_sqxx"]]],@[@[CHLocalizedString(@"修改密码", nil),CHLocalizedString(@"版本", nil),/*CHLocalizedString(@"意见反馈", nil),*/CHLocalizedString(@"关于我们", nil)],@[[UIImage imageNamed:@"icon_xgmm"],[UIImage imageNamed:@"icon_jcgx"],/*[UIImage imageNamed:@"icon_yjfk"],*/[UIImage imageNamed:@"icon_gywm"]]]];
+        _setTits = @[@[@[CHLocalizedString(@"user_userInfo", nil),CHLocalizedString(@"user_requestMes", nil)],@[[UIImage imageNamed:@"icon_yhzl"],[UIImage imageNamed:@"icon_sqxx"]]],@[@[CHLocalizedString(@"user_changePas", nil),CHLocalizedString(@"user_version", nil),/*CHLocalizedString(@"user_faceBack", nil),*/CHLocalizedString(@"user_aboutAs", nil)],@[[UIImage imageNamed:@"icon_xgmm"],[UIImage imageNamed:@"icon_jcgx"],/*[UIImage imageNamed:@"icon_yjfk"],*/[UIImage imageNamed:@"icon_gywm"]]]];
     }
     return _setTits;
 }
 
 - (NSArray *)headTits{
     if (!_headTits) {
-        _headTits = @[CHLocalizedString(@"个人账户", nil),CHLocalizedString(@"更多设置", nil)];
+        _headTits = @[CHLocalizedString(@"user_account", nil),CHLocalizedString(@"user_moreSet", nil)];
     }
     return _headTits;
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"APP管理", nil);
+    self.title = CHLocalizedString(@"user_appSet", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     _setTab = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _setTab.delegate = self;
@@ -57,10 +57,10 @@
     [self.view addSubview:_setTab];
     
     @WeakObj(self)
-    CHButton *signOutBut = [CHButton createWithTit:CHLocalizedString(@"退出登录", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
-        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"确认退出登录？", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    CHButton *signOutBut = [CHButton createWithTit:CHLocalizedString(@"user_logOut", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+        UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"user_outMes", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [JPUSHService setAlias:@"U1" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                 NSLog(@"fiowjiogj iojg3333222222222222222222222 j %ld",(long)iResCode);
             } seq:0];
@@ -71,7 +71,7 @@
             AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
             app.window.rootViewController = nav;
         }];
-        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
         [aler addAction:cancelAct];
@@ -83,7 +83,7 @@
     [self.view addSubview:signOutBut];
     
     [signOutBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);

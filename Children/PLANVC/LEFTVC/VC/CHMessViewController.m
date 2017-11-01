@@ -73,6 +73,7 @@
         [selfWeak.messTabView reloadData];
         if (items.count > 0) {
              [selfWeak.messTabView.mj_footer endRefreshing];
+                selfWeak.messTabView.backgroundView = [UIView new];
         }
         else{
              [selfWeak.messTabView.mj_footer endRefreshingWithNoMoreData];
@@ -84,7 +85,7 @@
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"宝贝消息", nil);
+    self.title = CHLocalizedString(@"device_mess_mes", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     self.messTabView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.messTabView.backgroundColor = [UIColor whiteColor];
@@ -101,15 +102,16 @@
     image.center = CGPointMake(CHMainScreen.size.width/2, CHMainScreen.size.height/2 - 106);
     [backView addSubview:image];
     
-    CHLabel *titLab = [CHLabel createWithTit:CHLocalizedString(@"暂时没有新消息", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
+    CHLabel *titLab = [CHLabel createWithTit:CHLocalizedString(@"user_notRequestMs", nil) font:CHFontNormal(nil, 16) textColor:CHUIColorFromRGB(0x757575, 1.0) backColor:nil textAlignment:1];
     titLab.frame = CGRectMake(30, CGRectGetMaxY(image.frame) + 10, CHMainScreen.size.width - 60, 60);
     [backView addSubview:titLab];
     
+//    self.messTabView.backgroundColor = [UIColor greenColor];
     [self.messTabView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(0);
+        make.bottom.mas_equalTo(0 - HOME_INDICATOR_HEIGHT);
     }];
     
     [self setupRefrish];
@@ -121,9 +123,9 @@
 //        [selfWeak.messTabView.mj_header beginRefreshing];
          [selfWeak initializeMethod:NO];
     }];
-    [footer setTitle:CHLocalizedString(@"点击或者上拉刷新", nil) forState:MJRefreshStateIdle];
-    [footer setTitle:CHLocalizedString(@"刷新中...", nil) forState:MJRefreshStateRefreshing];
-    [footer setTitle:CHLocalizedString(@"无更多数据", nil) forState:MJRefreshStateNoMoreData];
+    [footer setTitle:CHLocalizedString(@"device_mess_update", nil) forState:MJRefreshStateIdle];
+    [footer setTitle:CHLocalizedString(@"device_mess_updateing", nil) forState:MJRefreshStateRefreshing];
+    [footer setTitle:CHLocalizedString(@"device_mess_updatenone", nil) forState:MJRefreshStateNoMoreData];
     _messTabView.mj_footer = footer;
 }
 
@@ -155,6 +157,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    return nil;
     CHMessageListInfoMode *mode = self.messList[section];
     NSDate *lastTime = [NSDate getNowDateFromatAnDate:[self.formatter dateFromString:mode.CreateDate]];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
@@ -175,7 +178,7 @@
             titStr = [dateFormatter stringFromDate:lastDate];
         }else{
             dateFormatter.dateFormat = @"HH:mm";
-            titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"昨天", nil),[dateFormatter stringFromDate:lastDate]];
+            titStr = [NSString stringWithFormat:@"%@ %@",CHLocalizedString(@"user_lastData", nil),[dateFormatter stringFromDate:lastDate]];
         }
     }
     else{

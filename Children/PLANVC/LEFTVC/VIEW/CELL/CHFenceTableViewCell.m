@@ -105,6 +105,6 @@
     self.titLab.text = fenceMode.FenceName ? fenceMode.FenceName:@"";
     self.adressLab.text = fenceMode.Address ? fenceMode.Address:@"";
     NSString *fenceStr = [NSString stringWithFormat:@"%.0f",fenceMode.Radius];
-    self.fenceLab.text = [fenceStr intValue]>0 ? CHLocalizedString(@"安全范围%@米", fenceStr):@"";
+    self.fenceLab.text = [fenceStr intValue]>0 ? CHLocalizedString(@"device_fenceScope", fenceStr):@"";
 }
 @end

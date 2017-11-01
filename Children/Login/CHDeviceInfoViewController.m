@@ -75,11 +75,11 @@
 
 - (void)initializeMethod{
     if (_setUser) {
-        titArr = @[CHLocalizedString(@"账号", nil),CHLocalizedString(@"昵称", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"邮箱", nil)];
+        titArr = @[CHLocalizedString(@"device_account", nil),CHLocalizedString(@"deviee_nick", nil),CHLocalizedString(@"device_guar_phone", nil),CHLocalizedString(@"device_email", nil)];
         [self requestUserInfo];
         return;
     }
-    titArr = @[CHLocalizedString(@"昵称", nil),CHLocalizedString(@"生日", nil),CHLocalizedString(@"身高", nil),CHLocalizedString(@"体重", nil),CHLocalizedString(@"手机号码", nil),CHLocalizedString(@"IMEI", nil)];
+    titArr = @[CHLocalizedString(@"deviee_nick", nil),CHLocalizedString(@"device_birthday", nil),CHLocalizedString(@"device_heigh", nil),CHLocalizedString(@"device_weith", nil),CHLocalizedString(@"device_guar_phone", nil),CHLocalizedString(@"IMEI", nil)];
     formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSDate *norDate = [NSDate dateWithYear:[[NSDate date] getYear] - 6 month:6 day:1];
@@ -87,7 +87,7 @@
         user.deviceHe = @"115";
     }
     if (!user.deviceNa) {
-        user.deviceNa = CHLocalizedString(@"宝贝",nil);
+        user.deviceNa = CHLocalizedString(@"chat_baby",nil);
     }
     if (!user.deviceWi) {
         user.deviceWi = @"20";
@@ -135,7 +135,7 @@
                 }];
             }
             else{
-                [MBProgressHUD showError:CHLocalizedString(@"相机不可用", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"aler_photoErro", nil)];
             }
         } touchAlum:^(CHButton *sender) {
             NSLog(@"点击相册");
@@ -155,14 +155,14 @@
                 }];
             }
             else{
-                [MBProgressHUD showError:CHLocalizedString(@"相册不可用", nil)];
+                [MBProgressHUD showError:CHLocalizedString(@"aler_albumErro", nil)];
             }
         }];
         [app.window addSubview:photoView];
     }];
     [headView addSubview:headBut];
     
-    mainBut = [CHButton createWithTit:CHLocalizedString(@"男", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
+    mainBut = [CHButton createWithTit:CHLocalizedString(@"device_main", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
         sender.selected = YES;
         user.deviceGe = @"1";
         gailBut.selected = NO;
@@ -173,7 +173,7 @@
     [mainBut setTitleColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) forState:UIControlStateNormal];
     [headView addSubview:mainBut];
     
-    gailBut = [CHButton createWithTit:CHLocalizedString(@"女", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
+    gailBut = [CHButton createWithTit:CHLocalizedString(@"device_lady", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 16) backImaColor:CHUIColorFromRGB(0xb3e5fc, 1.0) Radius:16 touchBlock:^(CHButton *sender) {
         sender.selected = YES;
         mainBut.selected = NO;
         user.deviceGe = @"2";
@@ -193,7 +193,7 @@
     [headView addSubview:gailBut];
     
     if (_setUser) {
-        self.title = CHLocalizedString(@"用户资料", nil);
+        self.title = CHLocalizedString(@"user_userInfo", nil);
         gailBut.hidden = YES;
         mainBut.hidden = YES;
         if (user.userIm && ![[user userIm] isEqualToString:@""]) {
@@ -205,7 +205,7 @@
         }
     }
     else{
-        self.title = CHLocalizedString(@"宝贝资料", nil);
+        self.title = CHLocalizedString(@"device_bind_data", nil);
         if (user.deviceIm && ![[user deviceIm] isEqualToString:@""]) {
             NSData *imaData = [[NSData alloc] initWithBase64EncodedString:user.deviceIm options:NSDataBase64DecodingIgnoreUnknownCharacters];
             headIma = [UIImage imageWithData:imaData];
@@ -215,7 +215,7 @@
         }
     }
     
-    CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"确定", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
+    CHButton *confimBut = [CHButton createWithTit:CHLocalizedString(@"aler_confirm", nil) titColor:[UIColor whiteColor] textFont:CHFontNormal(nil, 18) backColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0f touchBlock:^(CHButton *sender) {
         if (_setUser) {
             NSMutableDictionary *saveDic = [CHAFNWorking shareAFNworking].requestDic;
             [saveDic addEntriesFromDictionary:@{@"UserId": [TypeConversionMode strongChangeString:user.userId],
@@ -238,7 +238,7 @@
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
                 if ([[result objectForKey:@"State"] intValue] == 0) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
                     [CHAccountTool saveUser:user];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [selfWeak.navigationController popViewControllerAnimated:YES];
@@ -250,7 +250,7 @@
             return ;
         }
         if (!user.devicePh) {
-            [MBProgressHUD showError:CHLocalizedString(@"请输入手机号码", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"login_inputPhone", nil)];
             return ;
         }
         
@@ -275,11 +275,11 @@
                                                       @"IDnumber": @"",
                                                       @"Remark": @"",
                                                       @"MarkerColor": @""}}];
-        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SavePersonProfile parameters:saveDic Mess:CHLocalizedString(@"正在保存", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SavePersonProfile parameters:saveDic Mess:CHLocalizedString(@"", nil) showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
             if ([[result objectForKey:@"State"] intValue] == 0) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
                 [CHAccountTool saveUser:user];
                 [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:user];
                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:user];
@@ -340,7 +340,7 @@
     [gailBut layoutButtonWithEdgeInsetsStyle:buttonddgeinsetsstyleleft space:10];
     
     [confimBut mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(40);
@@ -416,8 +416,8 @@
     cell.textLabel.text = [titArr objectAtIndex:indexPath.row];
     if (indexPath.row == 0) cell.detailTextLabel.text = _setUser ? user.userPh : user.deviceNa;
     if (indexPath.row == 1) cell.detailTextLabel.text = _setUser ? user.userNa : user.deviceBi;
-    if (indexPath.row == 2) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"CellPhone"]] : [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"厘米", nil)];
-    if (indexPath.row == 3) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"Email"]] : [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"公斤", nil)];
+    if (indexPath.row == 2) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"CellPhone"]] : [NSString stringWithFormat:@"%d%@",user.deviceHe.intValue,CHLocalizedString(@"device_cm", nil)];
+    if (indexPath.row == 3) cell.detailTextLabel.text = _setUser ? [TypeConversionMode strongChangeString:self.userInfoDic[@"Email"]] : [NSString stringWithFormat:@"%d%@",user.deviceWi.intValue,CHLocalizedString(@"device_kilo", nil)];
     if (indexPath.row == 4) cell.detailTextLabel.text = user.devicePh ? user.devicePh:CHLocalizedString(@"", nil);
     if (indexPath.row == 5) cell.detailTextLabel.text = user.deviceIMEI ? user.deviceIMEI:CHLocalizedString(@"", nil);
     return cell;
@@ -434,14 +434,14 @@
     
     if (_setUser) {
         if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
-            NSString *alerTit = CHLocalizedString(@"昵称", nil);
+            NSString *alerTit = CHLocalizedString(@"deviee_nick", nil);
             if (indexPath.row == 2) {
-                alerTit = CHLocalizedString(@"手机号码", nil);
+                alerTit = CHLocalizedString(@"device_guar_deleSus", nil);
             }
             if (indexPath.row == 3) {
-                alerTit = CHLocalizedString(@"邮箱", nil);
+                alerTit = CHLocalizedString(@"device_email", nil);
             }
-            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"deviee_nick", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
             [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 textField.keyboardType = UIKeyboardTypeDefault;
                 if (indexPath.row == 2) {
@@ -451,7 +451,7 @@
                     textField.keyboardType = UIKeyboardTypeEmailAddress;
                 }
             }];
-            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 UITextField *nickField = (UITextField *)aler.textFields[0];
                 
                 if (indexPath.row == 1) {
@@ -462,14 +462,14 @@
                 }
                 if (indexPath.row == 3) {
                     if (![CHCalculatedMode validateEmail:nickField.text]) {
-                        [MBProgressHUD showError:CHLocalizedString(@"请输入正确邮箱", nil)];
+                        [MBProgressHUD showError:CHLocalizedString(@"aler_inputEmail", nil)];
                         return ;
                     }
                     [self.userInfoDic setValue:nickField.text forKey:@"Email"];
                 }
                 cell.detailTextLabel.text = nickField.text;
             }];
-            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
             }];
             [aler addAction:cancelAct];
@@ -480,16 +480,16 @@
         }
     }else{
         if (indexPath.row == 0 ) {
-            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"昵称", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"deviee_nick", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
             [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 
             }];
-            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 UITextField *nickField = (UITextField *)aler.textFields[0];
                 user.deviceNa = nickField.text;
                 cell.detailTextLabel.text = nickField.text;
             }];
-            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
             }];
             [aler addAction:cancelAct];
@@ -509,31 +509,31 @@
         }
         if (indexPath.row == 2){
             CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-            [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"厘米", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
+            [PickView createPickDatas:@[self.heightArrs,@[CHLocalizedString(@"device_cm", nil)]] OriginIndex:user.deviceHe DidSelectConfirm:^(CHButton *sender, NSString *date) {
                 user.deviceHe = date;
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"厘米", nil)];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"device_cm", nil)];
             }];
             [app.window addSubview:PickView];
         }
         if (indexPath.row == 3){
             CHPhotoView *PickView = [CHPhotoView initWithNomarSheet];
-            [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"公斤", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
+            [PickView createPickDatas:@[self.widthArrs,@[CHLocalizedString(@"device_kilo", nil)]] OriginIndex:user.deviceWi DidSelectConfirm:^(CHButton *sender, NSString *date) {
                 user.deviceWi = date;
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"公斤", nil)];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@",date,CHLocalizedString(@"device_kilo", nil)];
             }];
             [app.window addSubview:PickView];
         }
         if(indexPath.row == 4){
-            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"手机号码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"device_guar_phone", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
             [aler addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 textField.keyboardType = UIKeyboardTypeNumberPad;
             }];
-            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 UITextField *nickField = (UITextField *)aler.textFields[0];
                 user.devicePh = nickField.text;
                 cell.detailTextLabel.text = nickField.text;
             }];
-            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"取消", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
             }];
             [aler addAction:cancelAct];

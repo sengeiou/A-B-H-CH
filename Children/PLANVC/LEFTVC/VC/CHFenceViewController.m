@@ -87,7 +87,7 @@
         }];
     }];
     [self.view addSubview:self.mapView];
-    self.searchField = [CHTextField createWithPlace:CHLocalizedString(@"搜索位置", nil) text:@"" textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 14)];
+    self.searchField = [CHTextField createWithPlace:CHLocalizedString(@"device_jbw_search", nil) text:@"" textColor:CHUIColorFromRGB(CHMediumBlackColor, 1.0) font:CHFontNormal(nil, 14)];
     self.searchField.backgroundColor = [UIColor whiteColor];
     self.searchField.layer.masksToBounds = YES;
     self.searchField.layer.cornerRadius = 8.0;
@@ -126,7 +126,7 @@
     self.fenceTab.tableFooterView = [UIView new];
     self.fenceTab.hidden = YES;
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem CHItemWithTit:CHLocalizedString(@"保存", nil) textColor:nil textFont:CHFontNormal(nil, 14) touchCallBack:^(UIBarButtonItem *item) {
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem CHItemWithTit:CHLocalizedString(@"device_guar_save", nil) textColor:nil textFont:CHFontNormal(nil, 14) touchCallBack:^(UIBarButtonItem *item) {
         [selfWeak setFence];
     }];
     [self.navigationItem.rightBarButtonItem.customView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -288,7 +288,7 @@ static int oldValue;
     
     int value = [NSString stringWithFormat:@"%.0f",self.fenceSlider.value*1000].intValue;
     self.fenceSlider.popover.textLabel.textColor = CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0);
-    self.fenceSlider.popover.textLabel.text = [NSString stringWithFormat:@"%d米",value/100*100];
+    self.fenceSlider.popover.textLabel.text = [NSString stringWithFormat:@"%d%@",value/100*100,CHLocalizedString(@"fence_mail", nil)];
     
     int newValue = value/100*100;
     if (newValue != oldValue) {
@@ -318,15 +318,15 @@ static int oldValue;
     [dic addEntriesFromDictionary:@{@"Item":self.fenceInfoMode.mj_keyValues,@"MapType":@"AMap"}];
     REQUESTURL url = REQUESTURL_CreateGeofence;
     if (self.fenceInfoMode.Radius <= 0) {
-        [MBProgressHUD showError:CHLocalizedString(@"请设置围栏距离", nil)];
+        [MBProgressHUD showError:CHLocalizedString(@"device_jbw_rain", nil)];
         return;
     }
-    if (_fenceCacheMode) {
+    if (_fenceCacheMode && _fenceCacheMode.Address) {
         url = REQUESTURL_EditGeofence;
     }
     else{
         if (!self.fenceInfoMode.Address) {
-            [MBProgressHUD showError:CHLocalizedString(@"请设置围栏位置", nil)];
+            [MBProgressHUD showError:CHLocalizedString(@"device_jbw_address", nil)];
             return;
         }
     }
@@ -335,11 +335,11 @@ static int oldValue;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         if ([result[@"State"] intValue] == 0) {
-            if (selfWeak.fenceCacheMode) {
-                [MBProgressHUD showSuccess:CHLocalizedString(@"修改成功", nil)];
+            if (selfWeak.fenceCacheMode && _fenceCacheMode.Address) {
+                [MBProgressHUD showSuccess:CHLocalizedString(@"user_chanSuccess", nil)];
             }
             else{
-                [MBProgressHUD showSuccess:CHLocalizedString(@"保存成功", nil)];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveSuss", nil)];
                 
             }
             selfWeak.fenceCacheMode = selfWeak.fenceInfoMode;
@@ -349,14 +349,14 @@ static int oldValue;
         }
         else{
             
-            if (selfWeak.fenceCacheMode) {
+            if (selfWeak.fenceCacheMode && _fenceCacheMode.Address) {
                 if (![CHAFNWorking shareAFNworking].requestMess) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"修改失败", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_changeFail", nil)];
                 }
             }
             else{
                 if (![CHAFNWorking shareAFNworking].requestMess) {
-                    [MBProgressHUD showSuccess:CHLocalizedString(@"保存失败", nil)];
+                    [MBProgressHUD showSuccess:CHLocalizedString(@"aler_saveFail", nil)];
                 }
             }
         }

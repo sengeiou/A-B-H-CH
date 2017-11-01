@@ -51,14 +51,15 @@ static NSString *fenceIdent = @"FENCECELL";
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
         @StrongObj(self)
         self.fenceList = [[CHFenceInfoMode mj_objectArrayWithKeyValuesArray:result[@"Items"]] mutableCopy];
-        if (self.fenceList.count < 2) {
+//        if (self.fenceList.count < 2) {
             [self addNormalFence];
-        }
+//        }
         [self checkHomeFence];
         [self setGuarderNum];
+        [MBProgressHUD hideHUD];
         [self.table reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-        
+        [MBProgressHUD hideHUD];
     }];
 }
 
@@ -76,28 +77,63 @@ static NSString *fenceIdent = @"FENCECELL";
     scrollFence.DeviceId = [self.user.deviceId integerValue];
     scrollFence.Description = @"安全圈-学校";
     
-    [self.fenceList addObject:homeFence];
-    [self.fenceList addObject:scrollFence];
+    BOOL findHome = NO;
+    BOOL findScroll = NO;
+    for (int i = 0; i < self.fenceList.count; i ++) {
+        CHFenceInfoMode *ode = [self.fenceList objectAtIndex:i];
+        if ([ode.Description isEqualToString:@"安全圈-家"]) {
+            findHome = YES;
+        }
+        if ([ode.Description isEqualToString:@"安全圈-学校"]) {
+            findScroll = YES;
+        }
+    }
+    if (!findHome) {
+         [self.fenceList addObject:homeFence];
+    }
+    if (!findScroll) {
+        [self.fenceList addObject:scrollFence];
+    }
+//    for (int j = 0; j < self.fenceList.count; j ++) {
+//        CHFenceInfoMode *ode = [self.fenceList objectAtIndex:j];
+//        if (![ode.Description isEqualToString:@"安全圈-学校"]) {
+//           [self.fenceList addObject:scrollFence];
+//             break;
+//        }
+//    }
+//    if (self.fenceList.count == 0) {
+//        [self.fenceList addObject:homeFence];
+//        [self.fenceList addObject:scrollFence];
+//    }
 }
 
 - (void)checkHomeFence{
-    CHFenceInfoMode *homeFence = [self.fenceList firstObject];
-    if (![homeFence.Description isEqualToString:@"安全圈-家"]) {
-        [self.fenceList exchangeObjectAtIndex:0 withObjectAtIndex:1];
+//    CHFenceInfoMode *homeFence = [self.fenceList firstObject];
+//    if (![homeFence.Description isEqualToString:@"安全圈-家"]) {
+//        [self.fenceList exchangeObjectAtIndex:0 withObjectAtIndex:1];
+//    }
+    for (int i = 0; i < self.fenceList.count; i ++) {
+        CHFenceInfoMode *homeFence = [self.fenceList objectAtIndex:i];
+        if ([homeFence.Description isEqualToString:@"安全圈-家"]) {
+            [self.fenceList exchangeObjectAtIndex:i withObjectAtIndex:0];
+        }
+        if ([homeFence.Description isEqualToString:@"安全圈-学校"]) {
+            [self.fenceList exchangeObjectAtIndex:i withObjectAtIndex:1];
+        }
     }
 }
 
 - (void)createUI{
-    self.title = CHLocalizedString(@"安全围栏", nil);
+    self.title = CHLocalizedString(@"device_fence", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     self.fenceLab = [CHLabel new];
     [self setGuarderNum];
     [self.view addSubview:self.fenceLab];
     
     @WeakObj(self)
-    self.addBut = [CHButton createWithTit:CHLocalizedString(@"添加新围栏", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
+    self.addBut = [CHButton createWithTit:CHLocalizedString(@"device_jbw_add", nil) titColor:CHUIColorFromRGB(0xffffff, 1.0) textFont:CHFontNormal(nil, 18) backImaColor:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) Radius:8.0 touchBlock:^(CHButton *sender) {
         CHFenceViewController *fenceVC = [[CHFenceViewController alloc] init];
-        fenceVC.title = CHLocalizedString(@"添加新围栏", nil);
+        fenceVC.title = CHLocalizedString(@"device_jbw_add", nil);
         fenceVC.changeModeName = YES;
         fenceVC.user = self.user;
         [selfWeak.navigationController pushViewController:fenceVC animated:YES];
@@ -118,7 +154,7 @@ static NSString *fenceIdent = @"FENCECELL";
     }];
     
     [self.addBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-30 - HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(30);
         make.right.mas_equalTo(-30);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
@@ -134,7 +170,7 @@ static NSString *fenceIdent = @"FENCECELL";
 
 - (void)setGuarderNum{
     NSString *str1 = [NSString stringWithFormat:@"%lu",10 - self.fenceList.count];
-    NSString *str = CHLocalizedString(@"围栏还可以添加%@个", str1);
+    NSString *str = CHLocalizedString(@"device_jbw_num", str1);
     NSMutableAttributedString *attrDescribeStr = [[NSMutableAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:CHFontNormal(nil, 12)}];
     [attrDescribeStr addAttribute:NSForegroundColorAttributeName  value:CHUIColorFromRGB(CHMediumSkyBlueColor, 1.0) range:[str rangeOfString:str1]];
     self.fenceLab.attributedText = attrDescribeStr;
@@ -192,7 +228,7 @@ static NSString *fenceIdent = @"FENCECELL";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return CHLocalizedString(@"删除", nil);
+    return CHLocalizedString(@"device_jbw_delete", nil);
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -211,12 +247,12 @@ static NSString *fenceIdent = @"FENCECELL";
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
              if ([result[@"State"] intValue] == 0) {
-                 [MBProgressHUD showSuccess:CHLocalizedString(@"删除成功", nil)];
+                 [MBProgressHUD showSuccess:CHLocalizedString(@"device_guar_deleSus", nil)];
                  [selfWeak.fenceList removeObjectAtIndex:indexPath.section];
                  [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
                  [selfWeak setGuarderNum];
              }else if (![CHAFNWorking shareAFNworking].requestMess){
-                 [MBProgressHUD showSuccess:CHLocalizedString(@"删除失败", nil)];
+                 [MBProgressHUD showSuccess:CHLocalizedString(@"device_jbw_deleteFail", nil)];
              }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
             
