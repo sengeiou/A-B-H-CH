@@ -10,6 +10,7 @@
 #define CHFIRSTLUN @"CHFIRSTLUN" //首次打开
 UIKIT_EXTERN NSString * const CHAPPTOKEN;
 UIKIT_EXTERN NSString * const CHVOLUMEVALUE;
+UIKIT_EXTERN NSString * const CALLPHONE;
 
 @interface CHDefaultionfos : NSObject
 + (void)CHputKey:(NSString *)key andValue:(NSObject *)value;

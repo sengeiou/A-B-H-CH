@@ -15,7 +15,6 @@
 @property(strong,nonatomic)UIView * coverView;
 @property(strong,nonatomic)NSMutableArray * screenshotImgs;
 
-
 @property(nonatomic,strong)UIImage * nextVCScreenShotImg;
 
 

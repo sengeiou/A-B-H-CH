@@ -174,6 +174,31 @@
         }];
         return;
     }
+//    #define debug(...) (__VA_ARGS__)
+//    NSString *s = @"我就是%@ 需要 %@";
+//    NSArray *comment = @[@"ag",@"**"];
+//    NSArray *sarr = [s componentsSeparatedByString:@"%@"];
+//    NSString *st = [NSString stringWithFormat:s, debug(@"111",@"222")];
+//    for (int i = 0; i < [(NSArray *)comment count]; i ++) {
+//        s = [NSString localizedStringWithFormat:s,@"1222",@"**1222"];
+//        NSLog(@"ffffffffffff %@",s);
+//    }
+//    id iii = {@(123),@"ab"};
+//    [NSString stringWithFormat:@"我就是%@ 需要 %@",iii];
+//    stringlog(@"device_guar_sendmess0", @"ag",@"**",@"ag",@"**");
+//    [NSString stringWithFormat:<#(nonnull NSString *), ...#>]
+//    stringlog(@"我邀请你加入%@,共同守护 %@ 的安全，IMEI号为：%@,App下载链接：%@",@"ag",@"**",@"ag",@"**");
+//    CHLocalizedStringtesx(@"device_guar_sendmess0",@"ag",@"**",@"ag",@"**");
+//    NSString
+//    [CHLocalizeableMode CHlocalizedStringKey:@"device_guar_sendmess0" comment:@"ag",@"**",@"ag",@"**"];
+//    [CHLocalizeableMode appendBaseUrlWithFormat:@"device_guar_sendmess0",@"ag",@"**",@"ag",@"**"];
+//    NSString *requestMess = [CHLocalizeableMode appendBaseUrlWithFormat:@"device_guar_sendmess0",@"ag",@"**",@"ag",@"**"];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSString *downUrl = @"http://fir.im/KidsWatch";
+    NSString *requestMess = [CHLocalizeableMode appendBaseUrlWithFormat:@"device_guar_sendmess",app_Name,[TypeConversionMode strongChangeString:[CHAccountTool user].deviceNa],[TypeConversionMode strongChangeString:[CHAccountTool user].deviceIMEI],downUrl];
+    [self showMessageView:@[self.phoneField.text] title:@"" body:requestMess];
+    return;
     @WeakObj(self)
     NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
     [dic addEntriesFromDictionary:@{@"Phone": selfWeak.phoneField.text,
@@ -193,6 +218,15 @@
         
     }];
 }
+
+- (NSString *)appendBaseUrlWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2) {
+    va_list args;
+    va_start(args, format);
+    NSString *appendStr = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
+    return [NSString stringWithFormat:@"%@%@", @"", appendStr];
+}
+
 
 - (NSString *)arrangeAdressList{
     self.mode.name = self.relationField.text;
@@ -316,6 +350,25 @@
     }
 }
 
+-(void)showMessageView:(NSArray *)phones title:(NSString *)title body:(NSString *)body
+{
+    if( [MFMessageComposeViewController canSendText])
+    {
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+        controller.recipients = phones;
+        controller.navigationBar.tintColor = [UIColor redColor];
+        controller.body = body;
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+//        [[[[controller viewControllers] lastObject] navigationItem] setTitle:title];//修改短信界面标题
+    }
+    else {
+        NSLog(@" //不支持短信功能");
+    }
+}
+
+
+
 #pragma mark -- CNContactPickerDelegate
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty {
         [self dismissViewControllerAnimated:YES completion:^{
@@ -429,6 +482,11 @@
     return YES;
 }
 
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    NSLog(@"messageComposeViewController %ld",(long)result);
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 ////取消选择
 //- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
 //{

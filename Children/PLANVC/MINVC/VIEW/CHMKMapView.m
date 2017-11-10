@@ -331,6 +331,7 @@ static int firstLoad;
         if (firstLoad == 0) {
         firstLoad ++;
         [self setCenterCoordinate:CLLocationCoordinate2DMake(39.9163854444,116.3971424103) zoomLevel:_zoomLevel animated:NO];
+    
 //             _zoomLevel = zoomLevel;
             _firstLun = NO;
         }
@@ -354,7 +355,6 @@ static int firstLoad;
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     NSLog(@"regionDidChangeAnimated rgi io = %f",[self getZoomLevel:self]);
-
     if (!_firstLun) {
         _zoomLevel = [self getZoomLevel:self];
     }
@@ -402,5 +402,7 @@ static int firstLoad;
  // Drawing code
  }
  */
-
+- (void)dealloc{
+    NSLog(@"mapview dealloc");
+}
 @end

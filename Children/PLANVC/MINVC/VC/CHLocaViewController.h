@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CHMKMapView.h"
 #import "CHLocationInfoView.h"
+#import "CHCallPhoneView.h"
 
 @interface CHLocaViewController : UIViewController
 @property (nonatomic, strong) CHUserInfo *user, *oldUser;

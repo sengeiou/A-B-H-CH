@@ -89,6 +89,7 @@
 //#define NSLog(FORMAT, ...) nil
 //#endif
 
+
 //#define CHLocalizedString(strKey,nil) [[CHLocalizeableMode shareLocalizable] CHlocalizedStringKey:strKey comment:nil] //.HelveticaNeueInterface-Regular SFUIText
 #define CHLocalizedString(strKey,nil) [CHLocalizeableMode  CHlocalizedStringDic:strKey comment:nil] //.HelveticaNeueInterface-Regular SFUIText
 #define CHFontNormal(nil,f) [UIFont fontWithName:nil ? nil:@".HelveticaNeueInterface-Regular" size:f]

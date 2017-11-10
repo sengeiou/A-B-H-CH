@@ -8,7 +8,7 @@
 
 #import "CHLocaViewController.h"
 
-@interface CHLocaViewController ()
+@interface CHLocaViewController ()<UITextFieldDelegate,ABPeoplePickerNavigationControllerDelegate,CNContactPickerDelegate>
 
 //@property (nonatomic, strong) MKMapView *mapView;
 @property (nonatomic, strong) CHMKMapView *mapView;
@@ -21,12 +21,13 @@
 @property (nonatomic, strong) NSTimer *searchTimer;
 @property (nonatomic, assign)  BOOL foundDevice;
 @property (nonatomic, strong) NSString *CellPhone;
-//@property (nonatomic, strong) NSString *CellPhone;
+@property (nonatomic, strong) UIAlertController *alerVC ;
 @property (nonatomic, strong) CHButton *moniBut;
 @property (nonatomic, assign) int geocodeNum;
+@property (nonatomic, strong) UITextField *cellField;
 @end
 @implementation CHLocaViewController
-
+@synthesize alerVC;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initializeMethod];
@@ -82,13 +83,13 @@ static int request;
     [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_UserInfo parameters:dic Mess:nil showError:NO progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
-        NSMutableDictionary *userInfoDic = [result[@"UserInfo"] mutableCopy];
-        selfWeak.CellPhone = userInfoDic[@"CellPhone"];
-        selfWeak.moniBut.hidden = YES;
-        BOOL bl = [CHCalculatedMode isPureNumandCharacters:selfWeak.CellPhone];
-        if (selfWeak.CellPhone && ![selfWeak.CellPhone isEqualToString:@""]) {
-            selfWeak.moniBut.hidden = NO;
-        }
+//        NSMutableDictionary *userInfoDic = [result[@"UserInfo"] mutableCopy];
+//        selfWeak.CellPhone = userInfoDic[@"CellPhone"];
+//        selfWeak.moniBut.hidden = YES;
+//        BOOL bl = [CHCalculatedMode isPureNumandCharacters:selfWeak.CellPhone];
+//        if (selfWeak.CellPhone && ![selfWeak.CellPhone isEqualToString:@""]) {
+//            selfWeak.moniBut.hidden = NO;
+//        }
 //        [selfWeak.tabView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
@@ -110,7 +111,7 @@ static int request;
         @StrongObj(self)
         if ([[result objectForKey:@"State"] intValue] == 0) {
             //            [self updateDeviceListWithRequestTimes:30];
-            request = 30;
+            request = 3;
             if (self.searchTimer) {
                 [self.searchTimer invalidate];
                 self.searchTimer = nil;
@@ -124,7 +125,7 @@ static int request;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
     }];
-     [self requestUserInfo];
+//     [self requestUserInfo];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -167,7 +168,7 @@ static int request;
 //    NSLog(@"moniBut  %f  %f",self.mapView.centerCoordinate.latitude,self.mapView.centerCoordinate.latitude);
         [selfWeak setMonitor];
     }];
-    _moniBut.hidden = YES;
+//    _moniBut.hidden = YES;
     [self.view addSubview:_moniBut];
 
     
@@ -457,24 +458,207 @@ static int request;
 }
 
 - (void)setMonitor{
-    NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
-    [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId,
-                                    @"DeviceModel": self.user.deviceMo,
-                                    @"CmdCode": DEVICE_LISTEN,
-                                    @"Params": self.CellPhone,
-                                    @"UserId": self.user.userId}];
-    //    @WeakObj(self)
-    [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
-        if ([result[@"State"] intValue] == 0) {
-//            if (mess) {
+     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    CHCallPhoneView *phoneView = [[CHCallPhoneView alloc] initWithcallBackBlock:^(NSString *phoneNum) {
+        NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+        [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId,
+                                        @"DeviceModel": self.user.deviceMo,
+                                        @"CmdCode": DEVICE_LISTEN,
+                                        @"Params": phoneNum,
+                                        @"UserId": self.user.userId}];
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+            if ([result[@"State"] intValue] == 0) {
+                [CHDefaultionfos CHputKey:CALLPHONE andValue:phoneNum];
+                [MBProgressHUD showSuccess:CHLocalizedString(@"location_monitor", nil)];
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        }];
+    }];
+    [app.window addSubview:phoneView];
+    return;
+    
+    UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:CHLocalizedString(@"location_monTit", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+     @WeakObj(self)
+    [alerVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        @StrongObj(self)
+        textField.keyboardType = UIKeyboardTypePhonePad;
+        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 25)];
+        CHButton *phoneBut = [CHButton createWithNorImage:[UIImage imageNamed:@"icon_txl"] selectIma:[UIImage imageNamed:@"icon_txl"] touchBlock:^(CHButton *sender) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self JudgeAddressBookPower];
+            });
+        }];
+        phoneBut.frame = CGRectMake(0, 0, 25, 25);
+        phoneBut.center = CGPointMake(25/2.0, 25/2.0);
+        [backView addSubview:phoneBut];
+        textField.leftView = backView;
+        textField.leftViewMode = UITextFieldViewModeAlways;
+        textField.frame = CGRectMake(0, 0, textField.frame.size.width, 44);
+    }];
+   
+    UIAlertAction *canAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_cnacel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *confimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        @StrongObj(self)
+        NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
+        [dic addEntriesFromDictionary:@{@"DeviceId":self.user.deviceId,
+                                        @"DeviceModel": self.user.deviceMo,
+                                        @"CmdCode": DEVICE_LISTEN,
+                                        @"Params": self.cellField.text,
+                                        @"UserId": self.user.userId}];
+        [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_SendCommand parameters:dic Mess:@"" showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
+            if ([result[@"State"] intValue] == 0) {
                 [MBProgressHUD showSuccess:CHLocalizedString(@"location_monitor", nil)];
-//            }
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+        }];
+
+    }];
+    [alerVC addAction:canAct];
+    [alerVC addAction:confimAct];
+   
+    [app.window.rootViewController presentViewController:alerVC animated:YES completion:^{
+
+    }];
+//     [self JudgeAddressBookPower];
+}
+
+- (void)JudgeAddressBookPower {
+    ///获取通讯录权限，调用系统通讯录
+    [self CheckAddressBookAuthorization:^(bool isAuthorized , bool isUp_ios_9) {
+        if (isAuthorized) {
+            [self callAddressBook:isUp_ios_9];
+        }else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
         }
-//        callBack(YES);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-//        callBack(NO);
+    }];
+}
+
+- (void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized , bool isUp_ios_9))block {
+    if (Is_up_Ios_9) {
+        CNContactStore * contactStore = [[CNContactStore alloc]init];
+        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined) {
+            [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * __nullable error) {
+                if (error) {
+                    NSLog(@"Error: %@", error);
+                }
+                else if (!granted){
+                    block(NO,YES);
+                }
+                else{
+                    block(YES,YES);
+                }
+            }];
+        }
+        else if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized){
+            block(YES,YES);
+        }
+        else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
+        }
+    }else {
+        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+        ABAuthorizationStatus authStatus = ABAddressBookGetAuthorizationStatus();
+        
+        if (authStatus == kABAuthorizationStatusNotDetermined)
+        {
+            ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error){
+                        NSLog(@"Error: %@", (__bridge NSError *)error);
+                    }
+                    else if (!granted){
+                        block(NO,NO);
+                    }
+                    else{
+                        block(YES,NO);
+                    }
+                });
+            });
+        }else if (authStatus == kABAuthorizationStatusAuthorized){
+            block(YES,NO);
+        }else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
+        }
+    }
+}
+
+#pragma mark -- CNContactPickerDelegate
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty {
+    [self dismissViewControllerAnimated:YES completion:^{
+        /// 联系人
+        NSString *contactStr = @"";
+        if ([contactProperty.key isEqualToString:@"phoneNumbers"]) {
+            contactStr = [NSString stringWithFormat:@"%@",[contactProperty.value stringValue]];
+        }
+        else{
+            return ;
+            //            contactStr = [NSString stringWithFormat:@"%@",contactProperty.value];
+        }
+        NSString *text1 = [NSString stringWithFormat:@"%@%@",contactProperty.contact.familyName,contactProperty.contact.givenName];
+        
+        NSString *contactNStr = @"";
+        NSArray *contactArr = [contactStr componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()-"]];
+        for (NSString *str in contactArr) {
+            if (![str isEqualToString:@"("] || ![str isEqualToString:@")"] || ![str isEqualToString:@"-"] || ![str isEqualToString:@""]) {
+                contactNStr = [contactNStr stringByAppendingString:[str stringByReplacingOccurrencesOfString:@" " withString:@""]];
+            }
+        }
+        self.cellField.text = contactStr;
+        NSLog(@"联系人：%@, 电话：%@",text1,contactNStr);
+    }];
+}
+
+- (void)callAddressBook:(BOOL)isUp_ios_9 {
+    alerVC.view.hidden = YES;
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (isUp_ios_9) {
+        CNContactPickerViewController *contactPicker = [[CNContactPickerViewController alloc] init];
+        contactPicker.delegate = self;
+        contactPicker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+        [app.window.rootViewController presentViewController:contactPicker animated:YES completion:nil];
+    }else {
+        ABPeoplePickerNavigationController *peoplePicker = [[ABPeoplePickerNavigationController alloc] init];
+        peoplePicker.peoplePickerDelegate = self;
+        [app.window.rootViewController presentViewController:peoplePicker animated:YES completion:nil];
+    }
+}
+
+#pragma mark -- ABPeoplePickerNavigationControllerDelegate
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
+    ABPropertyID propertyID;
+    if (property == 3) {
+        propertyID = kABPersonPhoneProperty;
+    }
+    else{
+        propertyID = kABPersonEmailProperty;
+        return;
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (property == 3 || property == 4) {
+            ABMultiValueRef valuesRef = ABRecordCopyValue(person, property == 3 ? kABPersonPhoneProperty:kABPersonEmailProperty);
+            //            ABMultiValueRef valuesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
+            CFIndex index = ABMultiValueGetIndexForIdentifier(valuesRef,identifier);
+            CFStringRef value = ABMultiValueCopyValueAtIndex(valuesRef,index);
+            CFStringRef anFullName = ABRecordCopyCompositeName(person);
+            /// 联系人
+            NSString *text1 = [NSString stringWithFormat:@"%@",anFullName];
+            /// 电话
+            NSString *text2 = (__bridge NSString*)value;
+            NSArray *contactArr = [text2 componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()-"]];
+            NSString *contactStr = @"";
+            for (NSString *str in contactArr) {
+                if (![str isEqualToString:@"("] || ![str isEqualToString:@")"] || ![str isEqualToString:@"-"] || ![str isEqualToString:@""]) {
+                    contactStr = [contactStr stringByAppendingString:[str stringByReplacingOccurrencesOfString:@" " withString:@""]];
+                }
+            }
+            NSString *contactStr0 = [contactStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+            self.cellField.text = contactStr;
+            NSLog(@"联系人：%@, 电话：%@  *** contactStr: %@",text1,text2,contactStr0);
+        }
     }];
 }
 

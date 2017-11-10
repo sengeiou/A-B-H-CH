@@ -19,6 +19,7 @@
 		EE1D90BF1F6A891C00885C10 /* CHTrackCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D90BE1F6A891C00885C10 /* CHTrackCollectionViewCell.m */; };
 		EE21888A1F5A3E0F004ACED1 /* CHDevicePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2188891F5A3E0E004ACED1 /* CHDevicePickView.m */; };
 		EE2188901F5A56FE004ACED1 /* MNWheelView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE21888F1F5A56FE004ACED1 /* MNWheelView.m */; };
+		EE28E5431FAC101C00DD167B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE28E5421FAC101C00DD167B /* MessageUI.framework */; };
 		EE2FCAF71F3E9D5E00A6457B /* CHDefaultionfos.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCAF61F3E9D5E00A6457B /* CHDefaultionfos.m */; };
 		EE2FCAFA1F3E9F8200A6457B /* CHLocalizeableMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2FCAF91F3E9F8200A6457B /* CHLocalizeableMode.m */; };
 		EE2FCAFD1F3EA5BA00A6457B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE2FCAFF1F3EA5BA00A6457B /* Localizable.strings */; };
@@ -175,6 +176,7 @@
 		EEF213371F6BF99D00E79E9A /* CHTrackingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF213361F6BF99D00E79E9A /* CHTrackingAnnotationView.m */; };
 		EEF4D4CA1F73A045006AE540 /* CHAdressMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF4D4C91F73A045006AE540 /* CHAdressMode.m */; };
 		EEF4D4CD1F73BC3E006AE540 /* CHVolumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF4D4CC1F73BC3E006AE540 /* CHVolumeViewController.m */; };
+		EEF574FE1FAC6660002892B4 /* CHCallPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF574FD1FAC6660002892B4 /* CHCallPhoneView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -203,6 +205,7 @@
 		EE2188891F5A3E0E004ACED1 /* CHDevicePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDevicePickView.m; sourceTree = "<group>"; };
 		EE21888E1F5A56FE004ACED1 /* MNWheelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNWheelView.h; sourceTree = "<group>"; };
 		EE21888F1F5A56FE004ACED1 /* MNWheelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNWheelView.m; sourceTree = "<group>"; };
+		EE28E5421FAC101C00DD167B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EE2FCAF51F3E9D5E00A6457B /* CHDefaultionfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHDefaultionfos.h; sourceTree = "<group>"; };
 		EE2FCAF61F3E9D5E00A6457B /* CHDefaultionfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHDefaultionfos.m; sourceTree = "<group>"; };
 		EE2FCAF81F3E9F8100A6457B /* CHLocalizeableMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHLocalizeableMode.h; sourceTree = "<group>"; };
@@ -507,6 +510,8 @@
 		EEF4D4C91F73A045006AE540 /* CHAdressMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHAdressMode.m; sourceTree = "<group>"; };
 		EEF4D4CB1F73BC3E006AE540 /* CHVolumeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHVolumeViewController.h; sourceTree = "<group>"; };
 		EEF4D4CC1F73BC3E006AE540 /* CHVolumeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHVolumeViewController.m; sourceTree = "<group>"; };
+		EEF574FC1FAC6660002892B4 /* CHCallPhoneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHCallPhoneView.h; sourceTree = "<group>"; };
+		EEF574FD1FAC6660002892B4 /* CHCallPhoneView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHCallPhoneView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,6 +519,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE28E5431FAC101C00DD167B /* MessageUI.framework in Frameworks */,
 				EEE69F1A1F6630E1008C2AF3 /* AddressBookUI.framework in Frameworks */,
 				EE8F57721F7A220B00E66DD6 /* libopencore-amrnb.a in Frameworks */,
 				EEB3595D1F526F64005C5064 /* CoreLocation.framework in Frameworks */,
@@ -683,6 +689,8 @@
 				EEF213361F6BF99D00E79E9A /* CHTrackingAnnotationView.m */,
 				EED29FB11F789C1300A012B4 /* CHChatTableViewCell.h */,
 				EED29FB21F789C1300A012B4 /* CHChatTableViewCell.m */,
+				EEF574FC1FAC6660002892B4 /* CHCallPhoneView.h */,
+				EEF574FD1FAC6660002892B4 /* CHCallPhoneView.m */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -1284,6 +1292,7 @@
 		F8F1A2E62B7D7CCAA0E2130C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE28E5421FAC101C00DD167B /* MessageUI.framework */,
 				EEE69F191F6630E1008C2AF3 /* AddressBookUI.framework */,
 				EEB3595C1F526F64005C5064 /* CoreLocation.framework */,
 				EE38B4C51F4FFD7700C33C1D /* MapKit.framework */,
@@ -1453,6 +1462,7 @@
 				EE2FCB101F3EEBCB00A6457B /* CHRegAnLogViewController.m in Sources */,
 				EEB40A901F4ADCA3003C33EA /* FMDatabasePool.m in Sources */,
 				EE8F57711F7A220B00E66DD6 /* amrFileCodec.m in Sources */,
+				EEF574FE1FAC6660002892B4 /* CHCallPhoneView.m in Sources */,
 				EE322E831F63CF1600FCA1CE /* CHGuarderItemMode.m in Sources */,
 				EE322E861F63DDDF00FCA1CE /* CHEditGuarderTableViewController.m in Sources */,
 				EE6E88C11F4EE6B70016104A /* XLSlideMenu.m in Sources */,

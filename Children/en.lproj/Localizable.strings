@@ -69,6 +69,7 @@
 "user_passErro"="The new passwords inputted twice are inconsistent";
 "login_inputAuth"="Please input verification code";
 "device_guar_inviteSus"="Successful Invitation";
+"device_guar_sendmess" = "You are invited to join %@ App,To Guard your %@ safety together,IMEI number: %@,App Download Link: %@";
 "location_monitor"="Monitoring code sent successful, please check incoming call";
 "aler_resigning"="Registering…";
 "firstLun_loca"="Location";
@@ -199,4 +200,6 @@
 "chat_update"="Pull down to refresh";
 "location_reload"="Downloading, please wait";
 "location_none"="No location information";
-
+"location_monTit" = "Please confirm the phone number for monitoring";
+"location_input" = "Enter or select the number";
+"location_nixt" = "Continue";

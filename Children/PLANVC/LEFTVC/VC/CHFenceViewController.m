@@ -368,10 +368,8 @@ static int oldValue;
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString *aString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSLog(@"textField %@",aString);
     @WeakObj(self)
     [self.locationMgr geocodeAddressString:aString callBlack:^(NSMutableArray *geos) {
-        NSLog(@"getos ==%@",geos);
         selfWeak.fenceArr = [geos copy];
         [selfWeak.fenceTab mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(70 * WIDTHAdaptive * (selfWeak.fenceArr.count > 3 ? 3:selfWeak.fenceArr.count));

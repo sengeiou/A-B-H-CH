@@ -11,5 +11,6 @@
 @interface CHLocalizeableMode : NSObject
 + (instancetype)shareLocalizable;
 + (NSString *)CHlocalizedStringDic:(NSString *)translation_key comment:(NSString *)comment;
-- (NSString *)CHlocalizedStringKey:(NSString *)translation_key comment:(NSString *)comment;
++ (NSString *)CHlocalizedStringKey:(NSString *)translation_key comment:(NSString *)comment,...;
++ (NSString *)appendBaseUrlWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 @end
