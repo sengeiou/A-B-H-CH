@@ -48,6 +48,13 @@
 #define CHMainScreen [UIScreen mainScreen].bounds
 #define SizeScale (([[UIScreen mainScreen] bounds].size.height) > 568 ? ([[UIScreen mainScreen] bounds].size.height)/568 : 1.0)
 #define WIDTHAdaptive [UIScreen mainScreen].bounds.size.width/375
+
+#define AutoSizeWidth(ScreenWidth) ((ScreenWidth * [UIScreen mainScreen].bounds.size.width)/375)
+
+//#define kWMScreenWidth [UIScreen mainScreen].bounds.size.width
+//#define kWMScreenHeight [UIScreen mainScreen].bounds.size.height
+//#define kWMAutoSizeWidth(controlWidth) (controlWidth * [UIScreen mainScreen].bounds.size.width) / 375
+
 //#define WIDTHAdaptive (([[UIScreen mainScreen] bounds].size.width) > 375 ? ([UIScreen mainScreen].bounds.size.width/375) : 1.0)
 #define CHMediumSkyBlueColor 0x28ccfa
 #define CHMediumBlackColor 0x212121
@@ -71,6 +78,7 @@
 #define SOUND_SWITCH @"1021"  //静音开关
 #define VIBRATION_SWITCH @"0134"  //震动时长控制
 #define SOS_PHONE @"0001"  //sos
+
 
 // 判断是否是iPhone X
 #define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)

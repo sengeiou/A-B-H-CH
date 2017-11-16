@@ -111,7 +111,7 @@
     
     CGSize radi = CGSizeMake(8.0, 8.0);
     UIRectCorner cornes = UIRectCornerTopLeft | UIRectCornerTopRight;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CHMainScreen.size.width, self.frame.size.height/2.5 * WIDTHAdaptive) byRoundingCorners:cornes cornerRadii:radi];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CHMainScreen.size.width, self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT) byRoundingCorners:cornes cornerRadii:radi];
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.fillColor = CHUIColorFromRGB(0xffffff, 1.0).CGColor;
     shapeLayer.path = path.CGPath;
@@ -135,22 +135,22 @@
     [backView addSubview:datePick];
     
     [backView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+        make.bottom.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+        make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
     }];
     
     CGFloat butWidth = (CHMainScreen.size.width - 64)/2;
     [canBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-16);
+        make.bottom.mas_equalTo(-16 - HOME_INDICATOR_HEIGHT);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.left.mas_equalTo(20);
         make.width.mas_equalTo(butWidth);
     }];
     
     [confirmBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-12);
+        make.bottom.mas_equalTo(-16 - HOME_INDICATOR_HEIGHT);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.right.mas_equalTo(-20);
         make.width.mas_equalTo(butWidth);
@@ -165,7 +165,7 @@
     
     [self commonDate:date];
     [UIView animateWithDuration:0.5 animations:^{
-        backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive);
+        backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive - HOME_INDICATOR_HEIGHT);
     }];
 }
 
@@ -179,7 +179,7 @@
     
     CGSize radi = CGSizeMake(8.0, 8.0);
     UIRectCorner cornes = UIRectCornerTopLeft | UIRectCornerTopRight;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CHMainScreen.size.width, self.frame.size.height/2.5 * WIDTHAdaptive) byRoundingCorners:cornes cornerRadii:radi];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CHMainScreen.size.width, self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT) byRoundingCorners:cornes cornerRadii:radi];
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.fillColor = CHUIColorFromRGB(0xffffff, 1.0).CGColor;
     shapeLayer.path = path.CGPath;
@@ -203,22 +203,22 @@
     [backView addSubview:heWiPick];
     
     [backView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+        make.bottom.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive);
+        make.height.mas_equalTo(self.frame.size.height/2.5 * WIDTHAdaptive + HOME_INDICATOR_HEIGHT);
     }];
     
     CGFloat butWidth = (CHMainScreen.size.width - 64)/2;
     [canBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-16);
+        make.bottom.mas_equalTo(-16 - HOME_INDICATOR_HEIGHT);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.left.mas_equalTo(20);
         make.width.mas_equalTo(butWidth);
     }];
     
     [confirmBut mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-12);
+        make.bottom.mas_equalTo(-16  - HOME_INDICATOR_HEIGHT);
         make.height.mas_equalTo(44 * WIDTHAdaptive);
         make.right.mas_equalTo(-20);
         make.width.mas_equalTo(butWidth);
@@ -236,7 +236,7 @@
     NSInteger current = [[self.dataArr firstObject] indexOfObject:origin] + offset * 30;
     [heWiPick selectRow:current inComponent:0 animated:YES];
     [UIView animateWithDuration:0.5 animations:^{
-        backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive);
+        backView.transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height/2.5 * WIDTHAdaptive - HOME_INDICATOR_HEIGHT);
     }];
 }
 

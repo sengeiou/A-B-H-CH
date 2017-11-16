@@ -104,6 +104,7 @@
         make.left.mas_equalTo(self.view);
         make.right.mas_equalTo(self.view);
         make.height.mas_equalTo([UIImage imageNamed:@"pic_dengluye"].size.height * WIDTHAdaptive);
+//         make.height.mas_equalTo(AutoSizeWidth([UIImage imageNamed:@"pic_dengluye"].size.height));
     }];
     
     [logoIma mas_makeConstraints:^(MASConstraintMaker *make) {

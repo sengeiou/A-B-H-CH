@@ -52,7 +52,8 @@
     va_start(args, format);
     s = [[NSString alloc] initWithFormat:s arguments:args];
     va_end(args);
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults * defaults =
+    [NSUserDefaults standardUserDefaults];
     NSArray * allLanguages = [defaults objectForKey:@"AppleLanguages"];
     NSString * preferredLang = [[allLanguages objectAtIndex:0] substringToIndex:2];
     //#if SMA
