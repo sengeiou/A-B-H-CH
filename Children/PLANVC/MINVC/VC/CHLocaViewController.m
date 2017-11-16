@@ -409,7 +409,7 @@ static int request;
     NSLog(@"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
     @WeakObj(self)
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_locationMar regeoCoding:user.deviceCoor callBack:^(CHGeoCodingMode *geo) {
+        [self.locationMar regeoCoding:user.deviceCoor callBack:^(CHGeoCodingMode *geo) {
             NSLog(@"str ********************************* %@",geo);
             selfWeak.geocodeNum ++;
             if (geo) {
@@ -426,7 +426,9 @@ static int request;
 }
 
 - (void)updateUI{
+    @WeakObj(self)
     [UIView animateWithDuration:1 animations:^{
+        @StrongObj(self)
         [self.infoView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.view.mas_bottom).mas_offset(-160 * WIDTHAdaptive - HOME_INDICATOR_HEIGHT);
             make.right.mas_equalTo(0);
@@ -439,7 +441,6 @@ static int request;
     self.infoView.locaLab.text = (_user.GeoCoding.FormattedAddress && ![_user.GeoCoding.FormattedAddress isEqualToString:@""]) ? _user.GeoCoding.FormattedAddress:CHLocalizedString(@"location_none", nil);
     self.infoView.selectDevice = _user;
     [self.infoView setDevices:_devices];
-    @WeakObj(self)
     [self.infoView didSelectItem:^(CHUserInfo *selDevice) {
         @StrongObj(self)
         if (self.user == selDevice) {
@@ -453,8 +454,8 @@ static int request;
     }];
     [self.mapView removeAnnotionsView];
     self.mapView.selectUser = self.user;
-    [self.mapView addAnnotationsWithPoints:_devices];
-    [self.mapView setCenterCoordinate:self.user.deviceCoor animated:NO];
+    [self.mapView addAnnotationsWithPoints:self.devices];
+//    [self.mapView setCenterCoordinate:self.user.deviceCoor animated:NO];
 }
 
 - (void)setMonitor{

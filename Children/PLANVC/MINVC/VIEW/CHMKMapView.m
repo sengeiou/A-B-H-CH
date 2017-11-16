@@ -223,9 +223,11 @@ static int firstLoad;
         }
 
         [annoView setLabTit:[(CHPointAnnotion *)annotation annotationUser].deviceNa];
+        @WeakObj(self)
         [annoView didSelectAnnotaton:^(id<MKAnnotation> tapAnnotation) {
-            if (block) {
-                block(((CHPointAnnotion *)tapAnnotation).annotationUser);
+            @StrongObj(self)
+            if (self->block) {
+                self->block(((CHPointAnnotion *)tapAnnotation).annotationUser);
             }
             NSLog(@"**********didSelectAnnotaton %@",tapAnnotation);
             for (CHPointAnnotion*annotion in self.mapAnnotations) {
@@ -240,40 +242,40 @@ static int firstLoad;
         }];
         return annoView;
     }
-    if ([annotation isMemberOfClass:[CHPointAnnotation class]]) {
-        static NSString *trackID = @"TACKANNO";
-        CHTrackingAnnotationView *actionView = (CHTrackingAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:trackID];
-        if (actionView == nil) {
-            actionView = [[CHTrackingAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:trackID];
-        }
-        if ([(CHPointAnnotation *)annotation textStr]) {
-            [actionView setText:[(CHPointAnnotation *)annotation textStr]];
-            actionView.imageView.image = [(CHPointAnnotation *)annotation annoTionImage];
-            actionView.headColor = [(CHPointAnnotation *)annotation headColor];
-            actionView.backgroundColor = CHUIColorFromRGB(0xff0000, 0.0);
-            actionView.layer.masksToBounds = NO;
-            actionView.layer.cornerRadius = 0;
-        }
-        else{
-            actionView.bounds = CGRectMake(0, 0, 6, 6);
-            actionView.backgroundColor = CHUIColorFromRGB(0xff0000, 1.0);
-            actionView.layer.masksToBounds = YES;
-            actionView.layer.cornerRadius = 3;
-        }
-        actionView.hidden = NO;
-        return actionView;
-    }
-    
-    if ([annotation isMemberOfClass:[MKPointAnnotation class]]) {
-        static NSString *SYSID = @"systemanno";
-        MKAnnotationView *annoView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:SYSID];
-        if (annoView == nil) {
-            annoView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:SYSID];
-            annoView.centerOffset = CGPointMake(0, -_bespokeIma.size.height/2); // 设置大头针的偏移
-        }
-        annoView.image = _bespokeIma;
-        return annoView;
-    }
+//    if ([annotation isMemberOfClass:[CHPointAnnotation class]]) {
+//        static NSString *trackID = @"TACKANNO";
+//        CHTrackingAnnotationView *actionView = (CHTrackingAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:trackID];
+//        if (actionView == nil) {
+//            actionView = [[CHTrackingAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:trackID];
+//        }
+//        if ([(CHPointAnnotation *)annotation textStr]) {
+//            [actionView setText:[(CHPointAnnotation *)annotation textStr]];
+//            actionView.imageView.image = [(CHPointAnnotation *)annotation annoTionImage];
+//            actionView.headColor = [(CHPointAnnotation *)annotation headColor];
+//            actionView.backgroundColor = CHUIColorFromRGB(0xff0000, 0.0);
+//            actionView.layer.masksToBounds = NO;
+//            actionView.layer.cornerRadius = 0;
+//        }
+//        else{
+//            actionView.bounds = CGRectMake(0, 0, 6, 6);
+//            actionView.backgroundColor = CHUIColorFromRGB(0xff0000, 1.0);
+//            actionView.layer.masksToBounds = YES;
+//            actionView.layer.cornerRadius = 3;
+//        }
+//        actionView.hidden = NO;
+//        return actionView;
+//    }
+//
+//    if ([annotation isMemberOfClass:[MKPointAnnotation class]]) {
+//        static NSString *SYSID = @"systemanno";
+//        MKAnnotationView *annoView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:SYSID];
+//        if (annoView == nil) {
+//            annoView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:SYSID];
+//            annoView.centerOffset = CGPointMake(0, -_bespokeIma.size.height/2); // 设置大头针的偏移
+//        }
+//        annoView.image = _bespokeIma;
+//        return annoView;
+//    }
     return nil;
 }
 
@@ -362,14 +364,18 @@ static int firstLoad;
 
 - (void)tapMap:(UITapGestureRecognizer *)tapGesture{
     NSLog(@"tapMap");
+    @WeakObj(self)
     if (tapBlock) {
+        @StrongObj(self)
         tapBlock(self);
     }
 }
 
 - (void)lpgrClick:(UILongPressGestureRecognizer *)lpgr{
     if(lpgr.state == UIGestureRecognizerStateBegan){
+        @WeakObj(self)
         if (longBlock) {
+            @StrongObj(self)
             longBlock(self,[lpgr locationInView:self]);
         }
     }

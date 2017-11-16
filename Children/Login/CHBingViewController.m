@@ -50,6 +50,13 @@
 }
 
 - (void)didClickBackBarButtonItem:(id)sender{
+    NSArray *superNavs = [self.navigationController childViewControllers];
+    for (UIViewController *nav in superNavs) {
+        if ([nav isKindOfClass:[MainViewController class]]) {
+            [[NSNotificationCenter defaultCenter]  removeObserver:nav];
+            break;
+        }
+    }
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
     CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
@@ -225,7 +232,7 @@
             if ([[result objectForKey:@"State"] intValue] == 0) {
                 
                 NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
-                [dic addEntriesFromDictionary:@{@"DeviceId":user.deviceId,@"UserId": user.userId,@"RelationPhone":[TypeConversionMode strongChangeString:user.userPh],@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
+                [dic addEntriesFromDictionary:@{@"DeviceId":[TypeConversionMode strongChangeString:user.deviceId],@"UserId": [TypeConversionMode strongChangeString:user.userId],@"RelationPhone":[TypeConversionMode strongChangeString:user.userPh],@"RelationName":@"",@"Info":@"",@"DeviceType":@6}];
                 [[CHAFNWorking shareAFNworking] CHAFNPostRequestUrl:REQUESTURL_AddDeviceAndUserGroup parameters:dic Mess:nil showError:YES progress:^(NSProgress * _Nonnull uploadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable result) {
@@ -246,6 +253,7 @@
                             [activityIndicatorView stopAnimating];
                             [MBProgressHUD hideHUD];
                             CHDeviceInfoViewController *deviceVC = [[CHDeviceInfoViewController alloc] init];
+                            user.devicePh = @"";
                             deviceVC.user = user;
                             [self.navigationController pushViewController:deviceVC animated:YES];
 

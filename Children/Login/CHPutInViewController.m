@@ -73,6 +73,14 @@
             if([result[@"State"] intValue] == 1500 || [result[@"State"] intValue] == 1501){
                 [MBProgressHUD showSuccess:CHLocalizedString(@"aler_requestSucc", nil)];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    NSArray *superNavs = [self.navigationController childViewControllers];
+                    for (UIViewController *nav in superNavs) {
+                        if ([nav isKindOfClass:[MainViewController class]]) {
+                            //                            cmdList = [(CHAlarmViewController *)nav commandList];
+                            [[NSNotificationCenter defaultCenter]  removeObserver:nav];
+                            break;
+                        }
+                    }
                     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
                     
                     CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
@@ -165,6 +173,9 @@
     return YES;
 }
 
+- (void)dealloc{
+    NSLog(@"dealloc");
+}
 /*
  #pragma mark - Navigation
  

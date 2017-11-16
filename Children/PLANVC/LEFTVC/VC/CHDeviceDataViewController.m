@@ -189,6 +189,8 @@
     device.userTo = [self.user.userTo copy];
     self.user = [device copy];
     [CHAccountTool saveUser:self.user];
+    CHUserInfo *use = [CHAccountTool user];
+    NSLog(@"few %@",use);
 }
 
 - (UIImage *)encodeQRImageWithContent:(NSString *)content size:(CGSize)size {

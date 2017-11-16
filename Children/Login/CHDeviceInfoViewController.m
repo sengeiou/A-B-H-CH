@@ -284,6 +284,15 @@
                 [[FMDBConversionMode sharedCoreBlueTool] deleteDevice:user];
                 [[FMDBConversionMode sharedCoreBlueTool] insertDevice:user];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    NSArray *superNavs = [self.navigationController childViewControllers];
+                    for (UIViewController *nav in superNavs) {
+                        if ([nav isKindOfClass:[MainViewController class]]) {
+//                            cmdList = [(CHAlarmViewController *)nav commandList];
+                            [[NSNotificationCenter defaultCenter]  removeObserver:nav];
+                            break;
+                        }
+                    }
                     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
                     CHKLTViewController *nav = [[CHKLTViewController alloc] initWithRootViewController:[[MainViewController alloc] init]];
                     CHLeftViewController *leftVC = [[CHLeftViewController alloc] init];
@@ -571,6 +580,7 @@
 
 - (void)dealloc{
     NSLog(@"dealloc");
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 /*
  #pragma mark - Navigation

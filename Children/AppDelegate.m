@@ -125,7 +125,7 @@
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
-        if ([userInfo[@"DataType"] intValue] == 3) {
+        if ([userInfo[@"DataType"] intValue] == 3 && [userInfo[@"Status"] intValue] == 1) {
             NSDictionary *apsDic = userInfo[@"aps"];
             UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_agree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -139,8 +139,21 @@
             [self.window.rootViewController presentViewController:aler animated:YES completion:^{
             }];
             completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
+        }else if ([userInfo[@"DataType"] intValue] == 3 && [userInfo[@"Status"] intValue] != 1) {
+            NSDictionary *apsDic = userInfo[@"aps"];
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //                [self dealRequestNotic:YES requestId:userInfo[@"RequestID"]];
+            }];
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_disagree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self dealRequestNotic:NO requestId:userInfo[@"RequestID"]];
+            }];
+//            [aler addAction:cancelAct];
+            [aler addAction:conFimAct];
+            [self.window.rootViewController presentViewController:aler animated:YES completion:^{
+            }];
         }
-//        [rootViewController addNotificationCount];
+//       [rootViewController addNotificationCount];
          if ([userInfo[@"DataType"] intValue] == 2) {
               [CHNotifictionCenter postNotificationName:@"VIDEONOTIFICATION" object:nil userInfo:@{@"VIDEO":userInfo}];
              completionHandler(UNNotificationPresentationOptionSound); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
@@ -151,9 +164,6 @@
         NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
         completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
     }
-
-
-
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
@@ -170,7 +180,7 @@
     
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
-        if ([userInfo[@"DataType"] intValue] == 3) {
+        if ([userInfo[@"DataType"] intValue] == 3 && [userInfo[@"Status"] intValue] == 1) {
             NSDictionary *apsDic = userInfo[@"aps"];
             UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_agree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -180,6 +190,20 @@
                 [self dealRequestNotic:NO requestId:userInfo[@"RequestID"]];
             }];
             [aler addAction:cancelAct];
+            [aler addAction:conFimAct];
+            [self.window.rootViewController presentViewController:aler animated:YES completion:^{
+            }];
+        }
+        else if ([userInfo[@"DataType"] intValue] == 3 && [userInfo[@"Status"] intValue] != 1) {
+            NSDictionary *apsDic = userInfo[@"aps"];
+            UIAlertController *aler = [UIAlertController alertControllerWithTitle:[TypeConversionMode strongChangeString:apsDic[@"alert"]] message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *conFimAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_confirm", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//                [self dealRequestNotic:YES requestId:userInfo[@"RequestID"]];
+            }];
+            UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:CHLocalizedString(@"aler_disagree", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self dealRequestNotic:NO requestId:userInfo[@"RequestID"]];
+            }];
+//            [aler addAction:cancelAct];
             [aler addAction:conFimAct];
             [self.window.rootViewController presentViewController:aler animated:YES completion:^{
             }];

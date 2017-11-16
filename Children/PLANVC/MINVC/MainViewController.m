@@ -27,6 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //接收抽屉点击事件的HomePage0Push通知
+//    [[NSNotificationCenter defaultCenter]  removeObserver:self];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(pushViewControllerFromLeftView:) name:@"HomePagePush" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(updateUser:) name:@"UPDATEUSER" object:nil];
     [self createUI];
@@ -129,7 +130,12 @@
                 self.foundDevice = YES;
             }
             
-            userList.userId = self.user.userId;
+            userList.userId = [self.user.userId copy];
+            userList.userPh = [self.user.userPh copy];
+            userList.userPs = [self.user.userPs copy];
+            userList.userNa = [self.user.userNa copy];
+            userList.userIm = [self.user.userIm copy];
+            userList.userTo = [self.user.userTo copy];
             userList.deviceId = [TypeConversionMode strongChangeString:itemDit[@"Id"]];
             userList.devicePh = [TypeConversionMode strongChangeString:itemDit[@"Sim"]];
             userList.deviceNa = [TypeConversionMode strongChangeString:itemDit[@"NickName"]];
@@ -475,14 +481,16 @@
 
 - (void)clearDevice{
     CHUserInfo *device = [[CHUserInfo alloc] init];
-    device.userId = self.user.userId;
-    device.userPh = self.user.userPh;
-    device.userPs = self.user.userPs;
-    device.userNa = self.user.userNa;
-    device.userIm = self.user.userIm;
-    device.userTo = self.user.userTo;
-    self.user = device;
+    device.userId = [self.user.userId copy];
+    device.userPh = [self.user.userPh copy];
+    device.userPs = [self.user.userPs copy];
+    device.userNa = [self.user.userNa copy];
+    device.userIm = [self.user.userIm copy];
+    device.userTo = [self.user.userTo copy];
+    self.user = [device copy];
     [CHAccountTool saveUser:self.user];
+    CHUserInfo *use = [CHAccountTool user];
+    NSLog(@"few %@",use);
 }
 
 - (void)leftViewWillDisApplear{

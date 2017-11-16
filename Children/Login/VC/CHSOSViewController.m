@@ -406,7 +406,7 @@
             }
         }
          self.selectField.text = contactNStr;
-        if (_phoneField.text.length > 0 && _phoneField1.text.length > 0 && _phoneField2.text.length > 0) {
+        if (_phoneField.text.length > 0 || _phoneField1.text.length > 0 || _phoneField2.text.length > 0) {
             _confimBut.enabled = YES;
         }
         else{
@@ -432,7 +432,15 @@
 
 - (void)addSosPhone{
     @WeakObj(self)
-    NSString *params = [NSString stringWithFormat:@"sos_1,%@,sos_2,%@,sos_3,%@",_phoneField.text,_phoneField1.text,_phoneField2.text];
+    NSArray *sosArr = @[_phoneField.text,_phoneField1.text,_phoneField2.text];
+//    NSString *params = [NSString stringWithFormat:@"sos_1,%@,sos_2,%@,sos_3,%@",_phoneField.text,_phoneField1.text,_phoneField2.text];
+    NSString *params = @"";
+    for(int i = 0; i < 3; i ++){
+        NSString *phStr = sosArr[i];
+        if(phStr && ![phStr isEqualToString:@""]){
+            params = [params stringByAppendingFormat:@"%@sos,%@",[params isEqualToString:@""] ? @"":@",",phStr];
+        }
+    }
     NSMutableDictionary *dic = [CHAFNWorking shareAFNworking].requestDic;
     [dic addEntriesFromDictionary:@{@"DeviceId":[CHAccountTool user].deviceId,
                                     @"DeviceModel": [CHAccountTool user].deviceMo,
@@ -484,7 +492,7 @@
             NSString *contactStr0 = [contactStr stringByReplacingOccurrencesOfString:@" " withString:@""];
 //            _phoneField.text = contactStr;
              self.selectField.text = contactStr;
-             if (_phoneField.text.length > 0 && _phoneField1.text.length > 0 && _phoneField2.text.length > 0) {
+             if (_phoneField.text.length > 0 || _phoneField1.text.length > 0 || _phoneField2.text.length > 0) {
                 _confimBut.enabled = YES;
             }
             else{
@@ -535,7 +543,7 @@
             passInt3 = NO;
         }
     }
-    if (passInt1 && passInt2 && passInt3) {
+    if (passInt1 || passInt2 || passInt3) {
         self.confimBut.enabled = YES;
     }
     else{
